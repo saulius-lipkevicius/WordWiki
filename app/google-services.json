@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "368756680857",
+    "project_id": "wordwiki-af0d4",
+    "storage_bucket": "wordwiki-af0d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368756680857:android:ec4487065a9097a5da3008",
+        "android_client_info": {
+          "package_name": "com.example.wordwiki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "368756680857-n3cugni6mq4p4gkj3ejgtoe7vfud27l5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wordwiki",
+            "certificate_hash": "178ad605695238ae61a97336024bbea6461c3571"
+          }
+        },
+        {
+          "client_id": "368756680857-9mkb1pjhetjtmmmhg84qsmb57aj3v0mb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1ySKMwbHYBSAr2GZUUPXupKj5LXJH_qI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "368756680857-9mkb1pjhetjtmmmhg84qsmb57aj3v0mb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

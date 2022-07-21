@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1C2D37">
+
+    <TextView
+        android:id="@+id/snackbar_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Item is added"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"/>
+
+
+    <!-- How to implement it //Java
+    private void customSnackBar(View view) {
+        final Snackbar snackbar = Snackbar.make(view, "", Snackbar.LENGTH_LONG);
+        View customView = getLayoutInflater().inflate(R.layout.snackbar_simple_layout, null);
+        snackbar.getView().setBackgroundColor(Color.TRANSPARENT);
+        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackbarLayout.setPadding(0,0,0,0);
+        snackbarLayout.addView(customView,0);
+        snackbar.show();
+    }
+    -->
+</androidx.constraintlayout.widget.ConstraintLayout>

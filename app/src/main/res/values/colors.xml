@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Set of colours for themes (dark)-->
+    <color name="light_theme_colorPrimary">#2196F3</color>
+    <color name="light_theme_colorPrimaryDark">#1976D2</color>
+    <color name="light_theme_colorAccent">#D81B60</color>
+    <color name="light_theme_backgroundColor">#FCFCFC</color>
+    <color name="light_theme_textColor">#808080</color>
+    <color name="light_theme_tintColor">#FFFFFF</color>
+    <color name="light_theme_buttonColor">#2196F3</color>
+
+    <!--Set of colours for themes (dark)-->
+    <color name="dark_theme_colorPrimary">#212121</color>
+    <color name="dark_theme_colorPrimaryDark">#000000</color>
+    <color name="dark_theme_colorAccent">#D81B60</color>
+    <color name="dark_theme_backgroundColor">#303030</color>
+    <color name="dark_theme_textColor">#212121</color>
+    <color name="dark_theme_tintColor">#212121</color>
+    <color name="dark_theme_buttonColor">#212121</color>
+
+
+    <!-- Intro colours -->
+    <!-- Screen background -->
+    <color name="bg_screen1">#B12515</color>
+    <color name="bg_screen2">#ffbb00</color>
+    <color name="bg_screen3">#85A553</color>
+    <color name="dot_active">#000000</color>
+    <color name="dot_inactive">#CCCCCC</color>
+
+    <!-- palette from ig -->
+    <color name="palette1">#E3E3E1</color>
+    <color name="palette2">#ECECEA</color>
+    <color name="palette3">#FDFDFD</color>
+    <color name="palette4">#505050</color>
+    <color name="palette5">#BDBDC7</color>
+    <color name="palette6">#BDBDDD</color>
+
+    <!-- First Palette  -->
+    <color name="col1">#A574AA</color>
+    <color name="col2">#4DA1A9</color>
+    <color name="col3">#028090</color>
+    <color name="col4">#D5E68D</color>
+    <color name="col5">#FBFBF2</color>
+
+    <!-- Second Palette  -->
+    <color name="col2_1">#F7AD17</color>
+    <color name="col2_2">#F58C37</color>
+    <color name="col2_3">#053F5C</color>
+    <color name="col2_4">#429EBD</color>
+    <color name="col2_5">#FFFFFF</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="teal_200">#000000</color>
+    <color name="purple_700">#000000</color>
+    <color name="purple_200">#000000</color>
+    <color name="purple_500">#000000</color>
+
+</resources>
+

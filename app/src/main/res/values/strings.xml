@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">WordWiki</string>
+    <string name="title_home">Home</string>
+    <string name="title_wardrobe">Wardrobe</string>
+    <string name="title_style">Style</string>
+    <string name="title_profile">Profile</string>
+
+    <!-- buttons in the intro-->
+    <string name="intro_activity_start_btn">Get Started</string>
+    <string name="intro_activity_next_btn">Next</string>
+    <string name="intro_activity_skip_btn">Skip</string>
+
+    <string name="intro_activity_slide1_text">text1</string>
+    <string name="intro_activity_slide1_description">description1</string>
+
+    <string name="intro_activity_slide2_text">text2</string>
+    <string name="intro_activity_slide2_description">description2</string>
+
+    <string name="intro_activity_slide3_text">text3</string>
+    <string name="intro_activity_slide3_description">description3</string>
+
+    <string name="intro_activity_slide4_text">text4</string>
+    <string name="intro_activity_slide4_description">description4</string>
+
+    <!-- login strings -->
+    <string name="login_hint">Login</string>
+    <string name="login_activity_facebook_btn">Login With Facebook</string>
+    <string name="login_activity_facebook_btn_description">Facebook login button description</string>
+    <string name="login_activity_google_btn">Login With Google</string>
+    <string name="login_activity_google_btn_description">Google login button description</string>
+    <string name="login_activity_no_btn">Continue Without Authentication</string>
+    <string name="login_activity_forgot_password">Forgot Password?</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_activity_or">OR</string>
+
+    <!-- Registration strings-->
+    <string name="register_activity_already_reg">Already Registered?</string>
+    <string name="register_activity_btn">Register</string>
+    <string name="registration_activity_il_description">Login page illustration</string>
+
+    <!-- mainActivity strings -->
+    <string name="main_activity_logout">Logout</string>
+
+    <!-- facebook authentication parameters-->
+    <string name="facebook_app_id">445146857251316</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">8b917f48269d983c74764211c0fff410</string>
+    <string name="login_activity_not_registered1">Not registered yet</string>
+    <string name="login_activity_not_registered2">Register Here</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_setting">Setting</string>
+    <string name="title_notification">Notification</string>
+
+</resources>
