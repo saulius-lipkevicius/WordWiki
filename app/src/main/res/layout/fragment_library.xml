@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_main.style.StyleFragment">
+    tools:context=".ui_main.library.LibraryFragment">
 
     <include layout="@layout/actionbar_style" />
 

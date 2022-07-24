@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
         Toolbar tb = root.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(tb);
 
-        FragmentManager fragmentManager = ((AppCompatActivity)getActivity()).getSupportFragmentManager();
+        FragmentManager fragmentManager = ((AppCompatActivity)getActivity()). getSupportFragmentManager();
         fragmentManager.popBackStack();
         
         return root;
@@ -98,11 +98,5 @@ public class HomeFragment extends Fragment {
             }
         });
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }

@@ -1,6 +1,9 @@
 package com.example.wordwiki.ui_main.actionbar.setting;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,13 +25,12 @@ import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentSettingBinding;
 import com.example.wordwiki.ui_main.home.HomeFragment;
-import com.example.wordwiki.ui_main.home.HomeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class SettingFragment extends Fragment {
+public class SettingFragment extends Fragment implements SettingListAdapter.OnSettingListener {
     List<SettingListModel> settingList = new ArrayList<>();
     SettingListAdapter settingAdapter;
     RecyclerView settingListRecycle;
@@ -40,24 +44,16 @@ public class SettingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Inflate the layout for this fragment
-        //View root =  inflater.inflate(R.layout.fragment_setting, container, false);
-
-        Toolbar tb = root.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(tb);
-
         // setup feed of friends in the feed
-        settingAdapter = new SettingListAdapter(getContext(), settingList, settingList.size());
+        settingAdapter = new SettingListAdapter(getContext(), settingList, settingList.size(), this);
         settingListRecycle = root.findViewById(R.id.fragment_setting_recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         settingListRecycle.setLayoutManager(layoutManager);
         settingListRecycle.addItemDecoration(new DividerItemDecoration(settingListRecycle.getContext(),
                 layoutManager.getOrientation()));
-
         settingListRecycle.setAdapter(settingAdapter);
 
         Button logOut =  root.findViewById(R.id.fragment_setting_logout_btn);
@@ -79,9 +75,8 @@ public class SettingFragment extends Fragment {
         getBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment_activity_main, new HomeFragment());
-                fr.commit();
+                NavController navController = Navigation.findNavController(binding.getRoot());
+                navController.navigate(R.id.action_navigation_setting_to_navigation_profile);
             }
         });
     }
@@ -93,6 +88,16 @@ public class SettingFragment extends Fragment {
         settingList.add(new SettingListModel("Languages"));
         settingList.add(new SettingListModel("Cookies"));
         settingList.add(new SettingListModel("Storage"));
-        settingList.add(new SettingListModel("About"));
+        settingList.add(new SettingListModel("About Us"));
+    }
+
+    @Override
+    public void onSettingClick(int position) {
+        String settingsClicked = settingList.get(position).getSettingsName();
+
+        if (settingsClicked.equals("About Us")){
+            NavController navController = Navigation.findNavController(binding.getRoot());
+            navController.navigate(R.id.action_navigation_setting_to_navigation_about);
+        }
     }
 }

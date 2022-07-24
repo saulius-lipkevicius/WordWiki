@@ -2,6 +2,9 @@ package com.example.wordwiki;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,14 +20,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
+    private static final String TAG = "main";
     private ActivityMainBinding binding;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListener;
+
+    BottomNavigationView navView;
+    NavController navController;
+    BottomNavigationView bottomNavigationView;
 
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         setUpView();
         setUpGoogleLogin();
         setUpTrackers();
+        bottomNavigationReselection();
     }
 
     private void setUpView() {
@@ -45,13 +55,13 @@ public class MainActivity extends AppCompatActivity {
         //Toolbar tb = findViewById(R.id.toolbar);
         //setSupportActionBar(tb);
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_style, R.id.navigation_profile)
+                R.id.navigation_home, R.id.navigation_library, R.id.navigation_profile)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
@@ -66,6 +76,25 @@ public class MainActivity extends AppCompatActivity {
 
     public FirebaseUser getCurrentUser(){
         return mAuth.getCurrentUser();
+    }
+
+    public void bottomNavigationReselection() {
+        navView.setOnItemReselectedListener(new NavigationBarView.OnItemReselectedListener()  {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.home_navigation) {
+                    navController.navigate(R.id.action_global_home_navigation);
+                } else if (id == R.id.explore_navigation){
+                    navController.navigate(R.id.action_global_navigation_explore);
+                } else if (id == R.id.library_navigation){
+                    navController.navigate(R.id.action_global_navigation_library);
+                } else if (id == R.id.profile_navigation) {
+                    navController.navigate(R.id.action_global_navigation_profile);
+                }
+            }
+        });
     }
 
 
@@ -105,5 +134,4 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
 }

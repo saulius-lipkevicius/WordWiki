@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.wordwiki.ui_main.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.SettingFragment"
+        android:label="@string/title_setting"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_about"
+            app:destination="@id/navigation_about" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.about.AboutFragment"
+        android:label="@string/title_about"
+        tools:layout="@layout/fragment_about">
+        <action
+            android:id="@+id/action_navigation_about_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_about_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+    <action
+        android:id="@+id/action_navigation_nested3_self"
+        app:destination="@id/navigation_profile"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/navigation_profile"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_navigation_profile"
+        app:destination="@id/navigation_profile" />
+</navigation>

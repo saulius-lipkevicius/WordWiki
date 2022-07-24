@@ -1,14 +1,14 @@
 package com.example.wordwiki.ui_main.actionbar.setting;
 
 public class SettingListModel {
-    private String friendName;
+    private String settingsName;
 
-    public SettingListModel(String friendName) {
-        this.friendName = friendName;
+    public SettingListModel(String settingsName) {
+        this.settingsName = settingsName;
     }
 
-    public String getFriendName() {
-        return friendName;
+    public String getSettingsName() {
+        return settingsName;
     }
 }
 

@@ -1,11 +1,10 @@
-package com.example.wordwiki.ui_main.style;
+package com.example.wordwiki.ui_main.library;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,31 +12,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.wordwiki.R;
-import com.example.wordwiki.databinding.FragmentStyleBinding;
+import com.example.wordwiki.databinding.FragmentLibraryBinding;
 import com.example.wordwiki.ui_main.actionbar.notification.NotificationFragment;
 import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
 
-public class StyleFragment extends Fragment {
+public class LibraryFragment extends Fragment {
 
-    private FragmentStyleBinding binding;
+    private FragmentLibraryBinding binding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        TextView actionBarTitle = getActivity().findViewById(R.id.tvTitle);
-        actionBarTitle.setText("Style");
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        StyleViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(StyleViewModel.class);
 
-        binding = FragmentStyleBinding.inflate(inflater, container, false);
+        binding = FragmentLibraryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         Toolbar tb = root.findViewById(R.id.toolbar);

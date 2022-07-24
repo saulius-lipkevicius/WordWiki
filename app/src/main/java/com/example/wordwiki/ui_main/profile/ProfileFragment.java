@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,8 +58,8 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        Toolbar tb = root.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(tb);
+        //Toolbar tb = root.findViewById(R.id.toolbar);
+        //((AppCompatActivity)getActivity()).setSupportActionBar(tb);
         setUpActionBarLinks(root);
 
         // cloud storage
@@ -90,9 +92,8 @@ public class ProfileFragment extends Fragment {
         toSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment_activity_main,new SettingFragment());
-                fr.commit();
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_navigation_profile_to_navigation_setting);
             }
         });
 
