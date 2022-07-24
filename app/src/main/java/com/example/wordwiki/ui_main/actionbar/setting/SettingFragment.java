@@ -35,6 +35,7 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
     SettingListAdapter settingAdapter;
     RecyclerView settingListRecycle;
     private FragmentSettingBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +57,6 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
                 layoutManager.getOrientation()));
         settingListRecycle.setAdapter(settingAdapter);
 
-        Button logOut =  root.findViewById(R.id.fragment_setting_logout_btn);
-
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((MainActivity) getActivity()).signOut();
-            }
-        });
-
         setUpActionBarLinks(root);
         return root;
     }
@@ -83,21 +75,36 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
 
     private void addSettingFolders() {
         settingList.clear();
-        settingList.add(new SettingListModel("Account"));
-        settingList.add(new SettingListModel("Preferences"));
-        settingList.add(new SettingListModel("Languages"));
-        settingList.add(new SettingListModel("Cookies"));
-        settingList.add(new SettingListModel("Storage"));
-        settingList.add(new SettingListModel("About Us"));
+        settingList.add(new SettingListModel(R.drawable.ic_account, "My Account"));
+        settingList.add(new SettingListModel(R.drawable.ic_notifications, "Notification"));
+        settingList.add(new SettingListModel(R.drawable.ic_preference, "Preferences"));
+        settingList.add(new SettingListModel(R.drawable.ic_language, "Languages"));
+        settingList.add(new SettingListModel(R.drawable.ic_feedback, "Feedback"));
+        settingList.add(new SettingListModel(R.drawable.ic_about, "About Us"));
+        settingList.add(new SettingListModel(R.drawable.ic_logout_w200, "Logout"));
     }
 
     @Override
     public void onSettingClick(int position) {
         String settingsClicked = settingList.get(position).getSettingsName();
 
-        if (settingsClicked.equals("About Us")){
+        if (settingsClicked.equals("About Us")) {
             NavController navController = Navigation.findNavController(binding.getRoot());
             navController.navigate(R.id.action_navigation_setting_to_navigation_about);
+        } else if (settingsClicked.equals("")) {
+
+        } else if (settingsClicked.equals("")) {
+
+        } else if (settingsClicked.equals("")) {
+
+        } else if (settingsClicked.equals("")) {
+
+        } else if (settingsClicked.equals("")) {
+            // TODO fill settings with fragments
+        } else if (settingsClicked.equals("")) {
+
+        } else if (settingsClicked.equals("Logout")) {
+            ((MainActivity) getActivity()).signOut();
         }
     }
 }

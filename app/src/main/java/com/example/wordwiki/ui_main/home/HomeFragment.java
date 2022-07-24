@@ -77,17 +77,6 @@ public class HomeFragment extends Fragment {
 
 
     private void setUpActionBarLinks() {
-        // moves of the actionbar in the mainActivity
-        ImageButton toSetting = getActivity().findViewById(R.id.main_actionbar_settings);
-        toSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment_activity_main,new SettingFragment());
-                fr.commit();
-            }
-        });
-
         ImageButton toNotification = getActivity().findViewById(R.id.main_actionbar_notification);
         toNotification.setOnClickListener(new View.OnClickListener() {
             @Override

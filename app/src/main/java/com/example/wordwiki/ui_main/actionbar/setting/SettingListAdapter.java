@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -53,6 +54,7 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyAdapter holder, int position) {
         SettingListModel model = mlist.get(position);
+        holder.settingsIcon.setImageResource(model.getSettingIcon());
         holder.settingsName.setText(model.getSettingsName());
     }
 
@@ -62,10 +64,13 @@ public class SettingListAdapter extends RecyclerView.Adapter<SettingListAdapter.
     }
 
     public class MyAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView settingsIcon;
         TextView settingsName;
         OnSettingListener onSettingListener;
+
         public MyAdapter(@NonNull View itemView, OnSettingListener onSettingListener) {
             super(itemView);
+            settingsIcon = itemView.findViewById(R.id.settings_icon);
             settingsName = itemView.findViewById(R.id.fragment_setting_name);
 
             this.onSettingListener = onSettingListener;

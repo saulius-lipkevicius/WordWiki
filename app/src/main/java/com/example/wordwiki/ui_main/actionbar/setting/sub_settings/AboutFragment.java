@@ -1,4 +1,4 @@
-package com.example.wordwiki.ui_main.actionbar.setting.about;
+package com.example.wordwiki.ui_main.actionbar.setting.sub_settings;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,32 +16,17 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentAboutBinding;
-import com.example.wordwiki.databinding.FragmentSettingBinding;
-import com.example.wordwiki.ui_main.home.HomeFragment;
-import com.example.wordwiki.ui_main.home.HomeViewModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AboutFragment extends Fragment {

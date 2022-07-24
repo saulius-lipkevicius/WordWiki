@@ -3,25 +3,26 @@
     android:id="@+id/toolbar"
     android:layout_width="fill_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@color/black">
+    android:background="@android:color/transparent">
 
     <RelativeLayout
 
         android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/setting_back"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
-            android:gravity="bottom|center"
-            android:src="@drawable/ic_back"
+            android:gravity="center"
+            android:src="@drawable/ic_chevron_left"
             android:textColor="@color/white"
             android:textSize="12sp"
+            android:layout_marginStart="-5dp"
             android:visibility="visible" />
 
         <TextView
@@ -29,11 +30,10 @@
             style="?android:textAppearanceLarge"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_horizontal|bottom"
-            android:text="Setting"
-            android:textColor="@color/white"
-            android:textSize="16sp"
+            android:gravity="center"
+            android:text="Settings"
+            android:textColor="@color/black"
+            android:textSize="18sp"
             android:textStyle="normal" />
 
 

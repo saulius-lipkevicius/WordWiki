@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/navigation_about"
-        android:name="com.example.wordwiki.ui_main.actionbar.setting.about.AboutFragment"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.sub_settings.AboutFragment"
         android:label="@string/title_about"
         tools:layout="@layout/fragment_about">
         <action
