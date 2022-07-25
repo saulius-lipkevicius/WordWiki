@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_selection_dialog_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/palette2"
+            android:id="@+id/toolbar"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Languages"
+                android:textAlignment="center"
+                android:textColor="@color/palette4"
+                android:textSize="25sp"
+                android:textStyle="italic"/>
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_below="@id/toolbar"
+            android:layout_marginTop="1dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/palette5"
+            android:layout_below="@id/toolbar"
+            android:id="@+id/view"/>
+
+        <View
+            android:id="@+id/view_above_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/recycleView"
+            android:background="@color/palette5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/recycleView"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/cancel_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="None"
+                android:textColor="@color/palette4"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:background="@drawable/home_selection_dialog_btn"/>
+
+            <Button
+                android:id="@+id/select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/palette4"
+                android:textSize="13sp"
+                android:textAllCaps="false"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:background="@drawable/home_selection_dialog_btn"/>
+
+            <Button
+                android:id="@+id/ok"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OK"
+                android:textAllCaps="false"
+                android:textColor="@color/palette4"
+                android:textSize="13sp"
+                android:layout_margin="10dp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:background="@drawable/home_selection_dialog_btn"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

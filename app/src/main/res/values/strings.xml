@@ -53,5 +53,6 @@
     <string name="title_setting">Setting</string>
     <string name="title_notification">Notification</string>
     <string name="title_about">About Us</string>
+    <string name="title_play">Play</string>
 
 </resources>

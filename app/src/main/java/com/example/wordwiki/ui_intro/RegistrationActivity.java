@@ -46,7 +46,7 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void setUpLinks() {
-        ImageButton toLogIn = findViewById(R.id.registration_back);
+        ImageButton toLogIn = findViewById(R.id.get_back_btn);
         toLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

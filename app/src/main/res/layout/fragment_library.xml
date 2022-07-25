@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui_main.library.LibraryFragment">
 
-    <include layout="@layout/actionbar_style" />
+    <include layout="@layout/actionbar_library" />
 
     <TextView
         android:id="@+id/text_notifications"

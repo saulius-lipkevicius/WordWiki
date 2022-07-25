@@ -7,51 +7,38 @@
     android:background="@android:color/transparent">
 
     <LinearLayout
+
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@android:color/transparent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/tvTitle"
             style="?android:textAppearanceLarge"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="start|bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_marginStart="20dp"
+            android:gravity="start|center_vertical"
             android:text="Follow Progress"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            android:layout_weight="1"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
 
         <ImageButton
-            android:id="@+id/main_actionbar_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_gravity="bottom"
-            android:src="@drawable/ic_notifications"
-            android:text="Sign Up"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:visibility="visible"
-            />
-
-        <ImageButton
             android:id="@+id/main_actionbar_settings"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@android:color/transparent"
-            android:layout_gravity="bottom"
+            android:gravity="bottom|center_horizontal"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_settings_fill0_wght400_grad0_opsz40"
-            android:text="Sign Up"
+            android:src="@drawable/ic_toolbar_settings"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="visible"
-            />
-
-
+            android:visibility="visible" />
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>
+

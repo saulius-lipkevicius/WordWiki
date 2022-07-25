@@ -60,4 +60,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.0.5'
     // firebase cloud storage
     implementation 'com.google.firebase:firebase-storage:20.0.1'
+
+    // viewpager
+    implementation 'com.tbuonomo:dotsindicator:4.2'
+    implementation "com.androidplot:androidplot-core:1.5.9"
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
+
+    // flags
+    implementation 'com.github.blongho:worldCountryData:1.5.3'
 }

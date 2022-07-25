@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //this is required to load git packages
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "WordWiki"

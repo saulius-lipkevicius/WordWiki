@@ -8,6 +8,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity{
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        //Toolbar tb = findViewById(R.id.toolbar);
-        //setSupportActionBar(tb);
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
 
         navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity{
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        tb.hideOverflowMenu();
     }
 
     private void setUpGoogleLogin() {
@@ -95,18 +97,6 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
-    }
-
-
-    private void setUpLinks() {
-        // call signOut, which triggers listener to get back to login activity
-        /*
-        btnLogOut = findViewById(R.id.btnLogout);
-        btnLogOut.setOnClickListener(view -> {
-            signOut();
-        });
-
-         */
     }
 
 

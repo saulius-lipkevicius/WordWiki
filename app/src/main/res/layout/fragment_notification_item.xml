@@ -9,6 +9,8 @@
         android:id="@+id/fragment_notification_name"
         android:paddingStart="30dp"
         android:paddingEnd="30dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:gravity="start|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

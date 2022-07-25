@@ -96,17 +96,6 @@ public class ProfileFragment extends Fragment {
                 navController.navigate(R.id.action_navigation_profile_to_navigation_setting);
             }
         });
-
-        ImageButton toNotification = root.findViewById(R.id.main_actionbar_notification);
-        toNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction fr = getFragmentManager().beginTransaction();
-                fr.replace(R.id.nav_host_fragment_activity_main,new NotificationFragment());
-                fr.commit();
-            }
-        });
-
     }
 
     @Override

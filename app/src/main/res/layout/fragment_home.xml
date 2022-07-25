@@ -10,30 +10,148 @@
         android:layout_height="wrap_content">
         <include layout="@layout/actionbar_home" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
-            android:id="@+id/fragment_home_profile_recycle_view"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="#ffffff"
-            android:orientation="horizontal"/>
 
-        <View
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+        <LinearLayout
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:background="@android:color/black"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/top_layout"
+            android:gravity="center">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_home_feed_recycle_view"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_layout"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+
+                <Button
+                    android:id="@+id/button_to_second_activity"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="3dp"
+                    android:text="Play"
+                    android:drawableTop="@drawable/ic_home_play"
+                    android:background="@android:color/transparent"
+                    android:textStyle="italic"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="10sp"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btnChooseLearningMode"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="3dp"
+                    android:background="@color/ap_transparent"
+                    android:drawableTop="@drawable/ic_home_settings"
+                    android:text="Mode"
+                    android:textStyle="italic"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="10sp"
+                    android:layout_weight="1"/>
+
+
+                <Button
+                    android:id="@+id/btnChooseLearningLanguage"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="3dp"
+                    android:background="@android:color/transparent"
+                    android:drawableTop="@drawable/ic_home_languages"
+                    android:text="Language"
+                    android:textStyle="italic"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="9sp"
+                    android:layout_weight="1"/>
+
+                <Button
+                    android:id="@+id/btnChooseLearningSection"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="3dp"
+                    android:drawableTop="@drawable/ic_home_section"
+                    android:text="Section"
+                    android:background="@android:color/transparent"
+                    android:textStyle="italic"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="10sp"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/scroll_view_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:orientation="vertical"
-            android:layout_margin="20dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="1" />
+            app:layout_constraintTop_toBottomOf="@+id/top_layout"
+            android:scrollbarTrackHorizontal="@drawable/ic_home_play"
+            android:gravity="bottom"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@android:color/transparent">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:id="@+id/view_pager"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textview_test" />
+
+                    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                        android:id="@+id/dot1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginHorizontal="125dp"
+                        android:layout_marginTop="-15dp"
+                        android:orientation="horizontal"
+                        app:dampingRatio="0.5"
+                        app:dotsColor="#0C0C0C"
+                        app:dotsCornerRadius="20dp"
+                        app:dotsSize="10dp"
+                        app:dotsSpacing="5dp"
+                        app:dotsStrokeColor="#C8C7C7"
+                        app:dotsStrokeWidth="5dp"
+                        app:stiffness="100" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -17,8 +17,8 @@
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
-            android:gravity="bottom|center"
-            android:src="@drawable/ic_back"
+            android:gravity="center"
+            android:src="@drawable/ic_toolbar_left"
             android:textColor="@color/white"
             android:textSize="12sp"
             android:visibility="visible" />
