@@ -37,17 +37,19 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class PlayFragment extends Fragment {
-    FragmentPlayBinding binding;
     private static final String TAG = "SecondActivity";
+    FragmentPlayBinding binding;
     DatabaseHelper myDb;
-    Integer valueOfStoredCount, newWordsTodayCounter, wordsRevisedCounter, wordsRevisedTotalCounter;
 
+    Integer valueOfStoredCount, newWordsTodayCounter, wordsRevisedCounter, wordsRevisedTotalCounter;
     ImageView languageImage;
     String word_to_fit, translation_to_fit, cursorWordHidden, cursorWordBolded, cursorWord;
     EditText shownWord, shownTranslation;
     TextView wordsToday, newWordsTotal, newWordsToday, languageShown, sectionShown, wordsRevisedTotal;
     Button showAnswerBtn;
-    ImageButton correctBtn, wrongBtn, neutralBtn;
+    ImageButton correctBtn, wrongBtn, neutralBtn, toHome;
+    BottomNavigationView navBar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,10 +62,13 @@ public class PlayFragment extends Fragment {
         binding = FragmentPlayBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // hide bottom navigation, since Play is the main fragment and it collides with other objects
+        navBar = getActivity().findViewById(R.id.nav_view);
+        navBar.setVisibility(View.GONE);
+
+        // Initiate the database helper
         myDb = new DatabaseHelper(getContext());
 
-        BottomNavigationView navBar = getActivity().findViewById(R.id.nav_view);
-        navBar.setVisibility(View.GONE);
         //setupSharedPreferences();
 
         if (wordsRevisedCounter == null) {
@@ -85,11 +90,6 @@ public class PlayFragment extends Fragment {
         languageImage = root.findViewById(R.id.wording_image);
         sectionShown = root.findViewById(R.id.wording_section_text);
 
-        showAnswerBtn = root.findViewById(R.id.show_answer_btn);
-        correctBtn = root.findViewById(R.id.correct_answer_btn);
-        neutralBtn = root.findViewById(R.id.neutral_answer_btn);
-        wrongBtn = root.findViewById(R.id.wrong_answer_btn);
-
         wordsToday.setText(myDb.countTotalWords().toString());
         newWordsTotal.setText(myDb.countTodayWords().toString());
         wordsRevisedTotal.setText(getRevisedStatistics());
@@ -97,17 +97,6 @@ public class PlayFragment extends Fragment {
         displayNewWord();
 
         setButtons();
-
-        ImageButton toHome = root.findViewById(R.id.back_to_previous);
-        toHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BottomNavigationView navBar = getActivity().findViewById(R.id.nav_view);
-                navBar.setVisibility(View.VISIBLE);
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_navigation_play_to_navigation_home);
-            }
-        });
 
         return root;
     }
@@ -192,7 +181,7 @@ public class PlayFragment extends Fragment {
         }
 
 
-        if (wordsCursor.getInt(position) == 1 ) {
+        if (wordsCursor.getInt(position) == 1) {
             buttonsLevelOne();
 
             newWordsTodayCounter = getCountOfTodayWords();
@@ -225,9 +214,9 @@ public class PlayFragment extends Fragment {
             if (ArrayUtils.contains(article_list, word)) {
                 if (isArticle) {
                     output_text = output_text + " " + "<B> ___ </B>";
-                } else if (boldedWord){
+                } else if (boldedWord) {
                     output_text = output_text + " " + "<B>" + word + "</B>";
-                } else if (theWord){
+                } else if (theWord) {
                     output_text = output_text + " " + word;
                 }
 
@@ -241,58 +230,23 @@ public class PlayFragment extends Fragment {
         return output_text;
     }
 
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setupSharedPreferences();
-        SharedPreferences sharedFontSize = PreferenceManager.getDefaultSharedPreferences(getContext());
-
-        String showFontSize = sharedFontSize.getString(getString(R.string.pref_size_key), getResources().getString(R.string.pref_size_default));
-        int changedFontSize = Integer.parseInt(showFontSize);
-
-        shownWord.setTextSize(changedFontSize);
-        shownTranslation.setTextSize(changedFontSize);
-
-        //displayNewWord();
-    }
-
-     */
-
     public void showAnswer(View v) {
         shownTranslation.setVisibility(View.VISIBLE);
         shownWord.setVisibility(View.VISIBLE);
         showAnswerBtn.setEnabled(false);
 
         // to change back the article from ___ to the true one
-        if (getModePreference().equals("Article")){
+        if (getModePreference().equals("Article")) {
             shownWord.setText(HtmlCompat.fromHtml(cursorWordBolded.trim(), HtmlCompat.FROM_HTML_MODE_COMPACT));
         }
     }
 
 
     public void onRightAnswer(View v) {
-
         shownWord.setText(cursorWord.trim());
         showAnswerBtn.setEnabled(true);
-        Log.d(TAG, "onRightAnswer: buttton on right " + cursorWord);
-
         myDb.UpdateLevelRight(shownWord.getText().toString(), getModePreference(), getLanguage());// Might be avoided
 
-
-        //Boolean Check = myDb.noMoreWords(getLanguage(), "classicalLvl", getContext());
-
-        //if (Check) {
-        //    showAlertDialogButtonClicked("Take a break", "You ran out of words. Take a break or change a learning mode",
-        //            "change the mode", "Go to Settings");
-        //}
-
-        /*
-        if (newWord.getInt(4) == 1 && newWord.getInt(6) == 1 && getCountofTodayWords() + 1 <= myDb.CurrentDayWords()) { // change after preferance is made
-            storeCountofTodayWords(getCountofTodayWords() + 1);
-            showUpAds();
-        }
-        */
         displayNewWord();
     }
 
@@ -317,33 +271,6 @@ public class PlayFragment extends Fragment {
     }
 
 
-    public void showAlertDialogButtonClicked(String title, String message, String nextButton, String cancelButton) {        // setup the alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle(title);
-        builder.setMessage(message);        // add the buttons
-        builder.setPositiveButton(nextButton, new
-                DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {        // do something like...
-                        // TODO insert positive direction
-                    }
-                });
-
-        builder.setNegativeButton(cancelButton, new
-                DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {        // do something like...
-                        // TODO insert negative direction
-                    }
-                });
-
-        builder.setCancelable(false);
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-
     public void setRevisedStatistics() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("statistics", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -358,53 +285,6 @@ public class PlayFragment extends Fragment {
 
         return String.valueOf(sharedPreferences.getInt("revised", 0)); //second argument is default, if your request is empty
     }
-
-    /**
-     * Preference category
-     */
-    /*
-    public void setupSharedPreferences() { //if we want to initialise some values
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-        sharedPreferences.getBoolean(getString(R.string.pref_night_mode_key), getResources().getBoolean(R.bool.pref_night_mode));
-        sharedPreferences.getBoolean(getString(R.string.pref_add_comment_key), getResources().getBoolean(R.bool.pref_add_comment_default));
-        sharedPreferences.getBoolean(getString(R.string.pref_ad_notification_key), getResources().getBoolean(R.bool.pref_ad_notification_default));
-        loadColorFromPreferences(sharedPreferences);
-        loadSizeFromSharedPreferences(sharedPreferences);
-
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_night_mode_key))) {
-            sharedPreferences.getBoolean(getString(R.string.pref_night_mode_key), getResources().getBoolean(R.bool.pref_night_mode));
-
-            if (sharedPreferences.getBoolean(getString(R.string.pref_night_mode_key), getResources().getBoolean(R.bool.pref_night_mode))) {
-                setTheme(R.style.darkTheme);
-            } else {
-                setTheme(R.style.AppTheme);
-            }
-            recreate();
-
-        } else if (key.equals(getString(R.string.pref_ad_notification_key))) {
-            sharedPreferences.getBoolean(getString(R.string.pref_ad_notification_key), getResources().getBoolean(R.bool.pref_ad_notification_default));
-        } else if (key.equals(getString(R.string.pref_color_key))) {
-            loadColorFromPreferences(sharedPreferences);
-        } else if (key.equals(getString(R.string.pref_size_key))) {
-            loadSizeFromSharedPreferences(sharedPreferences);
-        }
-    }
-
-    private void loadSizeFromSharedPreferences(SharedPreferences sharedPreferences) {
-        Float.parseFloat(sharedPreferences.getString(getString(R.string.pref_size_key), getString(R.string.pref_size_default)));
-    }
-
-    private void loadColorFromPreferences(SharedPreferences sharedPreferences) {
-        sharedPreferences.getString(getString(R.string.pref_color_key), getString(R.string.pref_color_red_value));
-    }
-    
-     */
 
     public void storeCountOfTodayWords(int InputInteger) {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("statistics", MODE_PRIVATE);
@@ -455,21 +335,6 @@ public class PlayFragment extends Fragment {
         return existing_modes.get(random_index); //second argument is default, if your request is empty
     }
 
-/*
-    public Boolean showUpAds() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean(getString(R.string.pref_ad_notification_key),
-                getResources().getBoolean(R.bool.pref_ad_notification_default)) && getCountOfTodayWords() % 50 == 0) {
-            ///AD PLACE
-            ///Intent startAdMobActivity = new Intent(this, adMob.class);
-            ///startActivity(startSettingsActivity);
-        }
-        return true;
-    }
-
- */
-
-
     public String getLanguage() {
         SharedPreferences sharedPreferencesNames = getActivity().getSharedPreferences("Languages", MODE_PRIVATE);
         Iterator<?> language_bool_for_commas = sharedPreferencesNames.getAll().values().iterator();
@@ -494,17 +359,12 @@ public class PlayFragment extends Fragment {
         return inClause;
     }
 
-    /**
-     * App lifecycle
-     */
-
-
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-    }
-
     public void setButtons() {
+        showAnswerBtn = binding.getRoot().findViewById(R.id.show_answer_btn);
+        correctBtn = binding.getRoot().findViewById(R.id.correct_answer_btn);
+        neutralBtn = binding.getRoot().findViewById(R.id.neutral_answer_btn);
+        wrongBtn = binding.getRoot().findViewById(R.id.wrong_answer_btn);
+
         showAnswerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -541,6 +401,17 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onWrongAnswer(view);
+            }
+        });
+
+        toHome = binding.getRoot().findViewById(R.id.back_to_previous);
+        toHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // make the navBar visible again when getting back from Play fragment
+                navBar.setVisibility(View.VISIBLE);
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_navigation_play_to_navigation_home);
             }
         });
     }

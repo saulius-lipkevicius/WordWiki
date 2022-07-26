@@ -31,7 +31,6 @@
             android:id="@+id/explore_add"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
             android:gravity="bottom|center_horizontal"
             android:src="@drawable/ic_toolbar_add"
