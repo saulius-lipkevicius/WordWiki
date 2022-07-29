@@ -812,7 +812,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 ", " + PROGRESS_COL4 +
                 ", " + PROGRESS_COL5 +
                 " FROM " + PROGRESS_TABLE_NAME +
-                " ORDER BY " + PROGRESS_COL2 + " ASC" + ";";
+                " ORDER BY " + PROGRESS_COL2 + " DESC" +
+                " LIMIT 7" + ";";
 
         Cursor exportWords = db.rawQuery(sql, null);
         // TODO check if this moveToFirst doesnt create more issues :?

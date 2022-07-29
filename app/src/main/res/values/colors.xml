@@ -28,11 +28,11 @@
     <color name="dot_inactive">#CCCCCC</color>
 
     <!-- palette from ig -->
-    <color name="palette1">#E3E3E1</color>
-    <color name="palette2">#ECECEA</color>
-    <color name="palette3">#FDFDFD</color>
-    <color name="palette4">#505050</color>
-    <color name="palette5">#BDBDC7</color>
+    <color name="palette1">#f8f9fa</color>
+    <color name="palette2">#c6c7c8</color>
+    <color name="palette3">#9c9c9d</color>
+    <color name="palette4">#dae7fa</color>
+    <color name="palette5">#9aa7bb</color>
     <color name="palette6">#BDBDDD</color>
 
     <!-- First Palette  -->

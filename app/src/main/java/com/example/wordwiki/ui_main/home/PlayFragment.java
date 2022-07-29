@@ -78,6 +78,7 @@ public class PlayFragment extends Fragment {
         // Objects that appears in activity
         shownWord = root.findViewById(R.id.word_text);
         shownTranslation = root.findViewById(R.id.translation_text);
+        showAnswerBtn = root.findViewById(R.id.show_answer_btn);
         shownWord.setEnabled(false);
         shownTranslation.setEnabled(false);
 
@@ -94,9 +95,10 @@ public class PlayFragment extends Fragment {
         newWordsTotal.setText(myDb.countTodayWords().toString());
         wordsRevisedTotal.setText(getRevisedStatistics());
 
+        setButtons();
         displayNewWord();
 
-        setButtons();
+
 
         return root;
     }

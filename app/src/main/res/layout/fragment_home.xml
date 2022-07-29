@@ -1,19 +1,15 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:background="@android:color/transparent">
         <include layout="@layout/actionbar_home" />
 
 
         <LinearLayout
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="70dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/top_layout"
@@ -26,13 +22,13 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/boarders">
 
                 <Button
                     android:id="@+id/button_to_second_activity"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
-                    android:layout_margin="3dp"
                     android:text="Play"
                     android:drawableTop="@drawable/ic_home_play"
                     android:background="@android:color/transparent"
@@ -88,71 +84,67 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
+
             android:id="@+id/scroll_view_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintTop_toBottomOf="@+id/top_layout"
-            android:scrollbarTrackHorizontal="@drawable/ic_home_play"
+            android:layout_marginBottom="50dp"
             android:gravity="bottom"
-            android:layout_marginBottom="5dp">
+            android:scrollbarTrackHorizontal="@drawable/ic_home_play"
+            app:layout_constraintTop_toBottomOf="parent">
+
 
             <LinearLayout
+                android:id="@+id/viewpager_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent">
-
-                    <androidx.viewpager.widget.ViewPager
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:id="@+id/view_pager"/>
-                </LinearLayout>
-
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center_vertical">
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-                    <TextView
+                    <AutoCompleteTextView
+                        android:id="@+id/viewpager_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textview_test" />
+                        android:background="@drawable/boarders"
+                        android:text="@string/home_stats_first"
+                        android:textSize="12sp"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="150dp"
+                        android:textAllCaps="false"
+                        android:gravity="center"
+                        android:inputType="none"
+                        android:layout_marginBottom="10dp"
+                        />
 
-                    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-                        android:id="@+id/dot1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginHorizontal="125dp"
-                        android:layout_marginTop="-15dp"
-                        android:orientation="horizontal"
-                        app:dampingRatio="0.5"
-                        app:dotsColor="#0C0C0C"
-                        app:dotsCornerRadius="20dp"
-                        app:dotsSize="10dp"
-                        app:dotsSpacing="5dp"
-                        app:dotsStrokeColor="#C8C7C7"
-                        app:dotsStrokeWidth="5dp"
-                        app:stiffness="100" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/boarders"
+                    android:orientation="vertical">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
+
             </LinearLayout>
 
 
+        </RelativeLayout>
 
-        </LinearLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

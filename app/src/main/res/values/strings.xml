@@ -55,4 +55,12 @@
     <string name="title_about">About Us</string>
     <string name="title_play">Play</string>
 
+    <!-- spinner in home for statistics -->
+    <string name="home_stats_first">Words Repeated</string>
+
+    <string-array name="home_stats">
+        <item>Words Repeated</item>
+        <item>Words approached</item>
+        <item>New Words</item>
+    </string-array>
 </resources>

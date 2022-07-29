@@ -1,8 +1,11 @@
 package com.example.wordwiki.ui_main.home.adapters;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,27 +17,36 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class dailyProgressAdapter extends PagerAdapter {
     DatabaseHelper myDb;
     private Context context;
     private LayoutInflater layoutInflater;
+    public int setPosition;
 
-    public dailyProgressAdapter(Context context) {
+    public dailyProgressAdapter(Context context, int setPosition) {
+
         this.context = context;
+        this.setPosition = setPosition;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 1;
     }
 
     @Override
@@ -48,11 +60,10 @@ public class dailyProgressAdapter extends PagerAdapter {
         layoutInflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(R.layout.home_daily_progress_item, null);
-
-        createChart(view, position);
+        createChart(view, setPosition);
 
         ViewPager viewPager = (ViewPager) container;
-        viewPager.addView(view, 0);
+        viewPager.addView(view, position);
         return view;
     }
 
@@ -68,36 +79,55 @@ public class dailyProgressAdapter extends PagerAdapter {
         // 0 - words approached today
         // 1 - new words today
         // 2 - All words learned
-        LineChart barChart = (LineChart) view.findViewById(R.id.barchart_in);
+        BarChart barChart = (BarChart) view.findViewById(R.id.barchart_in);
 
-        ArrayList<Entry> barEntries = new ArrayList<Entry>();
+        ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
 
         Cursor iterator = myDb.getStatistics();
-        for (int i = 0; i < iterator.getCount(); i++) {
-            //Log.d("tag", "createChart: addd:" + i);
 
-            barEntries.add(new Entry(i, iterator.getInt(position + 1), i));
+        ArrayList<String> dayNames = new ArrayList<>();
+        dayNames.add("Sat");
+        dayNames.add("Sun");
+        dayNames.add("Mon");
+        dayNames.add("Tue");
+        dayNames.add("Wed");
+        dayNames.add("Thu");
+        dayNames.add("Fri");
+
+
+
+        ArrayList<String> dayNames2 = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+
+        for (int i = 0; i < iterator.getCount(); i++) {
+            barEntries.add(new BarEntry(i, iterator.getInt(position)));
+            dayNames2.add(dayNames.get((day + 1 + i)%7));
             iterator.moveToNext();
         }
-
         iterator.close();
 
-        LineDataSet barDataSet = new LineDataSet(barEntries, "Contracts");
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Contracts");
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         //        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         barDataSet.setColor(Color.parseColor("#BDBDC7"));
         barDataSet.setHighlightEnabled(true);
         barDataSet.setHighLightColor(Color.RED);
-        barDataSet.setLineWidth(3);
-        barDataSet.setDrawCircles(false);
+        //barDataSet.setLineWidth(3);
+        //barDataSet.setDrawCircles(false);
+
+        // naujas
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dayNames2));
+
         barDataSet.setValueTextSize(10);
         barDataSet.setDrawValues(false);
         barDataSet.setValueTextColor(Color.parseColor("#BDBDDD"));
-        barDataSet.setDrawFilled(true);
-        LineData barData = new LineData(barDataSet);
-        barDataSet.setFillAlpha(40);
-        barDataSet.setFillColor(Color.parseColor("#BDBDC7"));
-        barDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+        //barDataSet.setDrawFilled(true);
+        BarData barData = new BarData(barDataSet);
+        //barDataSet.setFillAlpha(40);
+        //barDataSet.setFillColor(Color.parseColor("#BDBDC7"));
+        //barDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         barChart.getDescription().setTextSize(12);
         barChart.setDrawMarkers(false);
         //barChart.getAxisLeft().addLimitLine(lowerLimitLine(2,"Minimum",2,12,5,5));
@@ -108,8 +138,7 @@ public class dailyProgressAdapter extends PagerAdapter {
         barChart.getAxisRight().setEnabled(false);
         //remove top border
         barChart.getXAxis().setDrawAxisLine(false);
-        barChart.getAxisLeft().setLabelCount(3);
-        barChart.getXAxis().setLabelCount(4);
+        barChart.getAxisLeft().setLabelCount(4);
 
         //remove left border
         barChart.getAxisLeft().setDrawAxisLine(false);
@@ -137,7 +166,6 @@ public class dailyProgressAdapter extends PagerAdapter {
         barChart.clearAnimation();
         //barChart.getXAxis().setGranularityEnabled(true);
         //barChart.getXAxis().setGranularity(5.0f);
-        barChart.getXAxis().setLabelCount(4);
         //barChart.getXAxis().setLabelCount(barDataSet.getEntryCount());
 
         barChart.setData(barData);

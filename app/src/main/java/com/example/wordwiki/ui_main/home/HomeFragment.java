@@ -13,12 +13,17 @@ import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -75,6 +80,9 @@ public class HomeFragment extends Fragment {
     Button to_wording_activity_btn, choose_language_btn, choose_section_btn, choose_mode_btn;
     Button dialog_none_btn, dialog_all_btn, dialog_ok_btn;
 
+    TextView viewpagerText;
+
+    int mCurCheckPosition;
 
     private FragmentHomeBinding binding;
 
@@ -88,6 +96,16 @@ public class HomeFragment extends Fragment {
     public void onStart() {
         super.onStart();
         setUpActionBarLinks();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String[] stats = getResources().getStringArray(R.array.home_stats);
+        ArrayAdapter statsAdapter = new ArrayAdapter(requireContext(), R.layout.home_dropdown_stats, stats);
+
+        AutoCompleteTextView spinnerText = binding.viewpagerText;
+        spinnerText.setAdapter(statsAdapter);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -106,12 +124,13 @@ public class HomeFragment extends Fragment {
         choose_language_btn = root.findViewById(R.id.btnChooseLearningLanguage);
         choose_mode_btn = root.findViewById(R.id.btnChooseLearningMode);
 
+        viewpagerText = root.findViewById(R.id.viewpager_text);
+
         // daily progress following up\]
         viewPager = root.findViewById(R.id.view_pager);
-        springDotsIndicator = root.findViewById(R.id.dot1);
-        viewAdapter = new dailyProgressAdapter(getContext());
-        viewPager.setAdapter(viewAdapter);
-        springDotsIndicator.setViewPager(viewPager);
+        //springDotsIndicator = root.findViewById(R.id.dot1);
+
+        //springDotsIndicator.setViewPager(viewPager);
 
 
         checkFilePermissions();
@@ -122,6 +141,25 @@ public class HomeFragment extends Fragment {
         chooseSectionDialog();
 
 
+        viewAdapter = new dailyProgressAdapter(getContext(), mCurCheckPosition);
+        viewPager.setCurrentItem(mCurCheckPosition);
+        viewPager.setAdapter(viewAdapter);
+
+        String[] stats = getResources().getStringArray(R.array.home_stats);
+        ArrayAdapter statsAdapter = new ArrayAdapter(requireContext(), R.layout.home_dropdown_stats, stats);
+
+        AutoCompleteTextView spinnerText = root.findViewById(R.id.viewpager_text);
+        spinnerText.setAdapter(statsAdapter);
+        spinnerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+                viewAdapter = new dailyProgressAdapter(getContext(), position);
+                viewPager.setCurrentItem(position);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = position;
+            }
+        });
 
         return root;
     }
