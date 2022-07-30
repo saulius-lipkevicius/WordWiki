@@ -27,10 +27,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
 
 public class dailyProgressAdapter extends PagerAdapter {
     DatabaseHelper myDb;
@@ -119,12 +121,13 @@ public class dailyProgressAdapter extends PagerAdapter {
 
         // naujas
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dayNames2));
-
+        barDataSet.setValueFormatter(new DefaultValueFormatter(1));
         barDataSet.setValueTextSize(10);
-        barDataSet.setDrawValues(false);
+        barDataSet.setDrawValues(true);
         barDataSet.setValueTextColor(Color.parseColor("#BDBDDD"));
         //barDataSet.setDrawFilled(true);
         BarData barData = new BarData(barDataSet);
+
         //barDataSet.setFillAlpha(40);
         //barDataSet.setFillColor(Color.parseColor("#BDBDC7"));
         //barDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
@@ -138,7 +141,9 @@ public class dailyProgressAdapter extends PagerAdapter {
         barChart.getAxisRight().setEnabled(false);
         //remove top border
         barChart.getXAxis().setDrawAxisLine(false);
-        barChart.getAxisLeft().setLabelCount(4);
+        barChart.getAxisLeft().setEnabled(false);
+        //barChart.getAxisLeft().setLabelCount(0);
+        //barChart.setDrawValueAboveBar(true);
 
         //remove left border
         barChart.getAxisLeft().setDrawAxisLine(false);
@@ -154,6 +159,11 @@ public class dailyProgressAdapter extends PagerAdapter {
 
 
         barChart.setGridBackgroundColor(Color.parseColor("#A574AA"));
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        barChart.getXAxis().setDrawGridLines(false);
+        barChart.getXAxis().setDrawAxisLine(false);
         //barChart.getXAxis().setLabelCount(10);
         //barChart.getXAxis().setLabelCount(10);
 
@@ -162,7 +172,7 @@ public class dailyProgressAdapter extends PagerAdapter {
         //} else {
         //    barChart.animateY(1500);
         //}
-
+        xAxis.setDrawLabels(true);
         barChart.clearAnimation();
         //barChart.getXAxis().setGranularityEnabled(true);
         //barChart.getXAxis().setGranularity(5.0f);
@@ -170,4 +180,6 @@ public class dailyProgressAdapter extends PagerAdapter {
 
         barChart.setData(barData);
     }
+
+
 }

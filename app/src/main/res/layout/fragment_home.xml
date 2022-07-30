@@ -1,150 +1,144 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@android:color/transparent">
-        <include layout="@layout/actionbar_home" />
+    android:background="#faf6e9"
+    android:orientation="vertical">
+
+    <include layout="@layout/actionbar_home" />
+
+
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/boarders"
+        android:gravity="center"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp">
+
+        <LinearLayout
+            android:id="@+id/btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp">
+
+            <Button
+                android:id="@+id/button_to_second_activity"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/ic_home_play"
+                android:text="Play"
+                android:layout_margin="3dp"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="10sp"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/btnChooseLearningMode"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@color/ap_transparent"
+                android:drawableTop="@drawable/ic_home_settings"
+                android:text="Mode"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="10sp"
+                android:textStyle="italic" />
+
+
+            <Button
+                android:id="@+id/btnChooseLearningLanguage"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/ic_home_languages"
+                android:text="Language"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="9sp"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/btnChooseLearningSection"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_margin="3dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableTop="@drawable/ic_home_section"
+                android:text="Section"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="10sp"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+
+        android:id="@+id/scroll_view_main"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="bottom"
+        android:background="@drawable/boarders"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:scrollbarTrackHorizontal="@drawable/ic_home_play"
+        app:layout_constraintTop_toBottomOf="parent">
 
 
         <LinearLayout
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="70dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/top_layout"
-            android:gravity="center">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_layout"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/boarders">
-
-                <Button
-                    android:id="@+id/button_to_second_activity"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:text="Play"
-                    android:drawableTop="@drawable/ic_home_play"
-                    android:background="@android:color/transparent"
-                    android:textStyle="italic"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="10sp"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/btnChooseLearningMode"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="3dp"
-                    android:background="@color/ap_transparent"
-                    android:drawableTop="@drawable/ic_home_settings"
-                    android:text="Mode"
-                    android:textStyle="italic"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="10sp"
-                    android:layout_weight="1"/>
-
-
-                <Button
-                    android:id="@+id/btnChooseLearningLanguage"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="3dp"
-                    android:background="@android:color/transparent"
-                    android:drawableTop="@drawable/ic_home_languages"
-                    android:text="Language"
-                    android:textStyle="italic"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="9sp"
-                    android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/btnChooseLearningSection"
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_margin="3dp"
-                    android:drawableTop="@drawable/ic_home_section"
-                    android:text="Section"
-                    android:background="@android:color/transparent"
-                    android:textStyle="italic"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/black"
-                    android:textSize="10sp"
-                    android:layout_weight="1"/>
-
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-
-            android:id="@+id/scroll_view_main"
+            android:id="@+id/viewpager_bottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"
-            android:gravity="bottom"
-            android:scrollbarTrackHorizontal="@drawable/ic_home_play"
-            app:layout_constraintTop_toBottomOf="parent">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/boarders"
+            android:orientation="vertical">
 
-
-            <LinearLayout
-                android:id="@+id/viewpager_bottom"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
+                <AutoCompleteTextView
+                    android:id="@+id/viewpager_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginStart="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/viewpager_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/boarders"
-                        android:text="@string/home_stats_first"
-                        android:textSize="12sp"
-                        android:layout_gravity="end"
-                        android:layout_marginStart="150dp"
-                        android:textAllCaps="false"
-                        android:gravity="center"
-                        android:inputType="none"
-                        android:layout_marginBottom="10dp"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/boarders"
-                    android:orientation="vertical">
+                    android:gravity="center"
+                    android:inputType="none"
+                    android:text="@string/home_stats_first"
+                    android:textAllCaps="false"
+                    android:textSize="12sp" />
 
-                    <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/view_pager"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="wrap_content"
+                android:layout_height="220dp" />
+
+        </LinearLayout>
 
 
-        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
