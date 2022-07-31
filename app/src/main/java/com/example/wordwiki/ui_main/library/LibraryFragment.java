@@ -38,6 +38,7 @@ public class LibraryFragment extends Fragment {
 
     // recycle views
     List<SectionHelper> sectionList = new ArrayList<>();
+
     RecyclerView mainRecyclerView;
     SectionAdapter sectionAdapter;
 

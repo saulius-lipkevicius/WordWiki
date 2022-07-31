@@ -28,7 +28,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     // additional list for storing filtered search
     List<SectionHelper> sectionListFull;
     final String TAG = "Hi";
-
+    List<SectionHelper> sectionList2;
     public SectionAdapter(List<SectionHelper> sectionList) {
         this.sectionList = sectionList;
         sectionListFull = new ArrayList<>(sectionList);
@@ -94,23 +94,29 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
 
             if (charSequence == null || charSequence.length() == 0) {
+
                 filteredList.addAll(sectionListFull);
             } else {
                 String filterPattern = charSequence.toString().toLowerCase().trim();
 
                 for (SectionHelper item : sectionListFull) {
                     //if (item.getSectionName().toLowerCase().contains(filterPattern)) {
-
+                    List<SubsectionHelper> filteredSubList = new ArrayList<>();
                     for (int i = 0; i < item.getSectionItems().size(); i++) {
-                        if (!item.getSectionItems().get(i).getSubsectionName().toLowerCase().contains(filterPattern)) {
-                            item.getSectionItems().remove(i);
-                            i = i - 1;
+                        if (item.getSectionItems().get(i).getSubsectionName().toLowerCase().contains(filterPattern)) {
+                            filteredSubList.add(new SubsectionHelper(item.getSectionName()
+                                    , item.getSectionItems().get(i).getSubsectionName()
+                                    , item.getSectionItems().get(i).getDescription()
+                                    , item.getSectionItems().get(i).getCreator()
+                                    , item.getSectionItems().get(i).getSubsectionLevel()
+                                    , item.getSectionItems().get(i).getRatedUp()
+                                    , item.getSectionItems().get(i).getRatedDown()
+                                    , item.getSectionItems().get(i).getExpanded()));
                         }
                     }
 
-                    filteredList.add(item);
+                    filteredList.add(new SectionHelper(item.getSectionName(), item.getSectionFlag(), filteredSubList));
                 }
-                //}
             }
 
             FilterResults results = new FilterResults();
