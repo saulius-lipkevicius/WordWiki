@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp"
+    android:id="@+id/phone_Cardview"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/background_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.utils.widget.ImageFilterView
+                android:id="@+id/phone_image"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:src="@drawable/es"
+                app:roundPercent="0.2"
+                android:layout_weight="2"/>
+
+            <TextView
+                android:id="@+id/phone_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="test"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/number_of_words"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="500 words"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:textColor="@color/palette4"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+
+                    android:text="since June, 2020"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textSize="10sp"
+                    android:textColor="@color/palette4"
+                    android:layout_weight="10"/>
+
+                <ImageButton
+                    android:id="@+id/entrance_more_about_language"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:src="@drawable/ic_expand_more"
+                    app:tint="#B18DB5"
+                    android:layout_weight="2"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

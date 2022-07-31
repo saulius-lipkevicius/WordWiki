@@ -3,18 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/es"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"/>
+
 
     <TextView
         android:id="@+id/fragment_notification_name"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
+        android:layout_marginStart="20sp"
         android:gravity="start|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="name"
-        android:textSize="18sp"/>
+        android:textSize="14sp"/>
 
 </LinearLayout>

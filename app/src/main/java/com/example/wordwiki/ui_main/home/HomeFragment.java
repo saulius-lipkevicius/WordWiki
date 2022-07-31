@@ -161,6 +161,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
+
+        spinnerText.setBackground(getResources().getDrawable(R.drawable.home_fragment_selector));
+
         return root;
     }
 
