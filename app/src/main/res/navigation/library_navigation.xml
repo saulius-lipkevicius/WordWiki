@@ -10,17 +10,10 @@
         android:name="com.example.wordwiki.ui_main.library.LibraryFragment"
         android:label="@string/title_library"
         tools:layout="@layout/fragment_library" >
-        <action
-            android:id="@+id/action_navigation_library_to_add_library"
-            app:destination="@id/add_library" />
     </fragment>
     <action
         android:id="@+id/action_global_navigation_library"
         app:destination="@id/navigation_library" />
 
-    <fragment
-        android:id="@+id/add_library"
-        android:name="com.example.wordwiki.ui_main.library.ParsingFragment"
-        android:label="@string/title_parsing"
-        tools:layout="@layout/fragment_parsing" />
+
 </navigation>
