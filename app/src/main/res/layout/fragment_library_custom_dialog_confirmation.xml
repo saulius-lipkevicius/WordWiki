@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_c" />
+        app:srcCompat="@drawable/ic_done" />
 
     <TextView
         android:id="@+id/wording_today_statistics_text"

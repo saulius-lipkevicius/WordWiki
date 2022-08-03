@@ -9,6 +9,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,6 +39,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.classes.LoadingDialog;
 import com.example.wordwiki.classes.SuccessDialog;
@@ -84,7 +87,7 @@ public class LibraryFragment extends Fragment {
     DatabaseHelper myDb;
 
 
-    Map<String, String> language_suggestions_map = new HashMap<String, String>(){
+    Map<String, String> language_suggestions_map = new HashMap<String, String>() {
         {
             put("English", "en");
             put("French", "fr");
@@ -122,7 +125,7 @@ public class LibraryFragment extends Fragment {
             "Computer", "Animals", "Hobbies", "Jobs", "Patterns", "Idioms", "Environment",
             "Nouns", "Verbs", "Personality", "Clothes", "Technology", "Education", "Health",
             "Leisure", "Travel", "Services", "Feelings", "Work", "Notions", "People",
-            "Nature", "Sport", "Science", "Appearance", "Communication", "Culture"
+            "Nature", "Sport", "Science", "Appearance", "Communication", "Culture", "Introduction"
     };
 
     @Override
@@ -200,29 +203,21 @@ public class LibraryFragment extends Fragment {
             //proImportCSV(new File(data.getData().getPath());
             if (resultCode == Activity.RESULT_OK) {
                 Uri uri = data.getData();
-
+                uploadData = new ArrayList<>();
                 ClipData clipData = data.getClipData();
 
-                for(int i = 0; i < clipData.getItemCount(); i++)
-                {
-                    ClipData.Item path = clipData.getItemAt(i);
-                    Log.i("Path:",path.toString());
+                if (clipData == null) {
+                    read(FileUtils.getPath(getContext(), uri));
+                } else {
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                        ClipData.Item path = clipData.getItemAt(i);
+                        Log.i("Path:", path.toString());
 
-                    uploadData = new ArrayList<>();
-
-                    String paths = FileUtils.getPath(getContext(), path.getUri());
-                    readExcelData(paths, "testLanguage", "testSection");
-                    read(paths);
+                        String paths = FileUtils.getPath(getContext(), path.getUri());
+                        //readExcelData(paths, "testLanguage", "testSection");
+                        read(paths);
+                    }
                 }
-                /*
-                Log.d(TAG, "uri path: "+uri.getPath());
-                String path = FileUtils.getPath(getContext(), uri);
-                Log.d(TAG, "file path: "+path);
-                uploadData = new ArrayList<>();
-
-                read(path);
-
-                 */
 
             } else {
                 // The user cancelled the request.
@@ -241,6 +236,64 @@ public class LibraryFragment extends Fragment {
 
 
     private void initData() {
+        // TODO create sep. table for information about dictionaries for information storage - description, level...
+        /**
+         * 1. CREATE DB function that finds all
+         */
+
+        Cursor dictionaryInformation = myDb.findDictionaryInformation();
+        String currentLanguage = "";
+        Boolean rateUp = false;
+        Boolean rateDown = false;
+        if (dictionaryInformation == null)
+            return; // can't do anything with a null cursor.
+        try {
+            List<SubsectionHelper> sectionItems = new ArrayList<>();
+            while (dictionaryInformation.moveToNext()) {
+                Log.i(TAG, "currentLanguage: " + dictionaryInformation.getString(2));
+                Log.i(TAG, "currentLanguage: " + dictionaryInformation.getString(3));
+
+
+                if (currentLanguage.length() > 0 && !currentLanguage.equals(dictionaryInformation.getString(2))){
+                    sectionList.add(new SectionHelper(dictionaryInformation.getString(2), com.blongho.country_data.R.drawable.gb, sectionItems));
+                    sectionItems = new ArrayList<>();
+                    currentLanguage = dictionaryInformation.getString(2);
+                } else if (currentLanguage.length() == 0) {
+                    currentLanguage = dictionaryInformation.getString(2);
+                }
+
+
+                /*
+                if (dictionaryInformation.getString(1).equals(currentUser)){
+                    String username = "you";
+                } else {
+                    String username = dictionaryInformation.getString(1);
+                }
+                 */
+
+
+                rateUp = dictionaryInformation.getInt(6) == 1;
+
+                rateDown = dictionaryInformation.getInt(7) == 1;
+
+
+                sectionItems.add(new SubsectionHelper(dictionaryInformation.getString(2)
+                        ,  dictionaryInformation.getString(3)
+                        , dictionaryInformation.getString(4)
+                        , dictionaryInformation.getString(1)
+                        , dictionaryInformation.getString(5)
+                        , rateUp
+                        , rateDown
+                        ,false));
+
+
+            }
+
+        } finally {
+            dictionaryInformation.close();
+        }
+
+        /*
         String sectionOneName = "English";
         List<SubsectionHelper> sectionOneItems = new ArrayList<>();
 
@@ -263,6 +316,8 @@ public class LibraryFragment extends Fragment {
         sectionList.add(new SectionHelper(sectionTwoName, com.blongho.country_data.R.drawable.de, sectionTwoItems));
 
         Log.d(TAG, "initData: " + sectionList);
+
+         */
     }
 
 
@@ -360,7 +415,6 @@ public class LibraryFragment extends Fragment {
         for (int i = 0; i < rows.length; i++) {
             //Split the columns of the rows
             String[] columns = rows[i].split(",");
-            Log.i(TAG, "parseStringBuilder: my test: " + columns[0] + " : " + columns[1]);
             //use try catch to make sure there are no "" that try to parse into doubles.
             try {
                 String x = "";
@@ -398,6 +452,14 @@ public class LibraryFragment extends Fragment {
         Log.d(TAG, "printDataToLog: Printing data to log...");
         Log.d(TAG, "printDataToLog: (x,y): (" + language + "," + section + ")");
         for (int i = 0; i < uploadData.size(); i++) {
+            // initial entry creates information table row
+            if (i == 0) {
+                // TODO add username to the user in the cloud.
+                //String username =
+                myDb.enterDictionaryInformation(language, section);
+            }
+
+
             String x = uploadData.get(i).getX();
             String y = uploadData.get(i).getY();
             Log.d(TAG, "printDataToLog: (x,y): (" + i + ")");
@@ -450,6 +512,7 @@ public class LibraryFragment extends Fragment {
             dialog.getWindow().setBackgroundDrawable(getDrawable(getContext(), R.drawable.fragment_library_custom_dialog_bg));
         }
 
+
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
         int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.40);
 
@@ -457,6 +520,10 @@ public class LibraryFragment extends Fragment {
         dialog.setCancelable(false); //Optional
         //dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation; //Setting the animations to dialog
         dialog.show();
+
+        TextView fileDirectory = dialog.findViewById(R.id.user_input_path);
+        String fileName = lastDirectory.substring(lastDirectory.lastIndexOf('/') + 1, lastDirectory.length() - 5);
+        fileDirectory.setText(fileName);
 
         AutoCompleteTextView input_language = dialog.findViewById(R.id.enter_language_txt);
         ArrayAdapter<String> complete_language_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, language_suggestions);
@@ -523,7 +590,7 @@ public class LibraryFragment extends Fragment {
                                 }
                             });
                         }
-                    }, 5000);
+                    }, 1500);
                 } else if (TextUtils.isEmpty(input_language.getText().toString()) && !TextUtils.isEmpty(input_section.getText().toString())) {
                     toastMessage("You Forgot To Enter Language Name");
                 } else if (TextUtils.isEmpty(input_section.getText().toString()) && !TextUtils.isEmpty(input_language.getText().toString())) {

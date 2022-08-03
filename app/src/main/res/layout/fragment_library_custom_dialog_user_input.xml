@@ -10,6 +10,20 @@
     android:layout_marginRight="10dp"
     android:background="@drawable/fragment_library_custom_dialog_bg">
 
+    <TextView
+        android:id="@+id/user_input_path"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="it is path"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <AutoCompleteTextView
         android:id="@+id/enter_language_txt"
         android:layout_width="match_parent"
@@ -19,6 +33,7 @@
         android:capitalize="words"
         android:completionThreshold="1"
         android:hint="Enter Language"
+        app:layout_constraintTop_toBottomOf="@+id/user_input_path"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="16sp"
@@ -33,6 +48,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="50dp"
         android:capitalize="words"
+        android:text="Introduction"
         android:completionThreshold="1"
         android:hint="Enter Section"
         android:textAlignment="center"

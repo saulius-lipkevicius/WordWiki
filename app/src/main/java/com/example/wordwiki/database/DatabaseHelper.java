@@ -68,6 +68,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Date date = new Date();
 
+    // dictionary inner information table
+    public static final String INFORMATION_TABLE_NAME = "information_table";
+
+    public static final String INFORMATION_COL1 = "id";
+    public static final String INFORMATION_COL2 = "username";
+    public static final String INFORMATION_COL3 = "language";
+    public static final String INFORMATION_COL4 = "section";
+    public static final String INFORMATION_COL5 = "description";
+    public static final String INFORMATION_COL6 = "level";
+    public static final String INFORMATION_COL7 = "rateUp";
+    public static final String INFORMATION_COL8 = "rateDown";
+    public static final String INFORMATION_COL9 = "created";
+    public static final String INFORMATION_COL10 = "cloudID";
+
+
     // Map of ISO ---> language setUp
     final Map<String, String> language_suggestions_map = new HashMap<String, String>() {
         {
@@ -283,6 +298,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // enter country ISO and its language
         setUpISOTable();
+
+        db.execSQL("CREATE TABLE " + INFORMATION_TABLE_NAME +
+                " (" + INFORMATION_COL1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                INFORMATION_COL2 + " String, " +
+                INFORMATION_COL3 + " String, " +
+                INFORMATION_COL4 + " String, " +
+                INFORMATION_COL5 + " String, " +
+                INFORMATION_COL6 + " String, " +
+                INFORMATION_COL7 + " Boolean, " +
+                INFORMATION_COL8 + " Boolean, " +
+                INFORMATION_COL9 + " Boolean, " +
+                INFORMATION_COL10 + " String " +
+                ")");
+
     }
 
     private void setUpISOTable() {
@@ -655,7 +684,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
 
-
         wordInfo.moveToFirst();
 
         return wordInfo;
@@ -829,7 +857,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d(TAG, "insertCloudDictionary: 2 : " + words.size());
         for (i = 0; i < words.size(); i++) {
             ContentValues cv = new ContentValues();
-            cv.put(COL_2, learningLanguage + "test");
+            cv.put(COL_2, learningLanguage);
             cv.put(COL_3, sectionName);
             cv.put(COL_5, words.get(i));
             cv.put(COL_6, translations.get(i));
@@ -902,7 +930,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //" AND (" + COL_9 + " > 1 " +
                 //" OR " + COL_11 + " > 1 " +
                 //" OR " + COL_15 + " > 1 " +
-               // " OR " + COL_17 + " > 1 " +
+                // " OR " + COL_17 + " > 1 " +
                 //" OR " + COL_13 + " > 1 )" +
                 "';";
 
@@ -911,4 +939,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return exportWords.getInt(0);
     }
+
+
+    /** Used in the process of import of new dictionary from local storage
+     *
+     * @param language
+     * @param section
+     */
+    public void enterDictionaryInformation(String language, String section) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // TODO ADD Unique key generator and username later on
+        ContentValues cv = new ContentValues();
+        cv.put(INFORMATION_COL3, language);
+        cv.put(INFORMATION_COL4, section);
+        cv.put(INFORMATION_COL7, 0);
+        cv.put(INFORMATION_COL8, 0);
+        cv.put(INFORMATION_COL9, 1);
+
+        db.insert(INFORMATION_TABLE_NAME, null, cv);
+    }
+
+    /**
+     *
+     */
+    public Cursor findDictionaryInformation() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + " * " +
+                " FROM " + INFORMATION_TABLE_NAME + ";";
+
+        Cursor exportWords = db.rawQuery(sql, null);
+        //exportWords.moveToFirst();
+
+        return exportWords;
+    }
 }
+
