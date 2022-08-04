@@ -251,15 +251,17 @@ public class LibraryFragment extends Fragment {
             List<SubsectionHelper> sectionItems = new ArrayList<>();
             while (dictionaryInformation.moveToNext()) {
                 Log.i(TAG, "currentLanguage: " + dictionaryInformation.getString(2));
-                Log.i(TAG, "currentLanguage: " + dictionaryInformation.getString(3));
 
 
                 if (currentLanguage.length() > 0 && !currentLanguage.equals(dictionaryInformation.getString(2))){
-                    sectionList.add(new SectionHelper(dictionaryInformation.getString(2), com.blongho.country_data.R.drawable.gb, sectionItems));
+                    sectionList.add(new SectionHelper(currentLanguage, com.blongho.country_data.R.drawable.gb, sectionItems));
                     sectionItems = new ArrayList<>();
                     currentLanguage = dictionaryInformation.getString(2);
                 } else if (currentLanguage.length() == 0) {
                     currentLanguage = dictionaryInformation.getString(2);
+                } else if (dictionaryInformation.isLast()) {
+                    // to keep the last language entered, because there is no switch in the comparison
+                    sectionList.add(new SectionHelper(currentLanguage, com.blongho.country_data.R.drawable.gb, sectionItems));
                 }
 
 
@@ -292,32 +294,6 @@ public class LibraryFragment extends Fragment {
         } finally {
             dictionaryInformation.close();
         }
-
-        /*
-        String sectionOneName = "English";
-        List<SubsectionHelper> sectionOneItems = new ArrayList<>();
-
-        sectionOneItems.add(new SubsectionHelper(sectionOneName, "Introduction", "This dictionary considers 100 most used words", "mike2", "B2", false, false, false));
-        sectionOneItems.add(new SubsectionHelper(sectionOneName, "Animals", "This dictionary considers 100 most used words", "mike2", "C2", false, false, false));
-        sectionOneItems.add(new SubsectionHelper(sectionOneName, "Colors", "This dictionary considers 100 most used words", "mike2", "A2", false, false, false));
-        sectionOneItems.add(new SubsectionHelper(sectionOneName, "Body Parts", "This dictionary considers 100 most used words", "mike2", "A2", false, false, false));
-
-        String sectionTwoName = "German";
-        List<SubsectionHelper> sectionTwoItems = new ArrayList<>();
-
-        sectionTwoItems.add(new SubsectionHelper(sectionTwoName, "Introduction to human anatomy", "This dictionary considers 100 most used words", "mike2", "A2", false, false, false));
-        sectionTwoItems.add(new SubsectionHelper(sectionTwoName, "Animals", "This dictionary considers 100 most used words", "mike2", "A2", false, false, false));
-        sectionTwoItems.add(new SubsectionHelper(sectionTwoName, "Colors", "This dictionary considers 100 most used words", "mike2", "A1", false, false, false));
-        sectionTwoItems.add(new SubsectionHelper(sectionTwoName, "Body Parts", "This dictionary considers 100 most used words", "mike2", "A2", false, false, false));
-        sectionTwoItems.add(new SubsectionHelper(sectionTwoName, "Nouns A1", "This dictionary considers 100 most used words", "mike2", "B2", false, false, false));
-        sectionTwoItems.add(new SubsectionHelper(sectionTwoName, "BVerbs B1", "This dictionary considers 100 most used words", "mike2", "C2", false, false, false));
-
-        sectionList.add(new SectionHelper(sectionOneName, com.blongho.country_data.R.drawable.gb, sectionOneItems));
-        sectionList.add(new SectionHelper(sectionTwoName, com.blongho.country_data.R.drawable.de, sectionTwoItems));
-
-        Log.d(TAG, "initData: " + sectionList);
-
-         */
     }
 
 
@@ -369,7 +345,7 @@ public class LibraryFragment extends Fragment {
             XSSFFormulaEvaluator formulaEvaluator = workbook.getCreationHelper().createFormulaEvaluator();
             StringBuilder sb = new StringBuilder();
 
-            //outter loop, loops through rows
+            // outer loop, loops through rows
             for (int r = 1; r < rowsCount; r++) {
                 Row row = sheet.getRow(r);
                 int cellsCount = row.getPhysicalNumberOfCells();

@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_main.library.models.SectionHelper;
 import com.example.wordwiki.ui_main.library.models.SubsectionHelper;
 
@@ -19,17 +21,23 @@ import java.util.List;
 
 public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.ViewHolder> {
 
+    private final SectionAdapter.ViewHolder parent;
+
     List<SubsectionHelper> items;
     final String TAG = "subsection item";
-    public SubsectionAdapter(List<SubsectionHelper> items) {
+    public SubsectionAdapter(List<SubsectionHelper> items
+            , SectionAdapter.ViewHolder parent) {
         this.items = items;
+        this.parent = parent;
     }
-
+    DatabaseHelper myDb;
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.fragment_library_subsection_item, parent, false);
+
+        myDb = new DatabaseHelper(parent.getContext());
 
         return new SubsectionAdapter.ViewHolder(view);
     }
@@ -44,12 +52,38 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
         holder.creatorName.setText(section.getCreator());
         holder.subsectionLevel.setText(section.getSubsectionLevel());
 
+
+
         holder.deleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i(TAG, "onClick: " + items.get(holder.getAdapterPosition()).getSectionName() + ", " + items.get(holder.getAdapterPosition()).getSubsectionName());
+                String languageName = items.get(holder.getAdapterPosition()).getSectionName();
+                String sectionName = items.get(holder.getAdapterPosition()).getSubsectionName();
+                //notifyItemRemoved(position);
 
-                //TODO dialog to confirm and color it red
+
+                if (parent.subsectionRecyclerView.getAdapter().getItemCount() == 1) {
+                    parent.sectionName.callOnClick();
+                }
+
+                //parent.subsectionRecyclerView.getAdapter().notifyItemRemoved(parent.getAdapterPosition());
+
+
+                myDb.deleteDictionary(languageName, sectionName);
+                items.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+                /*
+                // TODO
+                if (parent.getAdapter().getItemCount() == 0) {
+                    Log.i(TAG, "onClick: " + sectionList.get(0));
+                    Log.i(TAG, "onClick: " + positionTRUE);
+                    Log.i(TAG, "onClick: " + sectionList.get(0));
+
+                    parent.getAdapter().notifyDataSetChanged();
+                }
+
+                 */
+
             }
         });
 

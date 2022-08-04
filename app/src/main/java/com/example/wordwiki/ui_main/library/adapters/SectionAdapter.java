@@ -2,8 +2,10 @@ package com.example.wordwiki.ui_main.library.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -21,7 +23,10 @@ import com.github.mikephil.charting.formatter.IFillFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHolder> implements Filterable {
+public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHolder> implements Filterable  {
+
+
+    //private ItemClickListener mClickListener;
 
     List<SectionHelper> sectionList;
 
@@ -29,6 +34,10 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     List<SectionHelper> sectionListFull;
     final String TAG = "Hi";
     List<SectionHelper> sectionList2;
+
+
+    //private ItemClickListener mClickListener;
+
     public SectionAdapter(List<SectionHelper> sectionList) {
         this.sectionList = sectionList;
         sectionListFull = new ArrayList<>(sectionList);
@@ -44,10 +53,11 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     }
 
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        SectionHelper section = sectionList.get(position);
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int positionA) {
+
+        SectionHelper section = sectionList.get(positionA);
         String sectionName = section.getSectionName();
         int sectionFlag = section.getSectionFlag();
         List<SubsectionHelper> items = section.getSectionItems();
@@ -55,9 +65,28 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         holder.sectionName.setText(sectionName);
         holder.sectionFlag.setImageResource(sectionFlag);
         // create recycler view for inner list
-        SubsectionAdapter subsectionAdapter = new SubsectionAdapter(items);
+        
+        holder.sectionName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sectionList.remove(holder.getAdapterPosition());
+                notifyItemRemoved(holder.getAdapterPosition());
+            }
+        });
+        
+        SubsectionAdapter subsectionAdapter = new SubsectionAdapter(items
+                , holder
+        );
         holder.subsectionRecyclerView.setAdapter(subsectionAdapter);
         //holder.subsectionRecyclerView.addItemDecoration(new DividerItemDecoration(get, DividerItemDecoration.VERTICAL));
+
+        
+        Log.i(TAG, "onClick2: " + subsectionAdapter.getItemCount());
+
+        // testing deleting items ---> when there is 0 elements in it.
+
+
+           
     }
 
     @Override
@@ -66,7 +95,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView sectionName;
         ImageView sectionFlag;
@@ -78,6 +107,14 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
             sectionName = itemView.findViewById(R.id.fragment_library_section_name);
             sectionFlag = itemView.findViewById(R.id.fragment_library_section_flag);
             subsectionRecyclerView = itemView.findViewById(R.id.fragment_library_inner_recycler_view);
+            itemView.setOnClickListener((View.OnClickListener) this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "onClick: cia clickino");
+            sectionList.remove(0);
+            notifyItemRemoved(0);
         }
     }
 

@@ -82,6 +82,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String INFORMATION_COL9 = "created";
     public static final String INFORMATION_COL10 = "cloudID";
 
+    // TODO connect article/iso table with the information table
+
 
     // Map of ISO ---> language setUp
     final Map<String, String> language_suggestions_map = new HashMap<String, String>() {
@@ -967,12 +969,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sql = "SELECT " + " * " +
-                " FROM " + INFORMATION_TABLE_NAME + ";";
+                " FROM " + INFORMATION_TABLE_NAME +
+                " ORDER BY " + INFORMATION_COL3 + " ASC " + ";";
 
         Cursor exportWords = db.rawQuery(sql, null);
         //exportWords.moveToFirst();
 
         return exportWords;
+    }
+
+    public void deleteDictionary(String language, String section){
+        Log.i(TAG, "deleteDictionary: " + language + " and " + section);
+
+        // from information table
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + INFORMATION_TABLE_NAME +
+                    " WHERE " + INFORMATION_COL3 + "='" + language + "'" +
+                " AND " + INFORMATION_COL4 + "= '" + section + "';");
+
+        // from the main table with all words
+        db.execSQL("DELETE FROM " + TABLE_NAME +
+                " WHERE " + COL_2 + "='" + language + "'" +
+                " AND " + COL_3 + "= '" + section + "';");
+        db.close();
     }
 }
 
