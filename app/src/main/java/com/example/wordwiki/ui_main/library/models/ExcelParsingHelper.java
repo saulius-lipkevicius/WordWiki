@@ -4,12 +4,12 @@ package com.example.wordwiki.ui_main.library.models;
  * Created by User on 1/21/2017.
  */
 
-public class ExcelParsing {
+public class ExcelParsingHelper {
 
     private String x;
     private String y;
 
-    public ExcelParsing(String x, String y) {
+    public ExcelParsingHelper(String x, String y) {
         this.x = x;
         this.y = y;
     }

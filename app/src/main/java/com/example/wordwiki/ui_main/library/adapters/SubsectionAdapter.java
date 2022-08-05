@@ -1,5 +1,6 @@
 package com.example.wordwiki.ui_main.library.adapters;
 
+import android.Manifest;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,16 +8,21 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.classes.LoadingDialog;
+import com.example.wordwiki.classes.SuccessDialog;
 import com.example.wordwiki.database.DatabaseHelper;
+import com.example.wordwiki.ui_main.library.classes.ExportClass;
 import com.example.wordwiki.ui_main.library.models.SectionHelper;
 import com.example.wordwiki.ui_main.library.models.SubsectionHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.ViewHolder> {
@@ -48,9 +54,37 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
         SubsectionHelper section = items.get(holder.getAdapterPosition());
 
         holder.subsectionName.setText(items.get(holder.getAdapterPosition()).getSubsectionName());
-        holder.description.setText(section.getDescription());
+
         holder.creatorName.setText(section.getCreator());
         holder.subsectionLevel.setText(section.getSubsectionLevel());
+
+        if (section.getDescription() == null) {
+            holder.description.setText("No Description. Press to Edit");
+        } else {
+            holder.description.setText(section.getDescription());
+        }
+
+        // TODO find current username
+       String currentUsername = "testusername";
+       if (section.getCreator().equals(currentUsername)) {
+           holder.creatorName.setText("You");
+           holder.reportSubsection.setText("Share");
+       } else {
+           holder.creatorName.setText(section.getCreator());
+           holder.reportSubsection.setText("Report It");
+       }
+
+
+        if (items.get(holder.getAdapterPosition()).getRatedUp()){
+            holder.rateUp.setImageResource(R.drawable.ic_thumb_up_fill);
+            holder.rateDown.setImageResource(R.drawable.ic_thumb_down);
+        } else if (items.get(holder.getAdapterPosition()).getRatedDown()){
+            holder.rateDown.setImageResource(R.drawable.ic_thumb_down_fill);
+            holder.rateUp.setImageResource(R.drawable.ic_thumb_up);
+        } else {
+            holder.rateDown.setImageResource(R.drawable.ic_thumb_down);
+            holder.rateUp.setImageResource(R.drawable.ic_thumb_up);
+        }
 
 
 
@@ -101,7 +135,12 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
                     holder.rateDown.setImageResource(R.drawable.ic_thumb_down_fill);
                     items.get(holder.getAdapterPosition()).setRatedDown(true);
+
                 }
+                myDb.rateDictionary(items.get(holder.getAdapterPosition()).getSectionName()
+                        , items.get(holder.getAdapterPosition()).getSubsectionName()
+                        , "down"
+                        , items.get(holder.getAdapterPosition()).getRatedDown());
             }
         });
 
@@ -120,6 +159,10 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
                     holder.rateUp.setImageResource(R.drawable.ic_thumb_up_fill);
                     items.get(holder.getAdapterPosition()).setRatedUp(true);
                 }
+                myDb.rateDictionary(items.get(holder.getAdapterPosition()).getSectionName()
+                        , items.get(holder.getAdapterPosition()).getSubsectionName()
+                        , "up"
+                        , items.get(holder.getAdapterPosition()).getRatedUp());
             }
         });
 
@@ -129,8 +172,11 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
                 Log.i(TAG, "onClick: aaaaa " + holder.expandableLayout.getVisibility());
                 if (holder.expandableLayout.getVisibility() == View.VISIBLE){
                     holder.expandableLayout.setVisibility(View.GONE);
+                    holder.expandItem.setImageResource(R.drawable.ic_expand_circle_down);
+
                 }else{
                     holder.expandableLayout.setVisibility(View.VISIBLE);
+                    holder.expandItem.setImageResource(R.drawable.ic_expand_circle_up);
                 }
 
             }
@@ -147,6 +193,29 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick: report it." );
+                ArrayList<String> dictionaryName = new ArrayList<>();
+                String section_language = "{" + parent.sectionName.getText().toString() + "}_{" + holder.subsectionName.getText().toString() + "}";
+
+                if (holder.reportSubsection.getText().equals("Share")){
+                    dictionaryName.add(section_language);
+                    ExportClass.exportCloud(dictionaryName, view.getContext());
+
+                } else if(holder.reportSubsection.getText().equals("Report It")){
+                    // TODO report a dictionary if that contains some malicious stuff
+                    //askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
+                    //askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, WRITE_EXST);
+
+                    //Toast.makeText(ExportActivity.this, "Excel is exported " + checkedItems, Toast.LENGTH_SHORT).show();
+                    // TODO export dictionary to an excel sheet, through fileManager
+                    ExportClass.export(dictionaryName, view.getContext());
+
+                    // TODO loadup screen and dialog that it was written in downloads
+                    //final LoadingDialog loadingDialog = new LoadingDialog(view.getAct);
+                    //final SuccessDialog successDialog = new SuccessDialog(ExportActivity.this);
+
+                    //showAlert();
+                }
+
             }
         });
 

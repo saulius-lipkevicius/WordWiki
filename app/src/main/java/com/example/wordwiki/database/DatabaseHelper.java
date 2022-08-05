@@ -10,6 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.viewpager.widget.PagerAdapter;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -993,5 +995,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " AND " + COL_3 + "= '" + section + "';");
         db.close();
     }
+
+    public void rateDictionary(String language, String section, String type, Boolean rating) {
+        int down = 0;
+        int up = 0;
+        if (type.equals("up") && rating) {
+            down = 0;
+            up = 1;
+        } else if (type.equals("down") && rating){
+            down = 1;
+            up = 0;
+        } else {
+            down = 0;
+            up = 0;
+        }
+        Log.i(TAG, "rateDictionary: down-" + down + ", up-" + up);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String strSQL = "UPDATE " +  INFORMATION_TABLE_NAME +
+                " SET " + INFORMATION_COL7 + "=" + up +
+                ", " + INFORMATION_COL8 + "=" + down +
+                " WHERE " + INFORMATION_COL3 + "= '" +  language + "' " +
+                " AND " + INFORMATION_COL4 + "= '" +  section + "' " +
+                ";";
+        Log.i(TAG, "rateDictionary: sql script: " + strSQL);
+        db.execSQL(strSQL);
+        db.close();
+
+        // TODO also create API that connects to the cloud rating
+    }
+
+    public Cursor getRating(String language, String section) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + INFORMATION_COL7 +
+                ", " + INFORMATION_COL8 + " " +
+                " FROM " + INFORMATION_TABLE_NAME +
+                " WHERE " + INFORMATION_COL3 + " = '" + language  + "' " +
+                " AND " + INFORMATION_COL4 + " = '" + section  + "' " +
+                ";";
+        Log.i(TAG, "getRating: sqlite: " + sql);
+        Cursor exportWords = db.rawQuery(sql, null);
+        exportWords.moveToFirst();
+
+        return exportWords;
+    }
+
 }
 

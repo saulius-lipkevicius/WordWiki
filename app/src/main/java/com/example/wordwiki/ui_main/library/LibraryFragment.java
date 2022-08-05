@@ -243,8 +243,9 @@ public class LibraryFragment extends Fragment {
 
         Cursor dictionaryInformation = myDb.findDictionaryInformation();
         String currentLanguage = "";
-        Boolean rateUp = false;
-        Boolean rateDown = false;
+        boolean rateUp = false;
+        boolean rateDown = false;
+
         if (dictionaryInformation == null)
             return; // can't do anything with a null cursor.
         try {
@@ -273,25 +274,23 @@ public class LibraryFragment extends Fragment {
                 }
                  */
 
-
-                rateUp = dictionaryInformation.getInt(6) == 1;
-
-                rateDown = dictionaryInformation.getInt(7) == 1;
-
-
+                Cursor ratingCursor = myDb.getRating(dictionaryInformation.getString(2)
+                        ,  dictionaryInformation.getString(3));
+                Log.i(TAG, "initData: " + ratingCursor.getString(0).equals("1") + ", down:" +ratingCursor.getString(1).equals("1"));
                 sectionItems.add(new SubsectionHelper(dictionaryInformation.getString(2)
                         ,  dictionaryInformation.getString(3)
                         , dictionaryInformation.getString(4)
                         , dictionaryInformation.getString(1)
                         , dictionaryInformation.getString(5)
-                        , rateUp
-                        , rateDown
+                        , ratingCursor.getString(0).equals("1")
+                        , ratingCursor.getString(1).equals("1")
                         ,false));
-
+                //ratingCursor.close();
 
             }
 
         } finally {
+
             dictionaryInformation.close();
         }
     }

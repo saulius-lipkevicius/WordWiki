@@ -73,4 +73,5 @@ dependencies {
     // reading xlsx
     implementation files('libs/poi-3.12-android-a.jar')
     implementation files('libs/poi-ooxml-schemas-3.12-20150511-a.jar')
+    implementation 'net.sourceforge.jexcelapi:jxl:2.6.12' // db to excel
 }
