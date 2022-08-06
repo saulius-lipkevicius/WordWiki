@@ -66,6 +66,8 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
         // TODO find current username
        String currentUsername = "testusername";
+
+        // TODO add username to an imported dictionary, otherwise it will give an error
        if (section.getCreator().equals(currentUsername)) {
            holder.creatorName.setText("You");
            holder.reportSubsection.setText("Share");

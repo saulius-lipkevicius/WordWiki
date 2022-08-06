@@ -1,6 +1,7 @@
 package com.example.wordwiki.ui_main.explore.adapters;
 
 import android.content.Context;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
-import com.example.wordwiki.ui_main.explore.OnItemClick;
+import com.example.wordwiki.ui_main.explore.classes.languageImporter;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
 
 import java.util.ArrayList;
@@ -27,7 +29,6 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
     final String TAG = "import adapter";
     private List<ImportModel> sectionsList;
     private List<ImportModel> sectionsListFull;
-    private OnItemClick mCallback;
     Context context;
 
     DatabaseHelper myDb;
@@ -37,23 +38,22 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
         ImageView countryImage;
         TextView section_name;
         TextView language_name;
-        CheckBox checkBox;
+        ImageButton downloadBtn;
 
         ImportLanguageViewHolder(View itemView) {
             super(itemView);
             countryImage = itemView.findViewById(R.id.import_cloud_image);
             section_name = itemView.findViewById(R.id.import_cloud_section);
             language_name = itemView.findViewById(R.id.import_cloud_language);
-            checkBox = itemView.findViewById(R.id.import_cloud_checkbox);
+            downloadBtn = itemView.findViewById(R.id.fragment_explore_downloan_dictionary);
         }
     }
 
-    public ImportAdapter(List<ImportModel> sectionsList, Context context, OnItemClick listener) {
+    public ImportAdapter(List<ImportModel> sectionsList, Context context) {
         this.sectionsList = sectionsList;
         sectionsListFull =  new ArrayList<>(sectionsList);
         Log.d(TAG, "onCreate: loc4: " + sectionsList.size() + " ir full size: " + sectionsListFull.size());
         this.context = context;
-        this.mCallback = listener;
     }
 
     @NonNull
@@ -78,15 +78,12 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
         int flag = World.getFlagOf(country_name);
         holder.countryImage.setImageResource(flag);
 
-        holder.checkBox.setChecked(currentItem.getCheckBox());
-
-        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+        holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currentItem.setCheckBox(!currentItem.getCheckBox());
-                holder.checkBox.setChecked(currentItem.getCheckBox());
+                languageImporter.importCloud(currentItem.getLearningLanguage(), currentItem.getSectionName(), context);
 
-                mCallback.onClick(currentItem.getSectionName(), currentItem.getLearningLanguage(), currentItem.getCheckBox());
+                //mCallback.onClick(currentItem.getSectionName(), currentItem.getLearningLanguage(), currentItem.getCheckBox());
             }
         });
     }

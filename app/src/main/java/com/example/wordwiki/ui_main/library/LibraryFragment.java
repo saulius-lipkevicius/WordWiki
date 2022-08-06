@@ -208,12 +208,15 @@ public class LibraryFragment extends Fragment {
 
                 if (clipData == null) {
                     read(FileUtils.getPath(getContext(), uri));
+                    Log.i(TAG, "onActivityResult: path to files: " + FileUtils.getPath(getContext(), uri));
                 } else {
                     for (int i = 0; i < clipData.getItemCount(); i++) {
                         ClipData.Item path = clipData.getItemAt(i);
                         Log.i("Path:", path.toString());
 
                         String paths = FileUtils.getPath(getContext(), path.getUri());
+
+
                         //readExcelData(paths, "testLanguage", "testSection");
                         read(paths);
                     }

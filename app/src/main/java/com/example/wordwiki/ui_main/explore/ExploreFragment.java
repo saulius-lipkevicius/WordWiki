@@ -43,13 +43,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExploreFragment extends Fragment implements OnItemClick {
+public class ExploreFragment extends Fragment{
     FragmentExploreBinding binding;
-
-
     final String TAG = "Dictionary Importing";
-    private static final Integer READ_EXST = 1;
-    private static final Integer WRITE_EXST = 1;
+
 
     private List<ImportModel> sectionsList;
     private List<ImportModel> sectionsListFull;
@@ -76,27 +73,27 @@ public class ExploreFragment extends Fragment implements OnItemClick {
         binding = FragmentExploreBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //setUpRecyclerView();
+        setUpRecyclerView();
 
         //fillSectionsList();
-        checkedItems = new ArrayList<String>();
 
-        downloadBtn = root.findViewById(R.id.import_cloud_dictionary_btn);
-        setUpButtons();
+
+        //setUpButtons();
         Log.d(TAG, "onCreate: loc1: ");
 
 
         return root;
     }
 
+    /*
     private void setUpButtons() {
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Dictionaries are finally loaded up :)", Toast.LENGTH_SHORT).show();
 
-                Log.d(TAG, "onClick: 2222: " + checkedItems.size());
-                languageImporter.importCloud(checkedItems, getContext());
+                //Log.d(TAG, "onClick: 2222: " + checkedItems.size());
+                //languageImporter.importCloud(languageName, sectionName, getContext());
 
                 // TODO loadup screen and dialog that it was written in downloads
                 //final LoadingDialog loadingDialog = new LoadingDialog(ImportCloudActivity.this);
@@ -106,6 +103,8 @@ public class ExploreFragment extends Fragment implements OnItemClick {
             }
         });
     }
+
+     */
 
     ValueEventListener valueEventListener = new ValueEventListener() {
 
@@ -117,13 +116,9 @@ public class ExploreFragment extends Fragment implements OnItemClick {
             if (snapshot.exists()) {
                 for (DataSnapshot snapshot_iter : snapshot.getChildren()) {
                     LanguageModel lng = snapshot_iter.getValue(LanguageModel.class);
-                    Log.d("a", "onCreate: change1 " + lng.getLearningLanguage());
-                    Log.d("a", "onCreate: change2 " + lng.getNativeLanguage());
-                    Log.d("a", "onCreate: change3 " + lng.getSectionName());
-                    Log.d("a", "onCreate: change4 " + lng.getWords());
-                    Log.d("a", "onCreate: change5 " + lng.getTranslations());
-                    Log.d("a", "onCreate: change6 " + lng.getWordsCount());
 
+
+                    // TODO do not add all words here, better create an alternative reference in the firebase
 
                     sectionsList.add(new ImportModel( lng.getNativeLanguage()
                             , lng.getLearningLanguage()
@@ -133,8 +128,8 @@ public class ExploreFragment extends Fragment implements OnItemClick {
                             , lng.getPeopleVoted()
                             , lng.getWordsCount()
                             , lng.getSectionName()
-                            , lng.getWords()
-                            , lng.getTranslations()
+                            , null //lng.getWords()
+                            , null //lng.getTranslations()
                             , false
 
                     ));  // cia papildyti su quey resultatais
@@ -167,7 +162,7 @@ public class ExploreFragment extends Fragment implements OnItemClick {
         }
     };
 
-    /*
+
     private void setUpRecyclerView() {
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.import_cloud_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -175,15 +170,13 @@ public class ExploreFragment extends Fragment implements OnItemClick {
         recyclerView.setLayoutManager(layoutManager);
         sectionsList = new ArrayList<>();
         sectionsListFull = new ArrayList<>();
-        adapter = new ImportAdapter(sectionsList, getContext(), binding.getRoot());
+        adapter = new ImportAdapter(sectionsList, getContext());
         recyclerView.setAdapter(adapter);
 
-        dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Languages");
+        dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries");
         dbLanguage.addListenerForSingleValueEvent(valueEventListener);
 
     }
-
-    */
 
 
 /*
@@ -212,22 +205,6 @@ public class ExploreFragment extends Fragment implements OnItemClick {
     }
 
  */
-
-
-
-    @Override
-    public void onClick(String section_name, String language_name, Boolean bool) {
-        String section_language = "{" + language_name + "}_{" + section_name + "}";
-
-        if (bool) {
-            checkedItems.add(section_language.trim().replaceAll("[\n\r]", ""));
-        } else {
-            checkedItems.remove(section_language.trim().replaceAll("[\n\r]", ""));
-        }
-
-        Toast.makeText(getContext(), "hay" + checkedItems, Toast.LENGTH_SHORT).show();
-    }
-
 
     public void showAlert() {
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);

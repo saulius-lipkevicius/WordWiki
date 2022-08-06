@@ -41,7 +41,10 @@ public class ExportClass {
      */
     public static void export(ArrayList<String> checkedItemsList, Context context) {
         DatabaseHelper myDb = new DatabaseHelper(context);
-        String sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+
+        //String sd = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
+        String sd = "/storage/emulated/0/Download/";
+
         File directory = new File(sd);
         String lastLanguage = "";
         String currentLanguage = "";
@@ -117,12 +120,6 @@ public class ExportClass {
                 }
                 workbook.write();
                 workbook.close();
-
-                // download workbook to the storage
-                FileOutputStream fOut = new FileOutputStream(file);
-                fOut.flush();
-                fOut.close();
-
 
             } catch (Exception e) {
                 e.printStackTrace();

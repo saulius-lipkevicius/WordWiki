@@ -24,7 +24,7 @@ public class languageImporter {
     private static String currentLanguage;
     private static String currentSection;
 
-    public static void importCloud(ArrayList<String> checkedItemsList, Context context) {
+    public static void importCloud(String languageName, String sectionName, Context context) {
         DatabaseReference dbLanguage;
         DatabaseHelper myDb = new DatabaseHelper(context);
 
@@ -33,20 +33,21 @@ public class languageImporter {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Log.d(TAG, "onCreate: loc2: ");
 
-                if (snapshot.exists()) {
-                    for (DataSnapshot snapshot_iter : snapshot.getChildren()) {
-                        LanguageModel lng = snapshot_iter.getValue(LanguageModel.class);
+                //DataSnapshot lng = snapshot;
+                LanguageModel lng = snapshot.getValue(LanguageModel.class);
 
-                        String checked_item = "{" + lng.getLearningLanguage() + "}_" + "{" + lng.getSectionName()  + "}";
-                        Log.d(TAG, "onDataChange: " + checked_item + checkedItemsList.get(0));
+                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getChildrenCount());
+                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getRef());
+                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getValue());
+                Log.i(TAG, "onDataChange: testas downloadinant " + lng.getWords());
+                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getChildrenCount());
+                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getChildrenCount());
 
-                        if (checkedItemsList.contains(checked_item)){
-                            myDb.insertCloudDictionary(lng.getLearningLanguage(), lng.getSectionName(), lng.getWords(), lng.getTranslations());
-                        }
-                    }
-                }
+
+                //myDb.insertCloudDictionary(languageName, sectionName, lng.getWords(), lng.getTranslations());
+
+
             }
 
             @Override
@@ -55,26 +56,9 @@ public class languageImporter {
             }
         };
         // go through all values to create a mapping between language and its sections for later exportation
-        for (String currentX : checkedItemsList) {
-            Pattern regex = Pattern.compile("\\{(.*?)\\}");
-            Matcher regexMatcher = regex.matcher(currentX);
 
-            int i = 0;
-            while (regexMatcher.find()) {//Finds Matching Pattern in String
-                String currentString = regexMatcher.group(1);
-                if (i == 0) {
-                    currentLanguage = currentString;
-                } else {
-                    currentSection = currentString;
-                }
-
-                i++;
-            }
-
-            dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Languages");
-            dbLanguage.addListenerForSingleValueEvent(valueEventListener);
-        }
+        dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries");
+        dbLanguage.addListenerForSingleValueEvent(valueEventListener);
     }
-
-
 }
+
