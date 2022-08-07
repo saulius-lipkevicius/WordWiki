@@ -21,9 +21,6 @@ import java.util.regex.Pattern;
 public class languageImporter {
     private static final String TAG = "ExcelExporter";
 
-    private static String currentLanguage;
-    private static String currentSection;
-
     public static void importCloud(String languageName, String sectionName, Context context) {
         DatabaseReference dbLanguage;
         DatabaseHelper myDb = new DatabaseHelper(context);
@@ -32,21 +29,8 @@ public class languageImporter {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
-                //DataSnapshot lng = snapshot;
                 LanguageModel lng = snapshot.getValue(LanguageModel.class);
-
-                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getChildrenCount());
-                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getRef());
-                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getValue());
-                Log.i(TAG, "onDataChange: testas downloadinant " + lng.getWords());
-                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getChildrenCount());
-                Log.i(TAG, "onDataChange: testas downloadinant " + snapshot.getChildrenCount());
-
-
-                //myDb.insertCloudDictionary(languageName, sectionName, lng.getWords(), lng.getTranslations());
-
+                myDb.insertCloudDictionary(languageName, sectionName, lng.getWords(), lng.getTranslations());
 
             }
 
@@ -55,7 +39,6 @@ public class languageImporter {
 
             }
         };
-        // go through all values to create a mapping between language and its sections for later exportation
 
         dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries");
         dbLanguage.addListenerForSingleValueEvent(valueEventListener);

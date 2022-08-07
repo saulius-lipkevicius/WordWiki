@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_user_navigation"
+    app:startDestination="@+id/navigation_create_user_username">
+
+    <fragment
+        android:id="@+id/navigation_create_user_username"
+        android:name="com.example.wordwiki.ui_intro.account.fragments.CreateUsernameFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_create_username">
+        <action
+            android:id="@+id/action_navigation_create_user_username_to_navigation_create_user_known_languages"
+            app:destination="@id/navigation_create_user_known_languages" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_user_known_languages"
+        android:name="com.example.wordwiki.ui_intro.account.fragments.CreateKnownLanguagesFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_create_known_languages">
+        <action
+            android:id="@+id/action_navigation_create_user_known_languages_to_navigation_create_user_learning_languages"
+            app:destination="@id/navigation_create_user_learning_languages" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_user_learning_languages"
+        android:name="com.example.wordwiki.ui_intro.account.fragments.CreateLearningLanguagesFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_create_learning_languages">
+        <action
+            android:id="@+id/action_navigation_create_user_learning_languages_to_navigation_create_user_picture"
+            app:destination="@id/navigation_create_user_picture" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_user_picture"
+        android:name="com.example.wordwiki.ui_intro.account.fragments.CreatePictureFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_create_picture">
+        <action
+            android:id="@+id/action_navigation_create_user_picture_to_navigation_create_user_description"
+            app:destination="@id/navigation_create_user_description" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_user_description"
+        android:name="com.example.wordwiki.ui_intro.account.fragments.CreateDescriptionFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_create_description"/>
+</navigation>

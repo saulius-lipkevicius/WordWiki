@@ -1,6 +1,7 @@
 package com.example.wordwiki.ui_intro.login;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.ui_intro.RegistrationActivity;
+import com.example.wordwiki.ui_intro.account.CreateProfileActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -255,8 +257,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
-                        boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-                        Log.d("MyTAG", "onComplete: " + (isNew ? "new user" : "old user"));
+                        checkNewUser(task);
+
                         Toast.makeText(LoginActivity.this, "User logged in successfully", Toast.LENGTH_SHORT).show();
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user.isEmailVerified()) {
@@ -279,9 +281,26 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mAuth.signInWithCredential(credentials).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                checkNewUser(task);
             }
         });
+    }
+
+    // creates a shared preference that follows if the user is new or not. If it is new, call information
+    // dialogs to create username and etc.
+    public void checkNewUser(Task<AuthResult>  task) {
+        SharedPreferences sharedPreferences = getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        boolean isNewUser = task.getResult().getAdditionalUserInfo().isNewUser();
+        if (isNewUser) {
+            editor.putBoolean("new_user", true);
+            startActivity(new Intent(LoginActivity.this, CreateProfileActivity.class));
+        } else {
+            editor.putBoolean("new_user", false);
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
+        editor.apply();
     }
 
 
@@ -309,7 +328,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            checkNewUser(task);
+                            //startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("TAG", "signInWithCredential:failure", task.getException());
