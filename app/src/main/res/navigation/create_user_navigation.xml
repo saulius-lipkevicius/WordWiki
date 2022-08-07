@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_navigation_create_user_known_languages_to_navigation_create_user_learning_languages"
             app:destination="@id/navigation_create_user_learning_languages" />
+        <action
+            android:id="@+id/action_navigation_create_user_known_languages_to_navigation_create_user_username"
+            app:destination="@id/navigation_create_user_username" />
     </fragment>
 
     <fragment
@@ -33,6 +36,9 @@
         <action
             android:id="@+id/action_navigation_create_user_learning_languages_to_navigation_create_user_picture"
             app:destination="@id/navigation_create_user_picture" />
+        <action
+            android:id="@+id/action_navigation_create_user_learning_languages_to_navigation_create_user_known_languages"
+            app:destination="@id/navigation_create_user_known_languages" />
     </fragment>
 
     <fragment
@@ -43,11 +49,18 @@
         <action
             android:id="@+id/action_navigation_create_user_picture_to_navigation_create_user_description"
             app:destination="@id/navigation_create_user_description" />
+        <action
+            android:id="@+id/action_navigation_create_user_picture_to_navigation_create_user_learning_languages"
+            app:destination="@id/navigation_create_user_learning_languages" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_create_user_description"
         android:name="com.example.wordwiki.ui_intro.account.fragments.CreateDescriptionFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_create_description"/>
+        tools:layout="@layout/fragment_create_description">
+        <action
+            android:id="@+id/action_navigation_create_user_description_to_navigation_create_user_picture"
+            app:destination="@id/navigation_create_user_picture" />
+    </fragment>
 </navigation>
