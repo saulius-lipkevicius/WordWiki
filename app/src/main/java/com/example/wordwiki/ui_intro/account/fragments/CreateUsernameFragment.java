@@ -2,7 +2,11 @@ package com.example.wordwiki.ui_intro.account.fragments;
 
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -27,9 +31,19 @@ import android.widget.Toast;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreateUsernameBinding;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class CreateUsernameFragment extends Fragment {
     FragmentCreateUsernameBinding binding;
+    TextInputEditText editText;
+    public boolean usernameEditTextFocus = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,31 +59,49 @@ public class CreateUsernameFragment extends Fragment {
 
         setButtons();
 
-        TextInputEditText editText = root.findViewById(R.id.outlined_edit_text);
-        editText.setText("@");
+        editText = root.findViewById(R.id.outlined_edit_text);
+        TextInputLayout editText_layout = root.findViewById(R.id.outlined_text_input_layout);
+
+        //editText.setText("@");
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
-                String enteredString = s.toString();
-                if (enteredString.startsWith("0")) {
-                    Toast.makeText(getActivity(),
-                            "should not starts with zero(0)",
-                            Toast.LENGTH_SHORT).show();
-                    if (enteredString.length() > 0) {
-                        editText.setText(enteredString.substring(1));
-                    } else {
-                        editText.setText("");
-                    }
-                }
-
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length() == 0) {
-                    editable.append('@');
+                Log.i(TAG, "afterTextChanged: length 1is " + editable.length());
+                Log.i(TAG, "afterTextChanged: length 2is " + editable);
+                if (editable.length() == 0 && usernameEditTextFocus) {
+                    editText.setText("@");
+                    editText.setSelection(1);
+                } else if (editable.length() > 1){
+                    readData(new MyCallback() {
+                        @Override
+                        public void onCallback(Boolean value) {
+                            Log.i(TAG, "onCallback: " + value);
+                            if (value) {
+                                int colorInt = getResources().getColor(R.color.red);
+                                ColorStateList csl = ColorStateList.valueOf(colorInt);
+
+                                editText_layout.setBoxStrokeColorStateList(csl);
+                                editText_layout.setHintTextColor(csl);
+                                editText_layout.setErrorIconDrawable(null);
+                                editText_layout.setError("Username is taken");
+                            } else {
+                                int colorInt = getResources().getColor(R.color.black);
+                                ColorStateList csl = ColorStateList.valueOf(colorInt);
+
+                                editText_layout.setBoxStrokeColorStateList(csl);
+                                editText_layout.setHintTextColor(csl);
+
+                                editText_layout.setError(null);
+                            }
+                        }
+                    });
                 }
+
             }
 
             @Override
@@ -78,11 +110,31 @@ public class CreateUsernameFragment extends Fragment {
             }
         });
 
+
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                Log.i(TAG, "afterTextChanged: length 3is " + editText.length());
+                Log.i(TAG, "afterTextChanged: length 4is " + editText.getText());
                 if (!hasFocus) {
+                    Log.i(TAG, "afterTextChanged: focus " + hasFocus);
+                    Log.i(TAG, "afterTextChanged: edittext " + editText.getText());
+
                     hideKeyboard(v);
+                    if (editText.length() == 1) {
+                        usernameEditTextFocus = false;
+                        editText.setText("");
+                    }
+
+                    Log.i(TAG, "afterTextChanged: focus2 " + hasFocus);
+                    Log.i(TAG, "afterTextChanged: edittext2 " + editText.getText());
+
+                } else {
+                    usernameEditTextFocus = true;
+                    if (editText.length() == 0) {
+                        editText.setText("@");
+                        //editText.setSelection(1);
+                    }
                 }
             }
         });
@@ -90,31 +142,77 @@ public class CreateUsernameFragment extends Fragment {
         return root;
     }
 
+
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 
-
     private void setButtons() {
-        Button skipFragment = binding.getRoot().findViewById(R.id.fragment_username_skip_btn);
-        skipFragment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // navigating to the mainActivity with navView
-            }
-        });
 
         Button nextFragment = binding.getRoot().findViewById(R.id.fragment_username_next_btn);
         nextFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_navigation_create_user_username_to_navigation_create_user_known_languages);
+                if (editText.length() < 2) {
+                    Toast.makeText(getContext(), "Username can't be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("create_user", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("username", editText.getText().toString());
 
+                    NavController navController = Navigation.findNavController(view);
+                    navController.navigate(R.id.action_navigation_create_user_username_to_navigation_create_user_known_languages);
+                }
             }
         });
     }
+
+
+    public String checkUsernameValidity(String username) {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
+        DatabaseReference userNameRef = rootRef.child("users").child(username);
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    //create new user
+                    Log.i(TAG, "onDataChange: there is no user");
+                } else {
+                    Log.i(TAG, "onDataChange: there is the user");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
+            }
+        };
+        userNameRef.addListenerForSingleValueEvent(eventListener);
+
+        return "";
+    }
+
+    public void readData(MyCallback myCallback) {
+        String myUsername = editText.getText().toString().substring(1);
+        Log.i(TAG, "onDataChange: mano testas edittext " + myUsername);
+        FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("users").child(myUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Boolean value = dataSnapshot.exists();
+                Log.i(TAG, "onDataChange: mano testas " + value);
+                myCallback.onCallback(value);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    public interface MyCallback {
+        void onCallback(Boolean value);
+    }
+
 }
 

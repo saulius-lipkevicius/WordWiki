@@ -109,34 +109,11 @@ public class RegistrationActivity extends AppCompatActivity {
                             }
                         });
                         Toast.makeText(RegistrationActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
-
-                        Map<String, String> learningLanguages = new HashMap<>();
-                        learningLanguages.put("English", "A1");
-
-                        Map<String, String> knownLanguages = new HashMap<>();
-                        knownLanguages.put("German", "C1");
-
-                        createNewUser("as useris", "Lithuanian", learningLanguages, knownLanguages);
                     } else {
                         Toast.makeText(RegistrationActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
-    }
-
-    private void createNewUser(String username, String nationality, Map<String, String> learningLanguages, Map<String, String> knownLanguages) {
-        // TODO move to firebase
-        String userId = mAuth.getUid();
-        User user = new User(username, nationality, learningLanguages, knownLanguages);
-
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference databaseReference = db.getReference("users");
-        assert userId != null;
-        databaseReference.child(username).setValue(user);
-
-        // TODO move to the storage
-
     }
 }

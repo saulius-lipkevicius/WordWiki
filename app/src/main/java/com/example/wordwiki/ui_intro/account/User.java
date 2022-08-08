@@ -1,4 +1,4 @@
-package com.example.wordwiki.ui_intro;
+package com.example.wordwiki.ui_intro.account;
 
 import java.util.Map;
 

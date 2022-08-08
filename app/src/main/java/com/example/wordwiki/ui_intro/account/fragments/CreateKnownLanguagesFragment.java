@@ -1,5 +1,8 @@
 package com.example.wordwiki.ui_intro.account.fragments;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -41,6 +44,10 @@ public class CreateKnownLanguagesFragment extends Fragment {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("create_user", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("known", "");
+
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_navigation_create_user_known_languages_to_navigation_create_user_username);
             }

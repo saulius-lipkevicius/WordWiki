@@ -8,38 +8,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <include layout="@layout/actionbar_create_account_full" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tell us about yourself"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:textColor="@android:color/black"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:text="Tell us about yourself"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="It will be visible on your profile"
-        android:textStyle="normal"
-        android:textSize="14sp"
-        android:layout_marginStart="10dp"
-        android:textColor="@android:color/darker_gray"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="It will be visible on your profile"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:textStyle="normal" />
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/outlined_text_input_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="200dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:hint="Description"
             android:padding="10dp">
@@ -48,30 +52,51 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/outlined_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:maxLength="150"
+                android:gravity="top|start" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="5 / 150"
+            android:gravity="end"
+            android:layout_marginEnd="40dp"
+            android:id="@+id/fragment_create_user_description_counter"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"
             android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
             android:orientation="horizontal"
             android:padding="5dp">
 
+            <Button
+                android:id="@+id/fragment_username_skip_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:background="@android:color/transparent"
+                android:gravity="center_horizontal|center"
+                android:text="Skip for now"
+                android:textColor="@android:color/black"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/fragment_username_next_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
                 android:background="@android:color/transparent"
+                android:gravity="center"
                 android:text="Finish"
-                android:textColor="@android:color/black"/>
-
-
+                android:textColor="@android:color/black" />
         </LinearLayout>
     </LinearLayout>
 

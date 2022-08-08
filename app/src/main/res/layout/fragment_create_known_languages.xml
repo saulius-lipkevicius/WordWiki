@@ -12,68 +12,70 @@
 
         <include layout="@layout/actionbar_create_account_full" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="How proficient you are in languages?"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:textColor="@android:color/black"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select languages to personalize your WordWiki experience and further learning"
-        android:textStyle="normal"
-        android:textSize="14sp"
-        android:layout_marginStart="10dp"
-        android:textColor="@android:color/darker_gray"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="20dp"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/fragment_create_known_language_recycle_view"/>
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:text="How proficient you are in languages?"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="Select languages to personalize your WordWiki experience and further learning"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_create_known_language_recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"
             android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <Button
                 android:id="@+id/fragment_username_skip_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="10dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
                 android:background="@android:color/transparent"
+                android:gravity="center_horizontal|center"
                 android:text="Skip for now"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
             <Button
                 android:id="@+id/fragment_username_next_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
                 android:background="@android:color/transparent"
+                android:gravity="center"
                 android:text="Next"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black" />
 
 
         </LinearLayout>
     </LinearLayout>
-
 
 
 </FrameLayout>
