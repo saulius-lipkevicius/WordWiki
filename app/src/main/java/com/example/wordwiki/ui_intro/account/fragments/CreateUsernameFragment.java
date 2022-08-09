@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreateUsernameBinding;
+import com.example.wordwiki.ui_intro.account.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -40,10 +41,13 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Map;
+
 public class CreateUsernameFragment extends Fragment {
     FragmentCreateUsernameBinding binding;
     TextInputEditText editText;
     public boolean usernameEditTextFocus = true;
+    Button nextFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +80,7 @@ public class CreateUsernameFragment extends Fragment {
                 if (editable.length() == 0 && usernameEditTextFocus) {
                     editText.setText("@");
                     editText.setSelection(1);
-                } else if (editable.length() > 1){
+                } else if (editable.length() > 1) {
                     readData(new MyCallback() {
                         @Override
                         public void onCallback(Boolean value) {
@@ -89,6 +93,8 @@ public class CreateUsernameFragment extends Fragment {
                                 editText_layout.setHintTextColor(csl);
                                 editText_layout.setErrorIconDrawable(null);
                                 editText_layout.setError("Username is taken");
+
+                                nextFragment.setEnabled(false);
                             } else {
                                 int colorInt = getResources().getColor(R.color.black);
                                 ColorStateList csl = ColorStateList.valueOf(colorInt);
@@ -97,6 +103,7 @@ public class CreateUsernameFragment extends Fragment {
                                 editText_layout.setHintTextColor(csl);
 
                                 editText_layout.setError(null);
+                                nextFragment.setEnabled(true);
                             }
                         }
                     });
@@ -151,16 +158,14 @@ public class CreateUsernameFragment extends Fragment {
 
     private void setButtons() {
 
-        Button nextFragment = binding.getRoot().findViewById(R.id.fragment_username_next_btn);
+        nextFragment = binding.getRoot().findViewById(R.id.fragment_username_next_btn);
         nextFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (editText.length() < 2) {
                     Toast.makeText(getContext(), "Username can't be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    SharedPreferences sharedPreferences = getActivity().getSharedPreferences("create_user", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("username", editText.getText().toString());
+                    createNewUser(editText.getText().toString(), null, null, null);
 
                     NavController navController = Navigation.findNavController(view);
                     navController.navigate(R.id.action_navigation_create_user_username_to_navigation_create_user_known_languages);
@@ -169,35 +174,10 @@ public class CreateUsernameFragment extends Fragment {
         });
     }
 
-
-    public String checkUsernameValidity(String username) {
-        DatabaseReference rootRef = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference();
-        DatabaseReference userNameRef = rootRef.child("users").child(username);
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()) {
-                    //create new user
-                    Log.i(TAG, "onDataChange: there is no user");
-                } else {
-                    Log.i(TAG, "onDataChange: there is the user");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
-            }
-        };
-        userNameRef.addListenerForSingleValueEvent(eventListener);
-
-        return "";
-    }
-
     public void readData(MyCallback myCallback) {
         String myUsername = editText.getText().toString().substring(1);
         Log.i(TAG, "onDataChange: mano testas edittext " + myUsername);
-        FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("users").child(myUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child(myUsername).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean value = dataSnapshot.exists();
@@ -206,12 +186,35 @@ public class CreateUsernameFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
     }
 
     public interface MyCallback {
         void onCallback(Boolean value);
+    }
+
+
+    private void createNewUser(String username, String nationality, Map<String, String> learningLanguages, Map<String, String> knownLanguages) {
+        // TODO move to firebase
+        //
+        //learningLanguages.put("English", "A1");
+
+        //knownLanguages.put("German", "C1");
+
+
+        //String userId = getActivity().mAuth.getUid();
+        User user = new User(username.substring(1), null, null, null);
+
+
+        FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
+        DatabaseReference databaseReference = db.getReference("Users");
+        //assert userId != null;
+        databaseReference.child(username.substring(1)).setValue(user);
+
+        // TODO move to the storage
+
     }
 
 }

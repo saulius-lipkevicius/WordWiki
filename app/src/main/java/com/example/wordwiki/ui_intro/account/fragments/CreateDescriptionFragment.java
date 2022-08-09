@@ -74,15 +74,11 @@ public class CreateDescriptionFragment extends Fragment {
             }
         });
 
-        Map<String, String> learningLanguages = new HashMap<>();
-        Map<String, String> knownLanguages = new HashMap<>();
+        //Map<String, String> learningLanguages = new HashMap<>();
+        //Map<String, String> knownLanguages = new HashMap<>();
 
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("create_user", MODE_PRIVATE);
-
-        String username = sharedPreferences.getString("username", "");
-
-        createNewUser(username, "Lithuanian", learningLanguages, knownLanguages);
+        //createNewUser(username, "Lithuanian", learningLanguages, knownLanguages);
 
         return root;
     }
@@ -105,7 +101,7 @@ public class CreateDescriptionFragment extends Fragment {
                 String description = editText.getText().toString();
 
 
-
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child("saulius").child("description").setValue(description);
 
 
                 // TODO start mainActivity

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreateLearningLanguagesBinding;
 import com.example.wordwiki.databinding.FragmentHomeBinding;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class CreateLearningLanguagesFragment extends Fragment {
     private FragmentCreateLearningLanguagesBinding binding;
@@ -61,9 +62,7 @@ public class CreateLearningLanguagesFragment extends Fragment {
         nextFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("create_user", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("learning", "");
+                //FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child("saulius").child("description").setValue(description);
 
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_navigation_create_user_learning_languages_to_navigation_create_user_picture);
