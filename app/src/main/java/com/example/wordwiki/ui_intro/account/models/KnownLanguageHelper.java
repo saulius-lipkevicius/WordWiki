@@ -88,4 +88,33 @@ public class KnownLanguageHelper {
     public void setNative(boolean aNative) {
         isNative = aNative;
     }
+
+    public void setChosen(int givenNr) {
+        setFalseAll();
+        if (givenNr==1){
+            setA1(true);
+        } else if (givenNr==2) {
+            setA2(true);
+        } else if (givenNr==3) {
+            setB1(true);
+        } else if (givenNr==4) {
+            setB2(true);
+        } else if (givenNr==5) {
+            setC1(true);
+        } else if (givenNr==6) {
+            setC2(true);
+        } else if (givenNr==7) {
+            setNative(true);
+        }
+    }
+
+    public void setFalseAll() {
+        setA1(false);
+        setA2(false);
+        setB1(false);
+        setB2(false);
+        setC1(false);
+        setC2(false);
+        setNative(false);
+    }
 }

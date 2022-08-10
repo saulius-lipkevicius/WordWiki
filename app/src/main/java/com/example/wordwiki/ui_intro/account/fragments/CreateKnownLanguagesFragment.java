@@ -55,15 +55,15 @@ public class CreateKnownLanguagesFragment extends Fragment {
     private void setRecyclerView() {
         RecyclerView recyclerView = binding.getRoot().findViewById(R.id.fragment_create_known_language_recycle_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         ArrayList<KnownLanguageHelper> knownLanguages = new ArrayList<>();
 
-        knownLanguages.add(new KnownLanguageHelper("English", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
+        knownLanguages.add(new KnownLanguageHelper("English", com.blongho.country_data.R.drawable.gb, false, false, false, false, false, false, false ));
         knownLanguages.add(new KnownLanguageHelper("Spanish", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("German", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("Italian", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("French", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
+        knownLanguages.add(new KnownLanguageHelper("German", com.blongho.country_data.R.drawable.de, false, false, false, false, false, false, false ));
+        knownLanguages.add(new KnownLanguageHelper("Italian", com.blongho.country_data.R.drawable.it, false, false, false, false, false, false, false ));
+        knownLanguages.add(new KnownLanguageHelper("French", com.blongho.country_data.R.drawable.fr, false, false, false, false, false, false, false ));
 
         KnownLanguageAdapter languageAdapter = new KnownLanguageAdapter(knownLanguages);
         recyclerView.setAdapter(languageAdapter);

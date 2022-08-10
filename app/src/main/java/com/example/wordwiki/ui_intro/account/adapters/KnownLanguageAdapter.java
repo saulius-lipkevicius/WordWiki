@@ -1,5 +1,7 @@
 package com.example.wordwiki.ui_intro.account.adapters;
 
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
@@ -36,78 +39,153 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        KnownLanguageHelper section = knownLanguageList.get(position);
+        KnownLanguageHelper section = knownLanguageList.get(holder.getAdapterPosition());
 
         holder.languageName.setText(section.getLanguageName());
         holder.flag.setImageResource(section.getFlag());
 
-        holder.a1.setEnabled(section.isA1());
-        holder.a2.setEnabled(section.isA2());
-        holder.a1.setEnabled(section.isB1());
-        holder.a2.setEnabled(section.isB2());
-        holder.a1.setEnabled(section.isC1());
-        holder.a2.setEnabled(section.isC2());
-        //holder.isNative.setEnabled(section.isNative());
 
         holder.a1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setA1(section.isA1());
-                holder.a1.setEnabled(section.isA1());
+                if (!section.isA1()){
+                    section.setChosen(1);
+                    holder.a1.setBackgroundColor(Color.BLACK);
+
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    section.setA1(false);
+                }
             }
         });
 
         holder.a2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setA2(section.isA2());
-                holder.a2.setEnabled(section.isA2());
+                if (!section.isA2()){
+                    section.setChosen(2);
+                    holder.a2.setBackgroundColor(Color.BLACK);
+
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    section.setA2(false);
+                }
             }
         });
+
 
         holder.b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setB1(section.isB1());
-                holder.b1.setEnabled(section.isB1());
+                if (!section.isB1()){
+                    section.setChosen(3);
+                    holder.b1.setBackgroundColor(Color.BLACK);
+
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    section.setB1(false);
+                }
             }
         });
 
         holder.b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setB2(section.isB2());
-                holder.b2.setEnabled(section.isB2());
+                if (!section.isB2()){
+                    section.setChosen(4);
+                    holder.b2.setBackgroundColor(Color.BLACK);
+
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    section.setB2(false);
+                }
             }
         });
 
         holder.c1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setC1(section.isC1());
-                holder.c1.setEnabled(section.isC1());
+                if (!section.isC1()){
+                    section.setChosen(5);
+                    holder.c1.setBackgroundColor(Color.BLACK);
+
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    section.setC1(false);
+                }
             }
         });
 
         holder.c2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setC2(section.isC2());
-                holder.c2.setEnabled(section.isC2());
+                if (!section.isC2()){
+                    section.setChosen(6);
+                    holder.c2.setBackgroundColor(Color.BLACK);
+
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                    section.setC2(false);
+                }
             }
         });
 
-        /*
+
         holder.isNative.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                section.setNative(section.isNative());
-                holder.isNative.setEnabled(section.isNative());
+                if (!section.isNative()){
+                    section.setChosen(7);
+                    holder.isNative.setBackgroundColor(Color.BLACK);
+
+                    holder.a1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.a2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.b2.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c1.setBackgroundColor(Color.TRANSPARENT);
+                    holder.c2.setBackgroundColor(Color.TRANSPARENT);
+                } else {
+                    holder.isNative.setBackgroundColor(Color.TRANSPARENT);
+                    section.setNative(false);
+                }
             }
         });
-
-         */
-
 
     }
 
@@ -119,7 +197,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView languageName;
         private ImageView flag;
-        private Button a1, a2, b1, b2, c1, c2, isNative;
+        private AppCompatButton a1, a2, b1, b2, c1, c2, isNative;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -133,7 +211,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             b2 = itemView.findViewById(R.id.know_language_btn_b2);
             c1 = itemView.findViewById(R.id.know_language_btn_c1);
             c2 = itemView.findViewById(R.id.know_language_btn_c2);
-            //isNative = itemView.findViewById(R.id.know_language_btn_native);
+            isNative = itemView.findViewById(R.id.know_language_btn_native);
 
         }
     }
