@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.ui_intro.account.classes.RecyclerViewClickInterface;
 import com.example.wordwiki.ui_intro.account.models.KnownLanguageHelper;
 import com.example.wordwiki.ui_main.library.adapters.SectionAdapter;
 import com.example.wordwiki.ui_main.library.models.SectionHelper;
@@ -24,8 +26,11 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
     final String TAG = "KnownLanguageAdapter";
     List<KnownLanguageHelper> knownLanguageList;
 
-    public KnownLanguageAdapter(List<KnownLanguageHelper> knownLanguageList) {
+    private RecyclerViewClickInterface recyclerViewClickInterface;
+
+    public KnownLanguageAdapter(List<KnownLanguageHelper> knownLanguageList, RecyclerViewClickInterface recyclerViewClickInterface) {
         this.knownLanguageList = knownLanguageList;
+        this.recyclerViewClickInterface = recyclerViewClickInterface;
     }
 
     @NonNull
@@ -194,13 +199,20 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
         return knownLanguageList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder{
         private TextView languageName;
         private ImageView flag;
         private AppCompatButton a1, a2, b1, b2, c1, c2, isNative;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
+                }
+            });
 
             languageName = itemView.findViewById(R.id.fragment_create_user_known_language_name);
             flag = itemView.findViewById(R.id.fragment_create_user_known_language_flag);

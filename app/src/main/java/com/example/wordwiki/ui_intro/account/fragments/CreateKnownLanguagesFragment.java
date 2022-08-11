@@ -16,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreateKnownLanguagesBinding;
 import com.example.wordwiki.databinding.FragmentCreateLearningLanguagesBinding;
 import com.example.wordwiki.ui_intro.account.adapters.KnownLanguageAdapter;
+import com.example.wordwiki.ui_intro.account.classes.RecyclerViewClickInterface;
 import com.example.wordwiki.ui_intro.account.models.KnownLanguageHelper;
 import com.example.wordwiki.ui_main.library.adapters.SectionAdapter;
 import com.example.wordwiki.ui_main.profile.models.progressHelper;
@@ -28,8 +30,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class CreateKnownLanguagesFragment extends Fragment {
+public class CreateKnownLanguagesFragment extends Fragment implements RecyclerViewClickInterface {
     FragmentCreateKnownLanguagesBinding binding;
+    ArrayList<KnownLanguageHelper> knownLanguages;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +61,7 @@ public class CreateKnownLanguagesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        ArrayList<KnownLanguageHelper> knownLanguages = new ArrayList<>();
+        knownLanguages = new ArrayList<>();
 
         knownLanguages.add(new KnownLanguageHelper("English", com.blongho.country_data.R.drawable.gb, false, false, false, false, false, false, false ));
         knownLanguages.add(new KnownLanguageHelper("Spanish", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
@@ -65,7 +69,7 @@ public class CreateKnownLanguagesFragment extends Fragment {
         knownLanguages.add(new KnownLanguageHelper("Italian", com.blongho.country_data.R.drawable.it, false, false, false, false, false, false, false ));
         knownLanguages.add(new KnownLanguageHelper("French", com.blongho.country_data.R.drawable.fr, false, false, false, false, false, false, false ));
 
-        KnownLanguageAdapter languageAdapter = new KnownLanguageAdapter(knownLanguages);
+        KnownLanguageAdapter languageAdapter = new KnownLanguageAdapter(knownLanguages, this::onItemClick);
         recyclerView.setAdapter(languageAdapter);
         // TODO create an adapter for it and item (fragment_create_user_known_language_item)
 
@@ -104,5 +108,10 @@ public class CreateKnownLanguagesFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Toast.makeText(getContext(), "" + knownLanguages.get(position).isNative(), Toast.LENGTH_SHORT).show();
     }
 }
