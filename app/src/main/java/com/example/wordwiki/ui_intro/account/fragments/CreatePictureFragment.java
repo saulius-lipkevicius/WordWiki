@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,19 +27,36 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreatePictureBinding;
+import com.example.wordwiki.ui_intro.account.CreateProfileActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class CreatePictureFragment extends Fragment {
     FragmentCreatePictureBinding binding;
+
     private static final int SELECT_PICTURE = 1;
     ImageView profilePic;
+    private StorageReference storageReference;
+    public Uri imageUri;
 
+    private FirebaseStorage firebaseStorage;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +68,9 @@ public class CreatePictureFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentCreatePictureBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         setButtons();
 
@@ -81,7 +104,7 @@ public class CreatePictureFragment extends Fragment {
             Bitmap bmp = null;
             if (requestCode == SELECT_PICTURE) {
                 if (data.getData() != null) {
-                    Uri imageUri = data.getData();
+                    imageUri = data.getData();
                     try {
                         bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), imageUri);
                     } catch (IOException e) {
@@ -92,15 +115,25 @@ public class CreatePictureFragment extends Fragment {
                     Bundle extras = data.getExtras();
                     bitmap = (Bitmap) extras.get("data");
                     profilePic.setImageBitmap(bitmap);
+                    imageUri = getImageUri(getContext(), bitmap);
                 }
                 profilePic.setImageBitmap(bitmap);
 
+
+                uploadImage();
             }
         }
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
-        private void setButtons () {
+
+    private void setButtons () {
             ImageButton backBtn = binding.getRoot().findViewById(R.id.back);
             backBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,72 +164,40 @@ public class CreatePictureFragment extends Fragment {
             });
         }
 
+    private void uploadImage() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
 
-/*
-        public void uploadProfileImage(){
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            StorageReference storageRef = storage.getReference();
-            // Create a reference to the file you want to upload
-            String directory = "images/";
+        final ProgressDialog pd = new ProgressDialog(getContext());
+        pd.setTitle("Uploading Image...");
+        pd.show();
 
-            StorageReference fileRef = storageRef.child(directory + serverFileName);
+        LinearLayout rootlayout = (LinearLayout) getView().findViewById(R.id.linear_layout);
+        //final String randomKey = UUID.randomUUID().toString();
+        //FirebaseUser user = ((CreateProfileActivity) getActivity()).getCurrentUser();
+        StorageReference profileImageRef = storageReference.child("user_profile/" + username + "/profile_image");
 
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] data = stream.toByteArray();
-
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-
-                    UploadTask uploadTask = fileRef.putBytes(data);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-                            // Handle unsuccessful uploads
-                            Log.e("oops","error in bitmap uploading");
-
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                            // ...
-                            // now download url first
-                        }
-                    });
-
-                    Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if (!task.isSuccessful()) {
-                                throw task.getException();
-                            }
-
-                            // Continue with the task to get the download URL
-                            return fileRef.getDownloadUrl();
-                        }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            if (task.isSuccessful()) {
-                                Uri downloadUri = task.getResult();
-                                String stringUrl = downloadUri.toString();
-
-                                // Great image is uploaded and url is here, you can load image anywhere via this stringUrl with Glide or Picasso.
-
-                            } else {
-                                // Handle unsuccessful uploads
-                                Log.e("oops","error in url retrieval");
-                            }
-                        }
-                    });
-
-
-                }
-            });
-        }
-
- */
+        profileImageRef.putFile(imageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Snackbar.make(rootlayout, "Image Uploaded.", Snackbar.LENGTH_LONG).show();
+                        pd.dismiss();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progressPercent = (100.00 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                        pd.setMessage("Progress: " + (int) progressPercent + "%");
+                    }
+                });
+    }
     }

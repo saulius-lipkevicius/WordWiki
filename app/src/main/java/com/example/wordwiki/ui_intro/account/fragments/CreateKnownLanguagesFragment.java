@@ -1,5 +1,6 @@
 package com.example.wordwiki.ui_intro.account.fragments;
 
+import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +31,13 @@ import com.example.wordwiki.ui_main.profile.models.progressHelper;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CreateKnownLanguagesFragment extends Fragment implements RecyclerViewClickInterface {
     FragmentCreateKnownLanguagesBinding binding;
     ArrayList<KnownLanguageHelper> knownLanguages;
-
+    HashMap<String, Integer> knownLanguageMap;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +52,8 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
 
         setButtons();
         setRecyclerView();
-        fillRecyclerView();
 
-
+        knownLanguageMap = new HashMap<>();
 
 
         return root;
@@ -63,11 +66,11 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
 
         knownLanguages = new ArrayList<>();
 
-        knownLanguages.add(new KnownLanguageHelper("English", com.blongho.country_data.R.drawable.gb, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("Spanish", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("German", com.blongho.country_data.R.drawable.de, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("Italian", com.blongho.country_data.R.drawable.it, false, false, false, false, false, false, false ));
-        knownLanguages.add(new KnownLanguageHelper("French", com.blongho.country_data.R.drawable.fr, false, false, false, false, false, false, false ));
+        knownLanguages.add(new KnownLanguageHelper("English", com.blongho.country_data.R.drawable.gb, false, false, false, false, false, false, false , 0));
+        knownLanguages.add(new KnownLanguageHelper("Spanish", com.blongho.country_data.R.drawable.es, false, false, false, false, false, false, false , 0));
+        knownLanguages.add(new KnownLanguageHelper("German", com.blongho.country_data.R.drawable.de, false, false, false, false, false, false, false , 0));
+        knownLanguages.add(new KnownLanguageHelper("Italian", com.blongho.country_data.R.drawable.it, false, false, false, false, false, false, false , 0));
+        knownLanguages.add(new KnownLanguageHelper("French", com.blongho.country_data.R.drawable.fr, false, false, false, false, false, false, false , 0));
 
         KnownLanguageAdapter languageAdapter = new KnownLanguageAdapter(knownLanguages, this::onItemClick);
         recyclerView.setAdapter(languageAdapter);
@@ -76,8 +79,6 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
         // TODO make it vertical with 2 columns, using gridLayout
     }
 
-    private void fillRecyclerView() {
-    }
 
     private void setButtons() {
         ImageButton backBtn = binding.getRoot().findViewById(R.id.back);
@@ -101,7 +102,12 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
         nextFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child("saulius").child("description").setValue(description);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
+
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                        .child("Users").child(username)
+                        .child("proficiency").setValue(knownLanguageMap);
 
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_navigation_create_user_known_languages_to_navigation_create_user_learning_languages);
@@ -112,6 +118,6 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
 
     @Override
     public void onItemClick(int position) {
-        Toast.makeText(getContext(), "" + knownLanguages.get(position).isNative(), Toast.LENGTH_SHORT).show();
+        knownLanguageMap.put(knownLanguages.get(position).getLanguageName(), knownLanguages.get(position).getSelectedLevel());
     }
 }

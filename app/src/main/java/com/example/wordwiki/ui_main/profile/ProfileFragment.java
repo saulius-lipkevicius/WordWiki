@@ -101,12 +101,6 @@ public class ProfileFragment extends Fragment {
     }
 
     private void progressRecycler() {
-
-        //All Gradients
-        GradientDrawable gradient2 = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xf7f5f5f5, 0xf7f5f5f5});
-        GradientDrawable gradient1 = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xf7f5f5f5, 0xf7f5f5f5});
-
-
         progressRecycler.setHasFixedSize(true);
         progressRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
@@ -205,7 +199,7 @@ public class ProfileFragment extends Fragment {
 
         LinearLayout rootlayout = (LinearLayout) getView().findViewById(R.id.linear_layout);
         //final String randomKey = UUID.randomUUID().toString();
-        FirebaseUser user = ((MainActivity)getActivity()).getCurrentUser();
+        FirebaseUser user = ((MainActivity) getActivity()).getCurrentUser();
         StorageReference profileImageRef = storageReference.child("user_profile/" + user + "/profile_image");
 
         profileImageRef.putFile(imageUri)

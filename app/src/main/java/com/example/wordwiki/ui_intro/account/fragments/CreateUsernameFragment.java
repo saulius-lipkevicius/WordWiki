@@ -121,21 +121,12 @@ public class CreateUsernameFragment extends Fragment {
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Log.i(TAG, "afterTextChanged: length 3is " + editText.length());
-                Log.i(TAG, "afterTextChanged: length 4is " + editText.getText());
                 if (!hasFocus) {
-                    Log.i(TAG, "afterTextChanged: focus " + hasFocus);
-                    Log.i(TAG, "afterTextChanged: edittext " + editText.getText());
-
                     hideKeyboard(v);
                     if (editText.length() == 1) {
                         usernameEditTextFocus = false;
                         editText.setText("");
                     }
-
-                    Log.i(TAG, "afterTextChanged: focus2 " + hasFocus);
-                    Log.i(TAG, "afterTextChanged: edittext2 " + editText.getText());
-
                 } else {
                     usernameEditTextFocus = true;
                     if (editText.length() == 0) {
@@ -197,24 +188,18 @@ public class CreateUsernameFragment extends Fragment {
 
 
     private void createNewUser(String username, String nationality, Map<String, String> learningLanguages, Map<String, String> knownLanguages) {
-        // TODO move to firebase
-        //
-        //learningLanguages.put("English", "A1");
-
-        //knownLanguages.put("German", "C1");
-
-
-        //String userId = getActivity().mAuth.getUid();
         User user = new User(username.substring(1), null, null, null);
-
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference databaseReference = db.getReference("Users");
-        //assert userId != null;
+
         databaseReference.child(username.substring(1)).setValue(user);
 
-        // TODO move to the storage
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        editor.putString("username", username.substring(1));
+        editor.commit();
     }
 
 }

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Bundle;
 
 import com.example.wordwiki.R;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CreateProfileActivity extends AppCompatActivity {
 

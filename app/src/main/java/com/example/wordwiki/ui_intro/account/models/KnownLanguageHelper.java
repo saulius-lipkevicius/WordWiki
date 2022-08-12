@@ -2,10 +2,10 @@ package com.example.wordwiki.ui_intro.account.models;
 
 public class KnownLanguageHelper {
     private String languageName;
-    private int flag;
+    private int flag, selectedLevel;
     private boolean a1, a2, b1, b2, c1, c2, isNative;
 
-    public KnownLanguageHelper(String languageName, int flag, boolean a1, boolean a2, boolean b1, boolean b2, boolean c1, boolean c2, boolean isNative) {
+    public KnownLanguageHelper(String languageName, int flag, boolean a1, boolean a2, boolean b1, boolean b2, boolean c1, boolean c2, boolean isNative, int selectedLevel) {
         this.languageName = languageName;
         this.flag = flag;
         this.a1 = a1;
@@ -15,6 +15,7 @@ public class KnownLanguageHelper {
         this.c1 = c1;
         this.c2 = c2;
         this.isNative = isNative;
+        this.selectedLevel = selectedLevel;
     }
 
     public String getLanguageName() {
@@ -106,6 +107,16 @@ public class KnownLanguageHelper {
         } else if (givenNr==7) {
             setNative(true);
         }
+
+        setSelectedLevel(givenNr);
+    }
+
+    public int getSelectedLevel() {
+        return selectedLevel;
+    }
+
+    public void setSelectedLevel(int selectedLevel) {
+        this.selectedLevel = selectedLevel;
     }
 
     public void setFalseAll() {

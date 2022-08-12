@@ -49,7 +49,6 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
         holder.languageName.setText(section.getLanguageName());
         holder.flag.setImageResource(section.getFlag());
 
-
         holder.a1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,6 +66,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     section.setA1(false);
                 }
+                holder.itemView.performClick();
             }
         });
 
@@ -87,6 +87,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);
                     section.setA2(false);
                 }
+                holder.itemView.performClick();
             }
         });
 
@@ -108,6 +109,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.b1.setBackgroundColor(Color.TRANSPARENT);
                     section.setB1(false);
                 }
+                holder.itemView.performClick();
             }
         });
 
@@ -128,6 +130,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.b2.setBackgroundColor(Color.TRANSPARENT);
                     section.setB2(false);
                 }
+                holder.itemView.performClick();
             }
         });
 
@@ -148,6 +151,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.c1.setBackgroundColor(Color.TRANSPARENT);
                     section.setC1(false);
                 }
+                holder.itemView.performClick();
             }
         });
 
@@ -168,6 +172,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.c2.setBackgroundColor(Color.TRANSPARENT);
                     section.setC2(false);
                 }
+                holder.itemView.performClick();
             }
         });
 
@@ -189,6 +194,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
                     holder.isNative.setBackgroundColor(Color.TRANSPARENT);
                     section.setNative(false);
                 }
+                holder.itemView.performClick();
             }
         });
 

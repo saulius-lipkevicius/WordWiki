@@ -2,6 +2,7 @@ package com.example.wordwiki.ui_intro.account.fragments;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -19,12 +20,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreateDescriptionBinding;
 import com.example.wordwiki.ui_intro.account.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.apache.log4j.chainsaw.Main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -97,17 +101,17 @@ public class CreateDescriptionFragment extends Fragment {
         finishIntroductionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO create user interface to put it into firebase
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
+
                 String description = editText.getText().toString();
 
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                        .child("Users").child(username)
+                        .child("description").setValue(description);
 
-                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child("saulius").child("description").setValue(description);
-
-
-                // TODO start mainActivity
-                //NavController navController = Navigation.findNavController(view);
-                //navController.navigate(R.id.action_navigation_create_user_username_to_navigation_create_user_known_languages);
-
+                Intent intent = new Intent(requireActivity(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }
