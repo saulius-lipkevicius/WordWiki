@@ -1041,5 +1041,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exportWords;
     }
 
+
+    public Integer countTotalWordsPerLanguage(String languageName) { // calculates how many words have been approached overall, implement language setting through preferances
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor word = db.rawQuery(
+                "SELECT COUNT( " + COL_9 + " )" +
+                        ", " + COL_2 + " " +
+                        "FROM " + TABLE_NAME + " " +
+                        "WHERE " + COL_9 + " > 1 " +
+                        " OR " + COL_13 + " > 1 " +
+                        " AND " + COL_2 + "= '" + languageName + "' " +
+                        "GROUP BY " + COL_2 + " ; "
+                , null);
+
+        word.moveToFirst();
+        return word.getInt(0);
+    }
+
 }
 

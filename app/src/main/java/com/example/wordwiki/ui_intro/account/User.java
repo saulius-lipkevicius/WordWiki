@@ -1,18 +1,33 @@
 package com.example.wordwiki.ui_intro.account;
 
+import android.net.Uri;
+
 import java.util.Map;
 
 public class User {
     String username;
-    String nationality;
-    Map<String, String> learningLanguageMap;
-    Map<String, String> masteredLanguageMap;
+    String description;
+    Map<String, Integer> learning;
+    Map<String, Integer> proficiency;
+    String profile;
 
-    public User(String username, String nationality, Map<String, String> learningLanguageMap, Map<String, String> masteredLanguageMap) {
+    public User(String username, String nationality, Map<String, Integer> learning, Map<String, Integer> proficiency, String profile) {
         this.username = username;
-        this.nationality = nationality;
-        this.learningLanguageMap = learningLanguageMap;
-        this.masteredLanguageMap = masteredLanguageMap;
+        this.description = nationality;
+        this.learning = learning;
+        this.proficiency = proficiency;
+        this.profile = profile;
+    }
+    public User() {
+
+    }
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
     }
 
     public String getUsername() {
@@ -23,27 +38,27 @@ public class User {
         this.username = username;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Map<String, String> getLearningLanguageMap() {
-        return learningLanguageMap;
+    public Map<String, Integer> getLearning() {
+        return learning;
     }
 
-    public void setLearningLanguageMap(Map<String, String> learningLanguageMap) {
-        this.learningLanguageMap = learningLanguageMap;
+    public void setLearning(Map<String, Integer> learning) {
+        this.learning = learning;
     }
 
-    public Map<String, String> getMasteredLanguageMap() {
-        return masteredLanguageMap;
+    public Map<String, Integer> getProficiency() {
+        return proficiency;
     }
 
-    public void setMasteredLanguageMap(Map<String, String> masteredLanguageMap) {
-        this.masteredLanguageMap = masteredLanguageMap;
+    public void setProficiency(Map<String, Integer> proficiency) {
+        this.proficiency = proficiency;
     }
 }

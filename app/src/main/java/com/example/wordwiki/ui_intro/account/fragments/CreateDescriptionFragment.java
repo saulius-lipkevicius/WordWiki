@@ -120,25 +120,4 @@ public class CreateDescriptionFragment extends Fragment {
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    private void createNewUser(String username, String nationality, Map<String, String> learningLanguages, Map<String, String> knownLanguages) {
-        // TODO move to firebase
-        //
-        learningLanguages.put("English", "A1");
-
-        knownLanguages.put("German", "C1");
-
-
-        //String userId = getActivity().mAuth.getUid();
-        User user = new User(username, nationality, learningLanguages, knownLanguages);
-
-
-        FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
-        DatabaseReference databaseReference = db.getReference("users");
-        //assert userId != null;
-        databaseReference.child("testas2").setValue(user);
-
-        // TODO move to the storage
-
-    }
 }

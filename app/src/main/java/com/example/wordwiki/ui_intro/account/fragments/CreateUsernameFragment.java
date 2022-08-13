@@ -188,7 +188,7 @@ public class CreateUsernameFragment extends Fragment {
 
 
     private void createNewUser(String username, String nationality, Map<String, String> learningLanguages, Map<String, String> knownLanguages) {
-        User user = new User(username.substring(1), null, null, null);
+        User user = new User(username.substring(1), null, null, null, null);
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference databaseReference = db.getReference("Users");

@@ -34,10 +34,14 @@ import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreatePictureBinding;
 import com.example.wordwiki.ui_intro.account.CreateProfileActivity;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -57,6 +61,7 @@ public class CreatePictureFragment extends Fragment {
     public Uri imageUri;
 
     private FirebaseStorage firebaseStorage;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,36 +138,36 @@ public class CreatePictureFragment extends Fragment {
     }
 
 
-    private void setButtons () {
-            ImageButton backBtn = binding.getRoot().findViewById(R.id.back);
-            backBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    NavController navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.action_navigation_create_user_picture_to_navigation_create_user_learning_languages);
-                }
-            });
+    private void setButtons() {
+        ImageButton backBtn = binding.getRoot().findViewById(R.id.back);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_navigation_create_user_picture_to_navigation_create_user_learning_languages);
+            }
+        });
 
-            Button skipFragment = binding.getRoot().findViewById(R.id.fragment_username_skip_btn);
-            skipFragment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // navigating to the mainActivity with navView
-                }
-            });
+        Button skipFragment = binding.getRoot().findViewById(R.id.fragment_username_skip_btn);
+        skipFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // navigating to the mainActivity with navView
+            }
+        });
 
-            Button nextFragment = binding.getRoot().findViewById(R.id.fragment_username_next_btn);
-            nextFragment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child("saulius").child("picture").setValue(description);
+        Button nextFragment = binding.getRoot().findViewById(R.id.fragment_username_next_btn);
+        nextFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child("saulius").child("picture").setValue(description);
 
-                    NavController navController = Navigation.findNavController(view);
-                    navController.navigate(R.id.action_navigation_create_user_picture_to_navigation_create_user_description);
+                NavController navController = Navigation.findNavController(view);
+                navController.navigate(R.id.action_navigation_create_user_picture_to_navigation_create_user_description);
 
-                }
-            });
-        }
+            }
+        });
+    }
 
     private void uploadImage() {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
@@ -177,7 +182,9 @@ public class CreatePictureFragment extends Fragment {
         //FirebaseUser user = ((CreateProfileActivity) getActivity()).getCurrentUser();
         StorageReference profileImageRef = storageReference.child("user_profile/" + username + "/profile_image");
 
-        profileImageRef.putFile(imageUri)
+        UploadTask uploadTask = profileImageRef.putFile(imageUri);
+
+        uploadTask
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -199,5 +206,36 @@ public class CreatePictureFragment extends Fragment {
                         pd.setMessage("Progress: " + (int) progressPercent + "%");
                     }
                 });
+
+
+
+
+        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+
+                // Continue with the task to get the download URL
+                return profileImageRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    String downloadURL = downloadUri.toString();
+                    //Log.i(TAG, "onComplete: xxxx: " + downloadURL);
+
+                    FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                            .child("Users").child(username)
+                            .child("profile").setValue(downloadURL);
+                } else {
+                    // Handle failures
+                    // ...
+                }
+            }
+        });
     }
-    }
+}

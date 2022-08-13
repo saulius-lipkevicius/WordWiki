@@ -78,4 +78,6 @@ dependencies {
 
     // circular image for a profile
     implementation 'de.hdodenhof:circleimageview:2.1.0'
+    // square image
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

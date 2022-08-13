@@ -6,9 +6,10 @@ import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,19 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,31 +34,50 @@ import com.blongho.country_data.World;
 import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
-import com.example.wordwiki.ui_main.actionbar.notification.NotificationFragment;
-import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
+import com.example.wordwiki.ui_intro.account.User;
+import com.example.wordwiki.ui_main.profile.adapters.flagAdapter;
 import com.example.wordwiki.ui_main.profile.adapters.progressAdapter;
+import com.example.wordwiki.ui_main.profile.models.flagHelper;
 import com.example.wordwiki.ui_main.profile.models.progressHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment {
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-    public ImageButton profileImage;
+    public CircleImageView profileImage;
     public Uri imageUri;
-    RecyclerView progressRecycler;
+    RecyclerView progressRecycler, flagRecycler;
     ArrayList<progressHelper> progressLocations;
+    ArrayList<flagHelper> flagLocations;
     DatabaseHelper myDb;
     RecyclerView.Adapter adapter;
+    String username;
+
+    TextView profileName, profileDescription;
+
+    String country_name;
+    int flag;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +91,10 @@ public class ProfileFragment extends Fragment {
 
         World.init(getApplicationContext());
         myDb = new DatabaseHelper(getContext());
+        flagLocations = new ArrayList<>();
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("username", "");
 
         //Toolbar tb = root.findViewById(R.id.toolbar);
         //((AppCompatActivity)getActivity()).setSupportActionBar(tb);
@@ -85,6 +105,13 @@ public class ProfileFragment extends Fragment {
 
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
+
+
+        profileName = root.findViewById(R.id.settings_profile_name);
+        profileDescription = root.findViewById(R.id.settings_profile_description);
+
+
+        setUserProfile();
 
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +124,69 @@ public class ProfileFragment extends Fragment {
         progressRecycler = root.findViewById(R.id.profile_fragment_language_recycleview);
         progressRecycler();
 
+        flagRecycler = root.findViewById(R.id.profile_flag_recycler);
+        setUpFlagRecycler();
+
         return root;
     }
+
+    private void setUpFlagRecycler() {
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        //flagRecycler.setHasFixedSize(true);
+        flagRecycler.setLayoutManager(layoutManager);
+
+        Collections.sort(flagLocations, new Comparator<flagHelper>() {
+            @Override
+            public int compare(flagHelper lhs, flagHelper rhs) {
+                return rhs.getLevel() - lhs.getLevel();
+            }
+        });
+
+
+        adapter = new flagAdapter(flagLocations);
+        flagRecycler.setAdapter(adapter);
+    }
+
+
+    private void setUserProfile() {
+        DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
+        referenceProfile.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User sth = snapshot.getValue(User.class);
+
+                if (sth != null) {
+                    Log.i(TAG, "onDataChange: " + sth.getUsername());
+                    profileName.setText("@" + sth.getUsername());
+                    profileDescription.setText(sth.getDescription());
+                    String path = sth.getProfile();
+                    Uri pathImage = Uri.parse(path);
+                    //profileImage.setImageURI();
+
+                    Picasso.get().load(pathImage).into(profileImage);
+
+                    // add learning/known languages
+                    sth.getProficiency().putAll(sth.getLearning());
+
+                    for (String key : sth.getProficiency().keySet()) {
+                        Log.i(TAG, "onDataChange: hi: " + key);
+                        // get flags for sep. languages
+                        country_name = myDb.getFlagISO(key);
+                        flag = World.getFlagOf(country_name);
+
+                        flagLocations.add(new flagHelper(flag, sth.getProficiency().get(key)));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     private void progressRecycler() {
         progressRecycler.setHasFixedSize(true);
@@ -111,17 +199,10 @@ public class ProfileFragment extends Fragment {
         if (progress_languages == null)
             return; // can't do anything with a null cursor.
         try {
-            String language_name = myDb.getFlagLanguage(progress_languages.getString(0));
-            String country_name = myDb.getFlagISO(progress_languages.getString(0));
-            int flag = World.getFlagOf(country_name);
-
-            // TODO find how many words are newly revised in that language
-            String wordsPerLanguage =Integer.toString(myDb.countWordsPerLanguage(language_name));
-            progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage));
-            progressLocations.add(new progressHelper(flag, "very long languagenameesase", wordsPerLanguage));
-            progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage));
-            progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage));
-            progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage));
+            String language_name;
+            String country_name;
+            int flag;
+            String wordsPerLanguage;
 
 
             while (progress_languages.moveToNext()) {
@@ -129,7 +210,8 @@ public class ProfileFragment extends Fragment {
                 country_name = myDb.getFlagISO(progress_languages.getString(0));
                 flag = World.getFlagOf(country_name);
 
-                wordsPerLanguage =Integer.toString(myDb.countWordsPerLanguage(language_name));
+                wordsPerLanguage = Integer.toString(myDb.countTotalWordsPerLanguage(language_name));
+                // wordsPerLanguage = Integer.toString(myDb.countWordsPerLanguage(language_name));
                 progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage));
             }
         } finally {
@@ -183,7 +265,7 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode==1 && resultCode==RESULT_OK && data!=null && data.getData()!=null){
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             profileImage.setImageURI(imageUri);
 

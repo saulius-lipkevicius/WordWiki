@@ -90,7 +90,7 @@
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_notification_item.xml" value="0.2558876811594203" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_parsing.xml" value="0.25" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_play.xml" value="0.2558876811594203" />
-        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_profile.xml" value="0.19972826086956522" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_setting_item.xml" value="0.2558876811594203" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_wardrobe.xml" value="0.18697916666666667" />
@@ -102,6 +102,7 @@
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/home_model_selection_item.xml" value="0.2558876811594203" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/home_section_selection_alert_dialog.xml" value="0.2558876811594203" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/navigation_icon_explore_selector.xml" value="0.2558876811594203" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/profile_fragment_flag_item.xml" value="0.190625" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/profile_fragment_language_item.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/profile_fragment_progress_card.xml" value="0.5" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/profile_fragment_progress_item.xml" value="0.24954710144927536" />
