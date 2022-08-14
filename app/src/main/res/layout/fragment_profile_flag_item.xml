@@ -10,6 +10,7 @@
         android:id="@+id/fragment_profile_flag_item_flag"
         android:layout_width="20dp"
         android:layout_height="15dp"
+        android:scaleType="fitXY"
         android:src="@drawable/es"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

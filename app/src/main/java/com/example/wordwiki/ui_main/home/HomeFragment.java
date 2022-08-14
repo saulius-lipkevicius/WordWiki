@@ -52,6 +52,7 @@ import com.example.wordwiki.ui_main.home.adapters.dailyProgressAdapter;
 import com.example.wordwiki.ui_main.home.models.LanguageSelectionModel;
 import com.example.wordwiki.ui_main.home.models.ModeSelectionModel;
 import com.example.wordwiki.ui_main.home.models.SectionSelectionModel;
+import com.facebook.share.Share;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
@@ -152,7 +153,7 @@ public class HomeFragment extends Fragment {
         spinnerText.setAdapter(statsAdapter);
         spinnerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick (AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 viewAdapter = new dailyProgressAdapter(getContext(), position);
                 viewPager.setCurrentItem(position);
                 viewPager.setAdapter(viewAdapter);
@@ -163,6 +164,13 @@ public class HomeFragment extends Fragment {
 
 
         spinnerText.setBackground(getResources().getDrawable(R.drawable.home_fragment_selector));
+
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", "saulius");
+        editor.commit();
+
 
         return root;
     }

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.ui_main.profile.models.flagHelper;
-import com.example.wordwiki.ui_main.profile.models.progressHelper;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,7 @@ public class flagAdapter extends RecyclerView.Adapter<flagAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_fragment_flag_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_profile_flag_item, parent, false);
         return new flagAdapter.ViewHolder(view);
     }
 

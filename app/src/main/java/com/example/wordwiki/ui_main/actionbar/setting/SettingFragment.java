@@ -1,6 +1,8 @@
 package com.example.wordwiki.ui_main.actionbar.setting;
 
 import static android.content.ContentValues.TAG;
+import static android.widget.LinearLayout.HORIZONTAL;
+import static android.widget.LinearLayout.VERTICAL;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +41,7 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        addSettingFolders();
+
     }
 
     @Override
@@ -49,14 +51,17 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
         View root = binding.getRoot();
 
         // setup feed of friends in the feed
+        addSettingFolders();
         settingAdapter = new SettingListAdapter(getContext(), settingList, settingList.size(), this);
         settingListRecycle = root.findViewById(R.id.fragment_setting_recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         settingListRecycle.setLayoutManager(layoutManager);
-        settingListRecycle.addItemDecoration(new DividerItemDecoration(settingListRecycle.getContext(),
-                layoutManager.getOrientation()));
+
+        //settingListRecycle.addItemDecoration(new DividerItemDecoration(settingListRecycle.getContext(),
+        //        layoutManager.getOrientation()));
         settingListRecycle.setAdapter(settingAdapter);
 
+        Log.i(TAG, "onCreateView: asd " + settingListRecycle.getItemDecorationCount());
         setUpActionBarLinks(root);
         return root;
     }
@@ -75,12 +80,21 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
 
     private void addSettingFolders() {
         settingList.clear();
+        settingList.add(new SettingListModel(R.drawable.ic_feedback, "Give Feedback"));
+        settingList.add(new SettingListModel(R.drawable.ic_feedback, "Request Feature"));
+        settingList.add(new SettingListModel(R.drawable.ic_language, ""));
+
         settingList.add(new SettingListModel(R.drawable.ic_account, "My Account"));
         settingList.add(new SettingListModel(R.drawable.ic_notifications, "Notification"));
         settingList.add(new SettingListModel(R.drawable.ic_preference, "Preferences"));
-        settingList.add(new SettingListModel(R.drawable.ic_language, "Languages"));
-        settingList.add(new SettingListModel(R.drawable.ic_feedback, "Feedback"));
+        settingList.add(new SettingListModel(R.drawable.ic_language, "Language"));
+        settingList.add(new SettingListModel(R.drawable.ic_language, ""));
+
+        settingList.add(new SettingListModel(R.drawable.ic_about, "Help & Support"));
         settingList.add(new SettingListModel(R.drawable.ic_about, "About Us"));
+        settingList.add(new SettingListModel(R.drawable.ic_language, ""));
+
+
         settingList.add(new SettingListModel(R.drawable.ic_logout_w200, "Logout"));
     }
 

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -189,8 +190,11 @@ public class ProfileFragment extends Fragment {
 
 
     private void progressRecycler() {
+        LinearLayoutManager layoutManager
+                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
         progressRecycler.setHasFixedSize(true);
-        progressRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        //progressRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        progressRecycler.setLayoutManager(layoutManager);
 
         progressLocations = new ArrayList<>();
 
@@ -199,20 +203,23 @@ public class ProfileFragment extends Fragment {
         if (progress_languages == null)
             return; // can't do anything with a null cursor.
         try {
-            String language_name;
-            String country_name;
-            int flag;
+            String language_name = myDb.getFlagLanguage(progress_languages.getString(0));
             String wordsPerLanguage;
-
+            if (myDb.countTotalWordsPerLanguage(language_name) > 0) {
+                String country_name = myDb.getFlagISO(progress_languages.getString(0));
+                int flag = World.getFlagOf(country_name);
+                wordsPerLanguage = Integer.toString(myDb.countTotalWordsPerLanguage(language_name));
+                progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage + " words in " + "N" + " days"));
+            }
 
             while (progress_languages.moveToNext()) {
                 language_name = myDb.getFlagLanguage(progress_languages.getString(0));
-                country_name = myDb.getFlagISO(progress_languages.getString(0));
-                flag = World.getFlagOf(country_name);
-
-                wordsPerLanguage = Integer.toString(myDb.countTotalWordsPerLanguage(language_name));
-                // wordsPerLanguage = Integer.toString(myDb.countWordsPerLanguage(language_name));
-                progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage));
+                if (myDb.countTotalWordsPerLanguage(language_name) > 0) {
+                    country_name = myDb.getFlagISO(progress_languages.getString(0));
+                    flag = World.getFlagOf(country_name);
+                    wordsPerLanguage = Integer.toString(myDb.countTotalWordsPerLanguage(language_name));
+                    progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage + " words in " + "N" + " days"));
+                }
             }
         } finally {
             progress_languages.close();
@@ -224,7 +231,34 @@ public class ProfileFragment extends Fragment {
 
     public void onProgressListClick(int clickedItemIndex) {
         Log.i(TAG, "onProgressListClick: " + progressLocations.get(clickedItemIndex).getTitle());
+        DialogFragment dialogFragment = FullScreenDialog.newInstance();
 
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title", progressLocations.get(clickedItemIndex).getTitle());
+
+        country_name = myDb.getFlagISO(progressLocations.get(clickedItemIndex).getTitle());
+        flag = World.getFlagOf(country_name);
+
+        bundle.putInt("flag", flag);
+        dialogFragment.setArguments(bundle);
+
+        dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+
+
+        // TODO implement the callback
+        /*
+        ((FullScreenDialog) dialogFragment).setCallback(new FullScreenDialog.Callback() {
+            @Override
+            public void onActionClick(String name) {
+                // here comes the callback
+            }
+        });
+
+         */
+
+
+        //TODO pop up dialogFragment here
         /*
 
         switch (clickedItemIndex) {

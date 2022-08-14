@@ -28,7 +28,7 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
     @NonNull
     @Override
     public PhoneViewHold onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.profile_fragment_progress_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_profile_progress_item, parent, false);
         return new PhoneViewHold(view);
 
     }
@@ -44,7 +44,6 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
     @Override
     public int getItemCount() {
         return progressLocations.size();
-
     }
 
     public interface ListItemClickListener {
