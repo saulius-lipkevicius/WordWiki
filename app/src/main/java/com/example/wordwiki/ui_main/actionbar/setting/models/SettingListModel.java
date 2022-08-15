@@ -1,4 +1,4 @@
-package com.example.wordwiki.ui_main.actionbar.setting;
+package com.example.wordwiki.ui_main.actionbar.setting.models;
 
 public class SettingListModel {
     private String settingsName;

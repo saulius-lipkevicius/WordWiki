@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_main.actionbar.setting.sub_settings.PreferenceFragment">
+    tools:context=".ui_main.actionbar.setting.sub_settings.NotificationSettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/actionbar_with_back_btn_title" />
+        <include layout="@layout/actionbar_dialog_fragment_closing" />
 
         <!-- TODO: Update blank fragment layout -->
         <TextView
@@ -18,5 +18,4 @@
             android:layout_height="match_parent"
             android:text="@string/hello_blank_fragment" />
     </LinearLayout>
-
 </FrameLayout>

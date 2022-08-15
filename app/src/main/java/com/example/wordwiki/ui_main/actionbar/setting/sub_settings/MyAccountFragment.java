@@ -13,11 +13,11 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.databinding.FragmentLanguagesBinding;
 import com.example.wordwiki.databinding.FragmentMyAccountBinding;
-import com.example.wordwiki.databinding.FragmentPreferenceBinding;
 
-public class PreferenceFragment extends Fragment {
-    FragmentPreferenceBinding binding;
+public class MyAccountFragment extends Fragment {
+    FragmentMyAccountBinding binding;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class PreferenceFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentPreferenceBinding.inflate(inflater, container, false);
+        binding = FragmentMyAccountBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         ImageButton toSettings = root.findViewById(R.id.toolbar_back_btn);
@@ -39,7 +39,7 @@ public class PreferenceFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.i("a", "onClick: aaaa");
-                navCo.navigate(R.id.action_navigation_preferences_to_navigation_setting);
+                navCo.navigate(R.id.action_navigation_myaccount_to_navigation_setting);
             }
         });
 

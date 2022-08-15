@@ -50,7 +50,7 @@ public class AboutFragment extends Fragment {
         toGit = root.findViewById(R.id.toGit);
         toGmail = root.findViewById(R.id.toGmail);
         toFeedback = root.findViewById(R.id.toFeedback);
-        toSettings = root.findViewById(R.id.back_to_settings);
+        toSettings = root.findViewById(R.id.toolbar_back_btn);
 
         NavHostFragment navHostFragment = (NavHostFragment) getActivity().getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment_activity_main);

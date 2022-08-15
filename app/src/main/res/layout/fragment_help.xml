@@ -3,21 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_intro.account.fragments.CreateKnownLanguagesFragment">
+    tools:context=".ui_main.actionbar.setting.sub_settings.dialogs.HelpFragmentDialog">
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <include layout="@layout/actionbar_create_account_full" />
+        <include layout="@layout/actionbar_dialog_fragment_closing" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:text="How proficient you are in languages?"
+            android:layout_marginEnd="10dp"
+            android:text="Tell us about the problem"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -27,18 +32,41 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:text="Select languages to personalize your WordWiki experience and further learning"
+            android:text="Constructive criticism is always good :)"
             android:textColor="@android:color/darker_gray"
             android:textSize="14sp"
             android:textStyle="normal" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment_create_known_language_recycle_view"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/outlined_text_input_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:hint="Description"
+            android:padding="10dp">
+
+            <!-- TODO create an indexer for the letter count, and keep it short and simple -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/outlined_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textPassword|textVisiblePassword|textCapSentences|textMultiLine"
+                android:maxLength="200"
+                android:gravity="top|start" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0 / 200"
+            android:gravity="end"
+            android:layout_marginEnd="40dp"
+            android:id="@+id/fragment_create_user_description_counter"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,8 +87,10 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_horizontal|center"
                 android:text="Skip for now"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:visibility="invisible" />
 
+            <!-- TODO add send icon-->
             <Button
                 android:id="@+id/fragment_username_next_btn"
                 android:layout_width="wrap_content"
@@ -68,10 +98,9 @@
                 android:layout_marginStart="50dp"
                 android:background="@android:color/transparent"
                 android:gravity="center"
-                android:text="Next"
+                android:text="Send"
                 android:textColor="@android:color/black" />
-
-
         </LinearLayout>
     </LinearLayout>
+
 </FrameLayout>

@@ -1,32 +1,30 @@
 package com.example.wordwiki.ui_main.actionbar.setting;
 
 import static android.content.ContentValues.TAG;
-import static android.widget.LinearLayout.HORIZONTAL;
-import static android.widget.LinearLayout.VERTICAL;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentSettingBinding;
-import com.example.wordwiki.ui_main.home.HomeFragment;
+import com.example.wordwiki.ui_main.actionbar.setting.adapters.SettingListAdapter;
+import com.example.wordwiki.ui_main.actionbar.setting.models.SettingListModel;
+import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.FeedbackFragmentDialog;
+import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.HelpFragmentDialog;
+import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.RequestFeatureFragmentDialog;
+import com.example.wordwiki.ui_main.profile.FullScreenDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,24 +99,46 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
     @Override
     public void onSettingClick(int position) {
         String settingsClicked = settingList.get(position).getSettingsName();
+        NavController navController = Navigation.findNavController(binding.getRoot());
 
-        if (settingsClicked.equals("About Us")) {
-            NavController navController = Navigation.findNavController(binding.getRoot());
+        // sending some data to change titles IF dialogFragment is called
+        Bundle bundle = new Bundle();
+        bundle.putString("title", settingsClicked);
+
+        // if it is a navigation case
+        // TODO finish it up later
+
+
+        if (settingsClicked.equals("Give Feedback")) {
+            DialogFragment dialogFragment = FeedbackFragmentDialog.newInstance();
+            dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+
+        } else if (settingsClicked.equals("Request Feature")) {
+            DialogFragment dialogFragment = RequestFeatureFragmentDialog.newInstance();
+            dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+
+        } else if (settingsClicked.equals("My Account")) {
+            navController.navigate(R.id.action_navigation_setting_to_navigation_myaccount);
+
+        } else if (settingsClicked.equals("Notification")) {
+            navController.navigate(R.id.action_navigation_setting_to_navigation_notification);
+
+        } else if (settingsClicked.equals("Preferences")) {
+            navController.navigate(R.id.action_navigation_setting_to_navigation_preferences);
+
+        } else if (settingsClicked.equals("Language")) {
+            navController.navigate(R.id.action_navigation_setting_to_navigation_language);
+
+        } else if (settingsClicked.equals("Help & Support")) {
+            DialogFragment dialogFragment = HelpFragmentDialog.newInstance();
+            dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+
+        } else if (settingsClicked.equals("About Us")) {
             navController.navigate(R.id.action_navigation_setting_to_navigation_about);
-        } else if (settingsClicked.equals("")) {
-
-        } else if (settingsClicked.equals("")) {
-
-        } else if (settingsClicked.equals("")) {
-
-        } else if (settingsClicked.equals("")) {
-
-        } else if (settingsClicked.equals("")) {
-            // TODO fill settings with fragments
-        } else if (settingsClicked.equals("")) {
 
         } else if (settingsClicked.equals("Logout")) {
             ((MainActivity) getActivity()).signOut();
+
         }
     }
 }

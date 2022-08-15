@@ -22,7 +22,7 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
 
     private Callback callback;
 
-    static FullScreenDialog newInstance() {
+    public static FullScreenDialog newInstance() {
         return new FullScreenDialog();
     }
 

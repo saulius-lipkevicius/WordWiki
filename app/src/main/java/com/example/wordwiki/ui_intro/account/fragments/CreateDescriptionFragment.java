@@ -50,6 +50,7 @@ public class CreateDescriptionFragment extends Fragment {
 
         setButtons();
 
+
         editText = root.findViewById(R.id.outlined_edit_text);
         editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

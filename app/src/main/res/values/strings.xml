@@ -58,6 +58,9 @@
     <!-- spinner in home for statistics -->
     <string name="home_stats_first">Words Repeated</string>
     <string name="title_parsing">Parsing</string>
+    <string name="title_myaccount">My Account</string>
+    <string name="title_preferences">Preferences</string>
+    <string name="title_languages">Languages</string>
 
     <string-array name="home_stats">
         <item>Words Repeated</item>

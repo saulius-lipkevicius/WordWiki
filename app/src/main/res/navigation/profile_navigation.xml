@@ -14,6 +14,16 @@
             android:id="@+id/action_navigation_profile_to_navigation_setting"
             app:destination="@id/navigation_setting" />
     </fragment>
+    <action
+        android:id="@+id/action_navigation_nested3_self"
+        app:destination="@id/navigation_profile"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/navigation_profile"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_navigation_profile"
+        app:destination="@id/navigation_profile" />
+
 
     <fragment
         android:id="@+id/navigation_setting"
@@ -26,6 +36,59 @@
         <action
             android:id="@+id/action_navigation_setting_to_navigation_profile"
             app:destination="@id/navigation_profile" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_language"
+            app:destination="@id/navigation_language" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_preferences"
+            app:destination="@id/navigation_preferences" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_notification"
+            app:destination="@id/navigation_notification" />
+        <action
+            android:id="@+id/action_navigation_setting_to_navigation_myaccount"
+            app:destination="@id/navigation_myaccount" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_myaccount"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.sub_settings.MyAccountFragment"
+        android:label="@string/title_myaccount"
+        tools:layout="@layout/fragment_my_account">
+        <action
+            android:id="@+id/action_navigation_myaccount_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_notification"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.sub_settings.NotificationSettingsFragment"
+        android:label="@string/title_notification"
+        tools:layout="@layout/fragment_notification_settings">
+        <action
+            android:id="@+id/action_navigation_notification_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_preferences"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.sub_settings.PreferenceFragment"
+        android:label="@string/title_preferences"
+        tools:layout="@layout/fragment_preference">
+        <action
+            android:id="@+id/action_navigation_preferences_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_language"
+        android:name="com.example.wordwiki.ui_main.actionbar.setting.sub_settings.LanguagesFragment"
+        android:label="@string/title_languages"
+        tools:layout="@layout/fragment_languages">
+        <action
+            android:id="@+id/action_navigation_language_to_navigation_setting"
+            app:destination="@id/navigation_setting" />
     </fragment>
 
     <fragment
@@ -34,19 +97,9 @@
         android:label="@string/title_about"
         tools:layout="@layout/fragment_about">
         <action
-            android:id="@+id/action_navigation_about_to_navigation_profile"
-            app:destination="@id/navigation_profile" />
-        <action
             android:id="@+id/action_navigation_about_to_navigation_setting"
             app:destination="@id/navigation_setting" />
     </fragment>
-    <action
-        android:id="@+id/action_navigation_nested3_self"
-        app:destination="@id/navigation_profile"
-        app:launchSingleTop="true"
-        app:popUpTo="@id/navigation_profile"
-        app:popUpToInclusive="true" />
-    <action
-        android:id="@+id/action_global_navigation_profile"
-        app:destination="@id/navigation_profile" />
+
+
 </navigation>
