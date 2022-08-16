@@ -1,37 +1,41 @@
 package com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs;
 
-import android.app.Dialog;
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
+import com.example.wordwiki.ui_main.actionbar.setting.models.UserFeedbackModel;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Objects;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class FeedbackFragmentDialog extends DialogFragment implements View.OnClickListener{
-    TextInputEditText editText;
+    TextInputEditText inputText;
+    TextView inputTextCounter;
+    Button sendFeedback;
     private FeedbackFragmentDialog.Callback callback;
 
     public static FeedbackFragmentDialog newInstance() {
@@ -47,7 +51,6 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.FullScreenDialogTheme);
-
     }
 
 
@@ -56,28 +59,39 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_feedback, container, false);
 
-
         // to get the intended resize when we have focus on the text field
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
+        // close the dialogFragment by connecting it to the listener which finds id of item pressed
         ImageButton closeDialog = view.findViewById(R.id.toolbar_back_btn);
         closeDialog.setOnClickListener(this);
 
+        inputText = view.findViewById(R.id.outlined_edit_text);
+        inputTextCounter = view.findViewById(R.id.fragment_create_user_description_counter);
+        inputTextListener(view);
 
+        sendFeedback = view.findViewById(R.id.dialog_fragment_send);
+        setSendFeedbackBtn(view);
 
+        return view;
+    }
 
-        editText = view.findViewById(R.id.outlined_edit_text);
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+    private void inputTextListener(View view) {
+        inputText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                LinearLayout btnLayout = view.findViewById(R.id.feedbackBtnLayout);
                 if (!hasFocus) {
                     hideKeyboard(v);
+                    btnLayout.setGravity(Gravity.END | Gravity.BOTTOM);
+                } else {
+                    btnLayout.setGravity(Gravity.END | Gravity.TOP);
                 }
             }
         });
 
-        TextView editTextCounter = view.findViewById(R.id.fragment_create_user_description_counter);
-        editText.addTextChangedListener(new TextWatcher() {
+
+        inputText.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
@@ -85,7 +99,7 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
 
             @Override
             public void afterTextChanged(Editable editable) {
-                editTextCounter.setText(editable.length() + " / 200");
+                inputTextCounter.setText(editable.length() + " / 200");
             }
 
             @Override
@@ -93,17 +107,30 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
                                           int after) {
             }
         });
-
-        //Map<String, String> learningLanguages = new HashMap<>();
-        //Map<String, String> knownLanguages = new HashMap<>();
-
-
-        //createNewUser(username, "Lithuanian", learningLanguages, knownLanguages);
-
-
-        return view;
     }
 
+    private void setSendFeedbackBtn(View view) {
+        sendFeedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
+                String feedbackText = inputText.getText().toString();
+                Date currentTime = Calendar.getInstance().getTime();
+                String fDate = new SimpleDateFormat("yyyy-MM-dd").format(currentTime);
+
+                UserFeedbackModel input = new UserFeedbackModel(username, feedbackText, "saulius43@gmail.com", fDate);
+
+                final String pushId = FirebaseDatabase.getInstance().getReference().push().getKey();
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                        .child("Feedback").child("Feedback")
+                        .child(pushId).setValue(input);
+                hideKeyboard(view);
+                sendResultsSettings(1);
+                dismiss();
+            }
+        });
+    }
 
 
     @Override
@@ -115,14 +142,6 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
                 sendResultsSettings(0);
                 dismiss();
                 break;
-
-                /*
-                case R.id.dialog_back:
-                callback.onActionClick("This is used to communicate with the parent fragment")
-
-                break;
-
-                 */
         }
     }
 
@@ -134,8 +153,13 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
         // identify sender
         Intent intent = new Intent();
         intent.putExtra("isDismissed", true);
+        if (requestCode == 1) {
+            intent.putExtra("isSnack", true);
+        }
+
+
         getTargetFragment().onActivityResult(
-                getTargetRequestCode(), requestCode, intent);
+                getTargetRequestCode(), 0, intent);
     }
 
     public void hideKeyboard(View view) {

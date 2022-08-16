@@ -69,35 +69,25 @@
             android:id="@+id/fragment_create_user_description_counter"/>
 
         <LinearLayout
+            android:id="@+id/feedbackBtnLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:gravity="center|bottom"
+            android:gravity="end|bottom"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <Button
-                android:id="@+id/fragment_username_skip_btn"
+                android:drawableEnd="@drawable/ic_send"
+                android:id="@+id/dialog_fragment_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
-                android:background="@android:color/transparent"
-                android:gravity="center_horizontal|center"
-                android:text="Skip for now"
-                android:textColor="@android:color/black"
-                android:visibility="invisible" />
-
-            <!-- TODO add send icon-->
-            <Button
-                android:id="@+id/fragment_username_next_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:background="@android:color/transparent"
                 android:gravity="center"
+                android:layout_marginEnd="10dp"
                 android:text="Send"
                 android:textColor="@android:color/black" />
         </LinearLayout>

@@ -31,6 +31,9 @@ import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.Feedb
 import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.HelpFragmentDialog;
 import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.RequestFeatureFragmentDialog;
 import com.example.wordwiki.ui_main.profile.FullScreenDialog;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,11 +75,20 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Make sure fragment codes match up
-        Log.i(TAG, "onActivityResult: ");
+        Log.i(TAG, "onActivityResult:::" + requestCode);
+
         if (requestCode == 0) {
             Boolean editTextString = data.getBooleanExtra("isDismissed", false);
+            Boolean createSnack = data.getBooleanExtra("isSnack", false);
             if (editTextString) {
                 changeStatusBarColor(true);
+            }
+
+            if (createSnack) {
+                Snackbar snackbar = Snackbar.make(binding.getRoot().getRootView(), "It is successfully sent. Thanks for the input.", Snackbar.LENGTH_SHORT);
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+                snackbar.setAnchorView(bottomNavigationView);
+                snackbar.show();
             }
         }
     }
