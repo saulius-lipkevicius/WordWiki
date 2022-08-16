@@ -1,6 +1,10 @@
 package com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +17,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
@@ -22,6 +27,8 @@ import android.widget.TextView;
 import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Objects;
 
 public class FeedbackFragmentDialog extends DialogFragment implements View.OnClickListener{
     TextInputEditText editText;
@@ -35,33 +42,13 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
         this.callback = callback;
     }
 
-    @NonNull
-    @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        Dialog dialog = getDialog();
-        if (dialog != null)
-        {
-            int width = ViewGroup.LayoutParams.MATCH_PARENT;
-            int height = ViewGroup.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().setLayout(width, height);
-        }
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.FullScreenDialogTheme);
-
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.FullScreenDialogTheme);
 
     }
-
 
 
     @Nullable
@@ -117,12 +104,15 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
         return view;
     }
 
+
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
 
         switch (id){
             case R.id.toolbar_back_btn:
+                sendResultsSettings(0);
                 dismiss();
                 break;
 
@@ -138,6 +128,14 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
 
     public  interface Callback {
         void onActionClick(String name);
+    }
+
+    public void sendResultsSettings(int requestCode) {
+        // identify sender
+        Intent intent = new Intent();
+        intent.putExtra("isDismissed", true);
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(), requestCode, intent);
     }
 
     public void hideKeyboard(View view) {

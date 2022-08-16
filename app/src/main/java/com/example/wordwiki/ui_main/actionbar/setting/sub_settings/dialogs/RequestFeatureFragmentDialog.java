@@ -3,6 +3,7 @@ package com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -122,6 +123,7 @@ public class RequestFeatureFragmentDialog extends DialogFragment implements View
         Log.i(TAG, "onClick: id: " + id);
         switch (id){
             case R.id.toolbar_back_btn:
+                sendResultsSettings(0);
                 dismiss();
                 break;
 
@@ -138,6 +140,14 @@ public class RequestFeatureFragmentDialog extends DialogFragment implements View
     public  interface Callback {
 
         void onActionClick(String name);
+    }
+
+    public void sendResultsSettings(int requestCode) {
+        // identify sender
+        Intent intent = new Intent();
+        intent.putExtra("isDismissed", true);
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(), requestCode, intent);
     }
 
     public void hideKeyboard(View view) {

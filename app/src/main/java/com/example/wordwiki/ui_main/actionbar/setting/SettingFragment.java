@@ -2,15 +2,21 @@ package com.example.wordwiki.ui_main.actionbar.setting;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -39,15 +45,14 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         // setup feed of friends in the feed
         addSettingFolders();
         settingAdapter = new SettingListAdapter(getContext(), settingList, settingList.size(), this);
@@ -63,6 +68,19 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
         setUpActionBarLinks(root);
         return root;
     }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Make sure fragment codes match up
+        Log.i(TAG, "onActivityResult: ");
+        if (requestCode == 0) {
+            Boolean editTextString = data.getBooleanExtra("isDismissed", false);
+            if (editTextString) {
+                changeStatusBarColor(true);
+            }
+        }
+    }
+
 
     private void setUpActionBarLinks(View root) {
         // moves of the actionbar in the mainActivity
@@ -110,12 +128,20 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
 
 
         if (settingsClicked.equals("Give Feedback")) {
+            changeStatusBarColor(false);
+            // to identify a sender later on
+            FragmentManager fm = SettingFragment.this.getParentFragmentManager();
             DialogFragment dialogFragment = FeedbackFragmentDialog.newInstance();
-            dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+            dialogFragment.setTargetFragment(this, 0);
+            dialogFragment.show(fm, "TAG");
 
         } else if (settingsClicked.equals("Request Feature")) {
+            changeStatusBarColor(false);
+
+            FragmentManager fm = SettingFragment.this.getParentFragmentManager();
             DialogFragment dialogFragment = RequestFeatureFragmentDialog.newInstance();
-            dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+            dialogFragment.setTargetFragment(this, 0);
+            dialogFragment.show(fm, "TAG");
 
         } else if (settingsClicked.equals("My Account")) {
             navController.navigate(R.id.action_navigation_setting_to_navigation_myaccount);
@@ -130,14 +156,30 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
             navController.navigate(R.id.action_navigation_setting_to_navigation_language);
 
         } else if (settingsClicked.equals("Help & Support")) {
+            changeStatusBarColor(false);
+            FragmentManager fm = SettingFragment.this.getParentFragmentManager();
             DialogFragment dialogFragment = HelpFragmentDialog.newInstance();
-            dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+            dialogFragment.setTargetFragment(this, 0);
+            dialogFragment.show(fm, "TAG");
 
         } else if (settingsClicked.equals("About Us")) {
             navController.navigate(R.id.action_navigation_setting_to_navigation_about);
 
         } else if (settingsClicked.equals("Logout")) {
             ((MainActivity) getActivity()).signOut();
+
+        }
+    }
+
+    public void changeStatusBarColor(Boolean isDismissed){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window =  getActivity().getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            if (isDismissed) {
+                window.setStatusBarColor(Color.BLACK);
+            } else {
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }
 
         }
     }

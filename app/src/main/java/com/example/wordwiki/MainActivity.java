@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity{
     private void setUpView() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -124,6 +127,4 @@ public class MainActivity extends AppCompatActivity{
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
-
 }
