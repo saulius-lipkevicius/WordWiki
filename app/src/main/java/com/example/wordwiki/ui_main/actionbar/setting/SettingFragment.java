@@ -56,20 +56,27 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
                              Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         // setup feed of friends in the feed
         addSettingFolders();
+
+        // set up settings recycler view and adapter
+        setRecyclerView();
+
+        // set movement to back to Profile destination
+        setUpActionBarLinks(root);
+
+        return root;
+    }
+
+    private void setRecyclerView() {
         settingAdapter = new SettingListAdapter(getContext(), settingList, settingList.size(), this);
-        settingListRecycle = root.findViewById(R.id.fragment_setting_recycle_view);
+        settingListRecycle = binding.getRoot().findViewById(R.id.fragment_setting_recycle_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         settingListRecycle.setLayoutManager(layoutManager);
 
-        //settingListRecycle.addItemDecoration(new DividerItemDecoration(settingListRecycle.getContext(),
-        //        layoutManager.getOrientation()));
-        settingListRecycle.setAdapter(settingAdapter);
 
-        Log.i(TAG, "onCreateView: asd " + settingListRecycle.getItemDecorationCount());
-        setUpActionBarLinks(root);
-        return root;
+        settingListRecycle.setAdapter(settingAdapter);
     }
 
 

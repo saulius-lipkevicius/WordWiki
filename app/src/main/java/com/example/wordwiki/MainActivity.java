@@ -1,6 +1,7 @@
 package com.example.wordwiki;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -49,6 +51,12 @@ public class MainActivity extends AppCompatActivity{
         setUpGoogleLogin();
         setUpTrackers();
         bottomNavigationReselection();
+    }
+
+    public String getUsername(){
+        SharedPreferences usernameSharedPreference = getSharedPreferences("general", MODE_PRIVATE);
+        String username = usernameSharedPreference.getString("username", "");
+        return username;
     }
 
     private void setUpView() {
@@ -81,6 +89,10 @@ public class MainActivity extends AppCompatActivity{
 
     public FirebaseUser getCurrentUser(){
         return mAuth.getCurrentUser();
+    }
+
+    public String  getAuthenticationType (){
+        return FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getProviderId();
     }
 
     public void bottomNavigationReselection() {

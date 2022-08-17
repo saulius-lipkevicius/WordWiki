@@ -10,12 +10,39 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/actionbar_dialog_fragment_closing" />
+        <include layout="@layout/actionbar_with_back_btn_title" />
 
-        <!-- TODO: Update blank fragment layout -->
-        <TextView
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/preference_notification_notification_switch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:layout_height="wrap_content"
+            android:text="Notification"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"/>
+
+        <TextView
+            android:id="@+id/preference_notification_create_remainder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"
+            android:text="Create a remainder"
+            android:textColor="@android:color/black"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/preference_notification_snooze_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"
+            android:text="Snooze notifications"
+            android:textColor="@android:color/black"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 </FrameLayout>

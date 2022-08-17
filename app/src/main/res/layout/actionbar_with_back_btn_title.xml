@@ -28,8 +28,8 @@
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
             android:layout_centerInParent="true"
-            android:textStyle="bold"/>
+            android:text="Title"
+            android:textStyle="bold" />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

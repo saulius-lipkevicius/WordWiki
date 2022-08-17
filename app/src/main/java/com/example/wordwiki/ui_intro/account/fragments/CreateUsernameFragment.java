@@ -168,11 +168,11 @@ public class CreateUsernameFragment extends Fragment {
     public void readData(MyCallback myCallback) {
         String myUsername = editText.getText().toString().substring(1);
         Log.i(TAG, "onDataChange: mano testas edittext " + myUsername);
-        FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference().child("Users").child(myUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                .child("Users").child(myUsername).child("profile").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Boolean value = dataSnapshot.exists();
-                Log.i(TAG, "onDataChange: mano testas " + value);
                 myCallback.onCallback(value);
             }
 

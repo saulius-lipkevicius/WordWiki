@@ -106,7 +106,7 @@ public class CreateLearningLanguagesFragment extends Fragment  implements Recycl
 
 
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                        .child("Users").child(username)
+                        .child("Users").child(username).child("profile")
                         .child("learning").setValue(learningLanguageMap);
 
                 NavController navController = Navigation.findNavController(view);

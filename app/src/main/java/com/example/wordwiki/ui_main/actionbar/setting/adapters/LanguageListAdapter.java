@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
@@ -53,7 +54,7 @@ public class LanguageListAdapter extends RecyclerView.Adapter {
 
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        ImageView languageFlag;
+        ImageFilterView languageFlag;
         TextView languageName;
         LanguageListAdapter.OnSettingListener onSettingListener;
 

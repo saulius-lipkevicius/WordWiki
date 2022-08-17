@@ -1,8 +1,11 @@
 package com.example.wordwiki.ui_main.actionbar.setting.sub_settings;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,6 +28,8 @@ import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.databinding.FragmentLanguagesBinding;
 import com.example.wordwiki.ui_main.actionbar.setting.adapters.LanguageListAdapter;
 import com.example.wordwiki.ui_main.actionbar.setting.models.LanguagesModel;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,7 @@ public class LanguagesFragment extends Fragment implements LanguageListAdapter.O
     DatabaseHelper myDb;
     ImageButton toSettings;
     NavController navCo;
+    TextView toolbarTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,8 +77,8 @@ public class LanguagesFragment extends Fragment implements LanguageListAdapter.O
     }
 
     private void setUpFunctionality() {
-        TextView toolbarTitle = binding.getRoot().findViewById(R.id.toolbar_title);
-        toolbarTitle.setText("Languages");
+        toolbarTitle = binding.getRoot().findViewById(R.id.toolbar_title);
+        toolbarTitle.setText("Language");
 
         World.init(getApplicationContext());
         myDb = new DatabaseHelper(getContext());
@@ -84,7 +90,6 @@ public class LanguagesFragment extends Fragment implements LanguageListAdapter.O
         toSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.i("a", "onClick: aaaa");
                 navCo.navigate(R.id.action_navigation_language_to_navigation_setting);
             }
         });
@@ -92,20 +97,45 @@ public class LanguagesFragment extends Fragment implements LanguageListAdapter.O
     }
 
     private void addLanguages() {
-        String country_name = myDb.getFlagISO("Spanish");
-        int flag = World.getFlagOf(country_name);
         languageList.clear();
-        languageList.add(new LanguagesModel("English", flag));
-        languageList.add(new LanguagesModel("Spanish", flag));
-        languageList.add(new LanguagesModel("German", flag));
-        languageList.add(new LanguagesModel("French", flag));
-        languageList.add(new LanguagesModel("Lithuanian", flag));
+        languageList.add(new LanguagesModel("English", World.getFlagOf("gb")));
+        languageList.add(new LanguagesModel("Spanish", World.getFlagOf("es")));
+        languageList.add(new LanguagesModel("German", World.getFlagOf("de")));
+        languageList.add(new LanguagesModel("French", World.getFlagOf("fr")));
+        languageList.add(new LanguagesModel("Lithuanian", World.getFlagOf("lt")));
 
     }
 
     @Override
     public void onSettingClick(int position) {
-        Log.i(TAG, "onLanguage selected " + languageList.get(position).getLanguageName());
+        // TODO finish the following
+        // if the item is clicked, put confirmation
+        Boolean isConfirmed = true;
+
+        if (isConfirmed){
+            // save it to the preferences
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            String chosenLanguage = languageList.get(position).getLanguageName();
+            editor.putString(chosenLanguage, "English");
+            editor.apply();
+
+            // get username from preferences
+            SharedPreferences usernameSharedPreference = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+            String username = usernameSharedPreference.getString("username", "");
+
+            // save it to the firebase database for later use
+            FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                    .child("Users").child(username).child("preference")
+                    .child("language").setValue(chosenLanguage);
+
+            // call function which determines app language and how to translate it
+        } else {
+            Snackbar.make(binding.getRoot(), "Try again to change the language", Snackbar.LENGTH_SHORT).show();
+        }
+
+
     }
 
 

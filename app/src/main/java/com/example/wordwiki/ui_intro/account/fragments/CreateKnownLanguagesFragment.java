@@ -106,7 +106,7 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
                 String username = sharedPreferences.getString("username", "");
 
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                        .child("Users").child(username)
+                        .child("Users").child(username).child("profile")
                         .child("proficiency").setValue(knownLanguageMap);
 
                 NavController navController = Navigation.findNavController(view);

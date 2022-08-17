@@ -17,6 +17,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Pick your language"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:textColor="@android:color/black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="More languages are incoming. Press to request your language"
@@ -25,6 +35,8 @@
             android:textStyle="normal" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
             android:id="@+id/fragment_settings_language_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
