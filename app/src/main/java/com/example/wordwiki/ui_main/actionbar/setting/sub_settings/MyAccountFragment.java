@@ -50,7 +50,19 @@ public class MyAccountFragment extends Fragment {
         // get the username for firebase pushes
         username = ((MainActivity)getActivity()).getUsername();
 
+        // set title and the navigation buttons
         setButtons();
+
+        // set preference functionality
+        onClickPreference();
+
+        // hide change password if an user is connected with the mail authorization
+        authenticationType = ((MainActivity)getActivity()).getAuthenticationType();
+        if (authenticationType.equals("password")){
+            binding.getRoot().findViewById(R.id.fragment_myaccount_change_password).setVisibility(View.VISIBLE);
+        } else {
+            binding.getRoot().findViewById(R.id.fragment_myaccount_change_password).setVisibility(View.GONE);
+        }
 
         return root;
     }
@@ -104,7 +116,18 @@ public class MyAccountFragment extends Fragment {
             public void onClick(View view) {
                 authenticationType = ((MainActivity)getActivity()).getAuthenticationType();
                 if (authenticationType.equals("password")){
+                    FirebaseUser user = ((MainActivity)getActivity()).getCurrentUser();
 
+                    ((MainActivity)getActivity()).getInstance().sendPasswordResetEmail(user.getEmail())
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "Email sent.");
+                                    }
+                                }
+                            });
+                    /*
                     // TODO create a small dialog with old + new password, to confirm the user
                     FirebaseUser user = ((MainActivity)getActivity()).getCurrentUser();
                     String newPassword = "test";
@@ -117,6 +140,8 @@ public class MyAccountFragment extends Fragment {
                                     }
                                 }
                             });
+
+                     */
                 }
             }
         });

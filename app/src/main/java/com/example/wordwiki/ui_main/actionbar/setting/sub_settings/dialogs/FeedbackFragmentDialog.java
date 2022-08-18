@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.ui_main.actionbar.setting.models.UserFeedbackModel;
+import com.example.wordwiki.ui_main.actionbar.setting.models.UserFeedbackNoStarsModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -119,7 +120,7 @@ public class FeedbackFragmentDialog extends DialogFragment implements View.OnCli
                 Date currentTime = Calendar.getInstance().getTime();
                 String fDate = new SimpleDateFormat("yyyy-MM-dd").format(currentTime);
 
-                UserFeedbackModel input = new UserFeedbackModel(username, feedbackText, "saulius43@gmail.com", fDate);
+                UserFeedbackNoStarsModel input = new UserFeedbackNoStarsModel(username, feedbackText, "saulius43@gmail.com", fDate);
 
                 final String pushId = FirebaseDatabase.getInstance().getReference().push().getKey();
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()

@@ -27,7 +27,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -58,7 +57,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -67,8 +65,8 @@ public class ProfileFragment extends Fragment {
     private StorageReference storageReference;
     public CircleImageView profileImage;
     public Uri imageUri;
-    RecyclerView progressRecycler, flagRecycler;
-    ArrayList<progressHelper> progressLocations;
+    RecyclerView flagRecycler;
+
     ArrayList<flagHelper> flagLocations;
     DatabaseHelper myDb;
     RecyclerView.Adapter adapter;
@@ -76,8 +74,19 @@ public class ProfileFragment extends Fragment {
 
     TextView profileName, profileDescription;
 
+
+
+
+    // newly written recyclerView
+    // variables
     String country_name;
     int flag;
+    // recycler and adapter + layoutManager
+    RecyclerView progressRecycler;
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+    // list of the progress
+    ArrayList<progressHelper> progressList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -190,14 +199,7 @@ public class ProfileFragment extends Fragment {
 
 
     private void progressRecycler() {
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false);
-        progressRecycler.setHasFixedSize(true);
-        //progressRecycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        progressRecycler.setLayoutManager(layoutManager);
-
-        progressLocations = new ArrayList<>();
-
+        /*
         Cursor progress_languages = myDb.getAllLanguages();
 
         if (progress_languages == null)
@@ -209,7 +211,7 @@ public class ProfileFragment extends Fragment {
                 String country_name = myDb.getFlagISO(progress_languages.getString(0));
                 int flag = World.getFlagOf(country_name);
                 wordsPerLanguage = Integer.toString(myDb.countTotalWordsPerLanguage(language_name));
-                progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage + " words in " + "N" + " days"));
+                progressList.add(new progressHelper(flag, language_name, wordsPerLanguage + " words in " + "N" + " days"));
             }
 
             while (progress_languages.moveToNext()) {
@@ -218,26 +220,31 @@ public class ProfileFragment extends Fragment {
                     country_name = myDb.getFlagISO(progress_languages.getString(0));
                     flag = World.getFlagOf(country_name);
                     wordsPerLanguage = Integer.toString(myDb.countTotalWordsPerLanguage(language_name));
-                    progressLocations.add(new progressHelper(flag, language_name, wordsPerLanguage + " words in " + "N" + " days"));
+                    progressList.add(new progressHelper(flag, language_name, wordsPerLanguage + " words in " + "N" + " days"));
                 }
             }
         } finally {
             progress_languages.close();
         }
 
-        adapter = new progressAdapter(progressLocations, this::onProgressListClick);
+         */
+
+        adapter = new progressAdapter(progressList, this::onProgressListClick, getContext());
+        progressRecycler.setLayoutManager(layoutManager);
         progressRecycler.setAdapter(adapter);
     }
 
+
+
     public void onProgressListClick(int clickedItemIndex) {
-        Log.i(TAG, "onProgressListClick: " + progressLocations.get(clickedItemIndex).getTitle());
+        Log.i(TAG, "onProgressListClick: " + progressList.get(clickedItemIndex).getTitle());
         DialogFragment dialogFragment = FullScreenDialog.newInstance();
 
 
         Bundle bundle = new Bundle();
-        bundle.putString("title", progressLocations.get(clickedItemIndex).getTitle());
+        bundle.putString("title", progressList.get(clickedItemIndex).getTitle());
 
-        country_name = myDb.getFlagISO(progressLocations.get(clickedItemIndex).getTitle());
+        country_name = myDb.getFlagISO(progressList.get(clickedItemIndex).getTitle());
         flag = World.getFlagOf(country_name);
 
         bundle.putInt("flag", flag);

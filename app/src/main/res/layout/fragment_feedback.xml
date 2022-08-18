@@ -79,7 +79,6 @@
             android:orientation="horizontal"
             android:padding="5dp">
 
-
             <Button
                 android:drawableEnd="@drawable/ic_send"
                 android:id="@+id/dialog_fragment_send"

@@ -3,11 +3,7 @@ package com.example.wordwiki;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +23,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -91,6 +86,10 @@ public class MainActivity extends AppCompatActivity{
         return mAuth.getCurrentUser();
     }
 
+    public FirebaseAuth getInstance() {
+        return FirebaseAuth.getInstance();
+    }
+
     public String  getAuthenticationType (){
         return FirebaseAuth.getInstance().getCurrentUser().getProviderData().get(0).getProviderId();
     }
@@ -128,7 +127,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void signOut() {
-        // signout from firebase + forget FB and google login information
+        //signout from firebase + forget FB and google login information
         mAuth.signOut();
         LoginManager.getInstance().logOut();
         mGoogleSignInClient.signOut();

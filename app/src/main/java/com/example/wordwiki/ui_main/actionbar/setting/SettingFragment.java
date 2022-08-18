@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -44,6 +45,7 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
     SettingListAdapter settingAdapter;
     RecyclerView settingListRecycle;
     private FragmentSettingBinding binding;
+    TextView termsText, privacyText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,9 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
 
         // set movement to back to Profile destination
         setUpActionBarLinks(root);
+
+        // TODO generate terms.
+        privacyTermsBtn();
 
         return root;
     }
@@ -128,7 +133,6 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
         settingList.add(new SettingListModel(R.drawable.ic_about, "Help & Support"));
         settingList.add(new SettingListModel(R.drawable.ic_about, "About Us"));
         settingList.add(new SettingListModel(R.drawable.ic_language, ""));
-
 
         settingList.add(new SettingListModel(R.drawable.ic_logout_w200, "Logout"));
     }
@@ -201,5 +205,23 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
             }
 
         }
+    }
+
+    public void privacyTermsBtn(){
+        termsText = binding.getRoot().findViewById(R.id.fragment_settings_terms);
+        termsText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO create terms dialog
+            }
+        });
+
+        privacyText = binding.getRoot().findViewById(R.id.fragment_settings_privacy);
+        privacyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO create privacy dialog
+            }
+        });
     }
 }

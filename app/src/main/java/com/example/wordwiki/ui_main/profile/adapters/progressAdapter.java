@@ -1,6 +1,7 @@
 package com.example.wordwiki.ui_main.profile.adapters;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.ui_intro.account.classes.AsyncTaskClassProfileProgress;
 import com.example.wordwiki.ui_main.profile.models.progressHelper;
 
 import java.util.ArrayList;
 
 public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneViewHold>  {
-
-    ArrayList<progressHelper> progressLocations;
+    Context context;
+    ArrayList<progressHelper> progressList;
     final private ListItemClickListener mOnClickListener;
 
-    public progressAdapter(ArrayList<progressHelper> phoneLaocations, ListItemClickListener listener) {
-        this.progressLocations = phoneLaocations;
+    public progressAdapter(ArrayList<progressHelper> phoneLaocations, ListItemClickListener listener, Context context) {
+        this.progressList = phoneLaocations;
         mOnClickListener = listener;
+        this.context = context;
     }
 
     @NonNull
@@ -35,15 +38,26 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
 
     @Override
     public void onBindViewHolder(@NonNull PhoneViewHold holder, int position) {
+
+        // get flag images from the package as Int
+        // where ImageView for it is on the adapter
+        // and create a context that is global in adapter
+
+        AsyncTaskClassProfileProgress profileProgressTask = new AsyncTaskClassProfileProgress(holder.image, holder.title, holder.wordCounter,context);
+        profileProgressTask.execute();
+
+        /*
         progressHelper progressHelper = progressLocations.get(position);
         holder.image.setImageResource(progressHelper.getImage());
         holder.title.setText(progressHelper.getTitle());
         holder.wordCounter.setText(progressHelper.getWordCounter());
+
+         */
     }
 
     @Override
     public int getItemCount() {
-        return progressLocations.size();
+        return progressList.size();
     }
 
     public interface ListItemClickListener {

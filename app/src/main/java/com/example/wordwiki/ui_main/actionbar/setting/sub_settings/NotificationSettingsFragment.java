@@ -75,6 +75,7 @@ public class NotificationSettingsFragment extends Fragment {
         SwitchMaterial isNotification = binding.getRoot().findViewById(R.id.preference_notification_notification_switch);
         TextView createRemainder = binding.getRoot().findViewById(R.id.preference_notification_create_remainder);
         TextView snoozeNotification = binding.getRoot().findViewById(R.id.preference_notification_snooze_notification);
+        SwitchMaterial isMarketing = binding.getRoot().findViewById(R.id.preference_notification_marketing);
 
         isNotification.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +89,21 @@ public class NotificationSettingsFragment extends Fragment {
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
                         .child("Users").child(username).child("preference")
                         .child("isNotification").setValue(isNotification.isChecked());
+            }
+        });
+
+        isMarketing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putBoolean("isMarketing", isNotification.isChecked());
+                editor.apply();
+
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                        .child("Users").child(username).child("preference")
+                        .child("isMarketing").setValue(isMarketing.isChecked());
             }
         });
 

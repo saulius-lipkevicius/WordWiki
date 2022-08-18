@@ -1,20 +1,16 @@
 package com.example.wordwiki.ui_main.actionbar.setting.models;
 
-import java.util.Date;
-
-public class UserFeedbackModel {
+public class UserFeedbackNoStarsModel {
     String username;
     String input;
     String email;
     String date;
-    int stars;
 
-    public UserFeedbackModel(String username, String input, String email, String date, int stars) {
+    public UserFeedbackNoStarsModel(String username, String input, String email, String date) {
         this.username = username;
         this.input = input;
         this.email = email;
         this.date = date;
-        this.stars = stars;
     }
 
     public String getUsername() {
@@ -47,13 +43,5 @@ public class UserFeedbackModel {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public int getStars() {
-        return stars;
-    }
-
-    public void setStars(int stars) {
-        this.stars = stars;
     }
 }
