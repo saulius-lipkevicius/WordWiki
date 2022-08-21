@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 public class languageImporter {
     private static final String TAG = "ExcelExporter";
 
-    public static void importCloud(String languageName, String sectionName, Context context) {
+    public static void importCloud(String username, String languageName, String sectionName, Context context) {
         DatabaseReference dbLanguage;
         DatabaseHelper myDb = new DatabaseHelper(context);
 
@@ -29,7 +29,14 @@ public class languageImporter {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 LanguageModel lng = snapshot.getValue(LanguageModel.class);
+
+                Log.i(TAG, "onDataChange: 1: " + lng.getLearningLanguage());
+                Log.i(TAG, "onDataChange: 1: " + lng.getWords());
+                Log.i(TAG, "onDataChange: 1: " + lng.getWords());
+                Log.i(TAG, "onDataChange: 1: " + lng.getWords());
+
                 myDb.insertCloudDictionary(languageName, sectionName, lng.getWords(), lng.getTranslations());
 
             }
@@ -40,7 +47,8 @@ public class languageImporter {
             }
         };
 
-        dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries");
+        dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries")
+                .child(username + "_" + languageName + "_" + sectionName);
         dbLanguage.addListenerForSingleValueEvent(valueEventListener);
     }
 }

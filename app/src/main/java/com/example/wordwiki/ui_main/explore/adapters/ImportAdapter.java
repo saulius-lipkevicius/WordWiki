@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
+import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassImportDictionary;
 import com.example.wordwiki.ui_main.explore.classes.languageImporter;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
 
@@ -35,13 +37,15 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
 
     // holder to define one liner
     static class ImportLanguageViewHolder extends RecyclerView.ViewHolder {
-        ImageView countryImage;
+        ImageFilterView countryImage;
         TextView section_name;
         TextView language_name;
         ImageButton downloadBtn;
+        TextView username;
 
         ImportLanguageViewHolder(View itemView) {
             super(itemView);
+            username = itemView.findViewById(R.id.import_cloud_username);
             countryImage = itemView.findViewById(R.id.import_cloud_image);
             section_name = itemView.findViewById(R.id.import_cloud_section);
             language_name = itemView.findViewById(R.id.import_cloud_language);
@@ -78,10 +82,41 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
         int flag = World.getFlagOf(country_name);
         holder.countryImage.setImageResource(flag);
 
+
+        Boolean isDictionaryDownloaded = myDb.isDictionaryImportedCheck(
+                holder.username.getText().toString()
+                , currentItem.getLearningLanguage()
+                , currentItem.getSectionName());
+        if (isDictionaryDownloaded) {
+            holder.downloadBtn.setClickable(false);
+            holder.downloadBtn.setImageResource(R.drawable.ic_checked);
+        } else {
+            holder.downloadBtn.setImageResource(R.drawable.ic_download);
+        }
+
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                languageImporter.importCloud(currentItem.getLearningLanguage(), currentItem.getSectionName(), context);
+
+                /* constructing AsyncTask to change the icon of downloadBtn after the sharing is done
+                 * also to speed up and let user to navigate and look for other dictionaries
+                 * paramaters:
+                 * input is a row of strings to identify unique dictionary name;
+                 * additionaly task takes holder.downloadBtn ImageView
+                 */
+                String[] dictionaryName = {
+                        holder.username.getText().toString()
+                        , currentItem.getLearningLanguage()
+                        , currentItem.getSectionName()
+                };
+
+
+                AsyncTaskClassImportDictionary taskClassImportDictionary = new AsyncTaskClassImportDictionary(holder.downloadBtn, context);
+                taskClassImportDictionary.execute(dictionaryName);
+
+                // older version
+                //languageImporter.importCloud(holder.username.getText().toString() ,currentItem.getLearningLanguage()
+                //                  , currentItem.getSectionName(), context);
 
                 //mCallback.onClick(currentItem.getSectionName(), currentItem.getLearningLanguage(), currentItem.getCheckBox());
             }

@@ -49,6 +49,7 @@ import com.example.wordwiki.ui_main.home.adapters.LanguageSelectionRecycleAdapte
 import com.example.wordwiki.ui_main.home.adapters.ModeSelectionRecycleAdapter;
 import com.example.wordwiki.ui_main.home.adapters.SectionSelectionRecycleAdapter;
 import com.example.wordwiki.ui_main.home.adapters.dailyProgressAdapter;
+import com.example.wordwiki.ui_main.home.classes.AsyncTaskClassGetStatistics;
 import com.example.wordwiki.ui_main.home.models.LanguageSelectionModel;
 import com.example.wordwiki.ui_main.home.models.ModeSelectionModel;
 import com.example.wordwiki.ui_main.home.models.SectionSelectionModel;
@@ -112,7 +113,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -141,10 +141,21 @@ public class HomeFragment extends Fragment {
         chooseLanguageDialog();
         chooseSectionDialog();
 
+        // Construction is under development here
 
-        viewAdapter = new dailyProgressAdapter(getContext(), mCurCheckPosition);
-        viewPager.setCurrentItem(mCurCheckPosition);
-        viewPager.setAdapter(viewAdapter);
+        AsyncTaskClassGetStatistics taskClassGetStatistics = new AsyncTaskClassGetStatistics(viewPager, viewAdapter, getContext());
+        taskClassGetStatistics.execute(mCurCheckPosition);
+
+
+
+        /// OLD CODE
+        //viewAdapter = new dailyProgressAdapter(getContext(), mCurCheckPosition);
+        //viewPager.setCurrentItem(mCurCheckPosition);
+        //viewPager.setAdapter(viewAdapter);
+
+
+
+
 
         String[] stats = getResources().getStringArray(R.array.home_stats);
         ArrayAdapter statsAdapter = new ArrayAdapter(requireContext(), R.layout.home_dropdown_stats, stats);

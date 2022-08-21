@@ -1,5 +1,6 @@
 package com.example.wordwiki;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,9 +14,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.wordwiki.classes.AsyncTaskClassFetchProfileData;
 import com.example.wordwiki.databinding.ActivityMainBinding;
 import com.example.wordwiki.ui_intro.login.LoginActivity;
 import com.facebook.login.LoginManager;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -46,6 +49,8 @@ public class MainActivity extends AppCompatActivity{
         setUpGoogleLogin();
         setUpTrackers();
         bottomNavigationReselection();
+
+        checkUserProfileData();
     }
 
     public String getUsername(){
@@ -137,5 +142,15 @@ public class MainActivity extends AppCompatActivity{
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    public void checkUserProfileData(){
+        SharedPreferences sharedPreferences = getSharedPreferences("user_profile", MODE_PRIVATE);
+        Boolean isProfileFilled = sharedPreferences.getBoolean("isFilled", false);
+
+        if(!isProfileFilled) {
+            AsyncTaskClassFetchProfileData taskFetchProfileData = new AsyncTaskClassFetchProfileData(this);
+            taskFetchProfileData.execute(getUsername());
+        }
     }
 }

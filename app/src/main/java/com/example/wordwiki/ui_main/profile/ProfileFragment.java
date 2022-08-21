@@ -10,12 +10,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,22 +29,30 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
+import com.bumptech.glide.Glide;
 import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
+import com.example.wordwiki.databinding.FragmentProfileBinding;
+import com.example.wordwiki.databinding.FragmentSettingBinding;
 import com.example.wordwiki.ui_intro.account.User;
+import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
+import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.HelpFragmentDialog;
 import com.example.wordwiki.ui_main.profile.adapters.flagAdapter;
 import com.example.wordwiki.ui_main.profile.adapters.progressAdapter;
+import com.example.wordwiki.ui_main.profile.classes.AsyncTaskClassUploadProfile;
 import com.example.wordwiki.ui_main.profile.models.flagHelper;
 import com.example.wordwiki.ui_main.profile.models.progressHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -67,14 +79,16 @@ public class ProfileFragment extends Fragment {
     public Uri imageUri;
     RecyclerView flagRecycler;
 
-    ArrayList<flagHelper> flagLocations;
+
     DatabaseHelper myDb;
     RecyclerView.Adapter adapter;
     String username;
 
     TextView profileName, profileDescription;
 
-
+    // profile describing task
+    ArrayList<flagHelper> flagLocations = new ArrayList<>();
+    LinearLayoutManager layoutManagerHorizontal = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
 
     // newly written recyclerView
@@ -88,6 +102,8 @@ public class ProfileFragment extends Fragment {
     // list of the progress
     ArrayList<progressHelper> progressList = new ArrayList<>();
 
+    FragmentProfileBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,18 +113,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_profile, container, false);
+        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         World.init(getApplicationContext());
         myDb = new DatabaseHelper(getContext());
-        flagLocations = new ArrayList<>();
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("username", "");
-
-        //Toolbar tb = root.findViewById(R.id.toolbar);
-        //((AppCompatActivity)getActivity()).setSupportActionBar(tb);
-        setUpActionBarLinks(root);
 
         // cloud storage
         profileImage = root.findViewById(R.id.profile_image);
@@ -116,12 +128,19 @@ public class ProfileFragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
-
         profileName = root.findViewById(R.id.settings_profile_name);
         profileDescription = root.findViewById(R.id.settings_profile_description);
+        flagRecycler = root.findViewById(R.id.profile_flag_recycler);
+
+        setUpFlagRecycler();
 
 
-        setUserProfile();
+        //Toolbar tb = root.findViewById(R.id.toolbar);
+        //((AppCompatActivity)getActivity()).setSupportActionBar(tb);
+        setUpActionBarLinks(root);
+
+
+        //setUserProfile();
 
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,31 +153,44 @@ public class ProfileFragment extends Fragment {
         progressRecycler = root.findViewById(R.id.profile_fragment_language_recycleview);
         progressRecycler();
 
-        flagRecycler = root.findViewById(R.id.profile_flag_recycler);
-        setUpFlagRecycler();
 
         return root;
     }
 
     private void setUpFlagRecycler() {
-        LinearLayoutManager layoutManager
-                = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-        //flagRecycler.setHasFixedSize(true);
-        flagRecycler.setLayoutManager(layoutManager);
+        SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+        String userDescriptionPreference = sharedPreferences1.getString("userDescription", "");
+        Boolean loadUpFirebaseProfile = userDescriptionPreference.equals("");
 
-        Collections.sort(flagLocations, new Comparator<flagHelper>() {
-            @Override
-            public int compare(flagHelper lhs, flagHelper rhs) {
-                return rhs.getLevel() - lhs.getLevel();
+        if (loadUpFirebaseProfile) {
+            AsyncTaskClassUploadProfile profileInfoTask = new AsyncTaskClassUploadProfile(
+                    profileImage, profileName, profileDescription, flagLocations, getContext());
+            profileInfoTask.execute(username);
+        } else {
+            String imagePath = sharedPreferences1.getString("imagePath", "");
+            Uri profileImageUri = Uri.parse(imagePath);
+
+            Glide.with(getContext())
+                    .load(profileImageUri)
+                    .into(profileImage);
+
+            profileName.setText(username);
+            profileDescription.setText(userDescriptionPreference);
+
+            SharedPreferences spLanguage = getActivity().getSharedPreferences("user_profile_language", Context.MODE_PRIVATE);
+            SharedPreferences spLevel = getActivity().getSharedPreferences("user_profile_language_level", Context.MODE_PRIVATE);
+            for (String keyValue : spLanguage.getAll().keySet()) {
+                flagLocations.add(new flagHelper(spLanguage.getInt(keyValue, 0), spLevel.getInt(keyValue, 0)));
             }
-        });
+        }
 
 
         adapter = new flagAdapter(flagLocations);
+        flagRecycler.setLayoutManager(layoutManagerHorizontal);
         flagRecycler.setAdapter(adapter);
     }
 
-
+/*
     private void setUserProfile() {
         DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
         referenceProfile.child(username).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -197,6 +229,8 @@ public class ProfileFragment extends Fragment {
         });
     }
 
+ */
+
 
     private void progressRecycler() {
         /*
@@ -228,16 +262,21 @@ public class ProfileFragment extends Fragment {
         }
 
          */
-
+        progressList.add(new progressHelper("English", " words in " + "N" + " days"));
+        progressList.add(new progressHelper("German", " words in " + "N" + " days"));
+        progressList.add(new progressHelper("Estonian", " words in " + "N" + " days"));
+        progressList.add(new progressHelper("French", " words in " + "N" + " days"));
+        progressList.add(new progressHelper("Latvian", " words in " + "N" + " days"));
+        progressList.add(new progressHelper("Lithuanian", " words in " + "N" + " days"));
         adapter = new progressAdapter(progressList, this::onProgressListClick, getContext());
         progressRecycler.setLayoutManager(layoutManager);
         progressRecycler.setAdapter(adapter);
     }
 
 
-
     public void onProgressListClick(int clickedItemIndex) {
         Log.i(TAG, "onProgressListClick: " + progressList.get(clickedItemIndex).getTitle());
+        FragmentManager fm = ProfileFragment.this.getParentFragmentManager();
         DialogFragment dialogFragment = FullScreenDialog.newInstance();
 
 
@@ -249,8 +288,14 @@ public class ProfileFragment extends Fragment {
 
         bundle.putInt("flag", flag);
         dialogFragment.setArguments(bundle);
+        changeStatusBarColor(false); // false means transparent - white statusbar
 
-        dialogFragment.show(getActivity().getSupportFragmentManager(), "TAG");
+
+        // create a request to later on send some results back
+
+        dialogFragment.setTargetFragment(this, 5);
+        dialogFragment.show(fm, "TAG");
+
 
 
         // TODO implement the callback
@@ -312,6 +357,23 @@ public class ProfileFragment extends Fragment {
 
             uploadImage();
         }
+
+        if (requestCode == 5) {
+            Log.i(TAG, "onActivityResult: testing request code 5");
+            Boolean editTextString = data.getBooleanExtra("isDismissed", false);
+            Boolean createSnack = data.getBooleanExtra("isSnack", false);
+            if (editTextString) {
+                changeStatusBarColor(true);
+            }
+
+            Log.i(TAG, "onActivityResult: testing request code 5; second if");
+            if (createSnack) {
+                Snackbar snackbar = Snackbar.make(binding.getRoot().getRootView(), "It is successfully sent. Thanks for the input.", Snackbar.LENGTH_SHORT);
+                BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+                snackbar.setAnchorView(bottomNavigationView);
+                snackbar.show();
+            }
+        }
     }
 
     private void uploadImage() {
@@ -348,4 +410,18 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
+
+    public void changeStatusBarColor(Boolean isDismissed) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getActivity().getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            if (isDismissed) {
+                window.setStatusBarColor(Color.BLACK);
+            } else {
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }
+
+        }
+    }
+
 }

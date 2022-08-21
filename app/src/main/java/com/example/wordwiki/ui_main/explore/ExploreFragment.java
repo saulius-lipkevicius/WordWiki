@@ -28,6 +28,7 @@ import com.example.wordwiki.classes.SuccessDialog;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.databinding.FragmentExploreBinding;
 import com.example.wordwiki.ui_main.explore.adapters.ImportAdapter;
+import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassesGetCloudDictionaries;
 import com.example.wordwiki.ui_main.explore.classes.OnItemClickImport;
 import com.example.wordwiki.ui_main.explore.classes.languageImporter;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
@@ -79,8 +80,6 @@ public class ExploreFragment extends Fragment{
 
 
         //setUpButtons();
-        Log.d(TAG, "onCreate: loc1: ");
-
 
         return root;
     }
@@ -173,8 +172,13 @@ public class ExploreFragment extends Fragment{
         adapter = new ImportAdapter(sectionsList, getContext());
         recyclerView.setAdapter(adapter);
 
-        dbLanguage = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries");
-        dbLanguage.addListenerForSingleValueEvent(valueEventListener);
+
+        // execute a task that creats a small loading screen and then pops up
+        AsyncTaskClassesGetCloudDictionaries taskClassesGetCloudDictionaries = new AsyncTaskClassesGetCloudDictionaries(dbLanguage, valueEventListener);
+        taskClassesGetCloudDictionaries.execute();
+
+        //
+
 
     }
 

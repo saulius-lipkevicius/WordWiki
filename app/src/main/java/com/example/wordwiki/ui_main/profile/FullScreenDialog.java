@@ -3,6 +3,7 @@ package com.example.wordwiki.ui_main.profile;
 import static android.content.ContentValues.TAG;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
 
 public class FullScreenDialog extends DialogFragment implements View.OnClickListener{
 
@@ -69,7 +71,11 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
 
         switch (id){
             case R.id.dialog_back:
+                Log.i(TAG, "onClick: dialogFragment dialog_back");
+                sendResultsSettings(5);
+                Log.i(TAG, "onClick: sending request 5");
                 dismiss();
+                Log.i(TAG, "onClick: dismissing");
                 break;
 
                 /*
@@ -82,8 +88,23 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
         }
     }
 
+
     public  interface Callback {
 
         void onActionClick(String name);
+    }
+
+    public void sendResultsSettings(int requestCode) {
+        // identify sender
+        Intent intent = new Intent();
+        intent.putExtra("isDismissed", true);
+        if (requestCode == 6) {
+            intent.putExtra("isSnack", true);
+        }
+
+        Log.i(TAG, "sendResultsSettings: results will be send");
+        getTargetFragment().onActivityResult(
+                getTargetRequestCode(), 5, intent);
+        Log.i(TAG, "sendResultsSettings: results are sent");
     }
 }

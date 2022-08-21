@@ -2,27 +2,18 @@ package com.example.wordwiki.ui_main.profile.models;
 
 public class progressHelper {
 
-    int image;
     String title;
     String wordCounter;
     String topicCounter;
 
-    public progressHelper(int image, String title, String wordCounter) {
-        this.image = image;
+    public progressHelper(String title, String wordCounter) {
         this.title = title;
         this.wordCounter = wordCounter;
     }
 
-    public int getImage() {
-        return image;
-    }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public void setTitle(String title) {

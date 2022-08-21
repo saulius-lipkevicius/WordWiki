@@ -19,6 +19,6 @@ public class ExportedDictionaryCloudAdapter {
 
     public Task<Void> add(ExportedDictionaryHelper lng){
         // TODO throw error statement here
-        return databaseReference.push().setValue(lng);
+        return databaseReference.child(lng.getUsername() + "_" + lng.getLearningLanguage() + "_" + lng.getSectionName()).setValue(lng);
     }
 }

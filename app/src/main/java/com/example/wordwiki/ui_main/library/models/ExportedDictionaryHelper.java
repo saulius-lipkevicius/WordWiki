@@ -13,11 +13,13 @@ public class ExportedDictionaryHelper {
     private String sectionName;
     private ArrayList<String> words;
     private ArrayList<String> translations;
+    private String username;
 
     public ExportedDictionaryHelper(){};
     public ExportedDictionaryHelper(String nativeLanguage, String learningLanguage, Integer downloadCount
             , String sectionLevel, Integer starsGiven, Integer peopleVoted, Integer wordsCount
-            , String sectionName, ArrayList<String> words, ArrayList<String> translations) {
+            , String sectionName, ArrayList<String> words, ArrayList<String> translations
+            , String username) {
         this.nativeLanguage = nativeLanguage;
         this.learningLanguage = learningLanguage;
         this.downloadCount = downloadCount;
@@ -28,6 +30,7 @@ public class ExportedDictionaryHelper {
         this.sectionName = sectionName;
         this.words = words;
         this.translations = translations;
+        this.username = username;
     }
 
     public ArrayList<String> getWords() {
@@ -108,5 +111,13 @@ public class ExportedDictionaryHelper {
 
     public void setLearningLanguage(String learningLanguage) {
         this.learningLanguage = learningLanguage;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

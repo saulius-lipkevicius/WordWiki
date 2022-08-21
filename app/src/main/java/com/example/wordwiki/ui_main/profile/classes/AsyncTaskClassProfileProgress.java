@@ -1,31 +1,24 @@
-package com.example.wordwiki.ui_intro.account.classes;
+package com.example.wordwiki.ui_main.profile.classes;
 
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.blongho.country_data.World;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_main.profile.models.progressHelper;
 
-import java.io.IOException;
 
 public class AsyncTaskClassProfileProgress extends AsyncTask<progressHelper, Integer, Integer> {
     ImageView flag;
-    TextView languageName;
-    TextView progressText;
     Context context;
     DatabaseHelper myDb;
 
-    public AsyncTaskClassProfileProgress(ImageView flag, TextView languageName, TextView progressText, Context context) {
+    public AsyncTaskClassProfileProgress(ImageView flag, Context context) {
         this.flag = flag;
-        this.languageName = languageName;
-        this.progressText = progressText;
         this.context = context;
     }
 
@@ -36,10 +29,11 @@ public class AsyncTaskClassProfileProgress extends AsyncTask<progressHelper, Int
 
 
     @Override
-    protected Integer doInBackground(progressHelper... params) {
+    protected Integer doInBackground(progressHelper... helpers) {
+        Log.i(TAG, "doInBackground: " + helpers[0].getTitle() + " : " + helpers[0].getWordCounter());
         try {
-
-            String countryISO = myDb.getFlagISO(params[0].getTitle());
+            myDb = new DatabaseHelper(context);
+            String countryISO = myDb.getFlagISO(helpers[0].getTitle());
             Integer flagInt = World.getFlagOf(countryISO);
             return flagInt;
         } catch (Error e) {

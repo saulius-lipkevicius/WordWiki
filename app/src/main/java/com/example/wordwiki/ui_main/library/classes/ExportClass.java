@@ -1,10 +1,12 @@
 package com.example.wordwiki.ui_main.library.classes;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_main.library.models.ExportedDictionaryHelper;
 
@@ -199,6 +201,9 @@ public class ExportClass {
                 exportWords.close();
             }
 
+            SharedPreferences sharedPreferences = context.getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+
+
             // TODO add native language indicator
             ExportedDictionaryHelper emp = new ExportedDictionaryHelper("English"
                     , currentLanguage
@@ -210,6 +215,7 @@ public class ExportClass {
                     , currentSection
                     , words
                     , translations
+                    , sharedPreferences.getString("username", "").substring(1)
             );
             ExportedDictionaryCloudAdapter model = new ExportedDictionaryCloudAdapter();
             model.add(emp);

@@ -11,15 +11,23 @@
         android:orientation="vertical">
 
         <include layout="@layout/actionbar_explore" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black"
+            android:layout_marginTop="20dp"/>
+
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="25dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="25dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="100"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/import_cloud_recycler_view"
@@ -29,29 +37,6 @@
                 android:scrollbars="vertical" />
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
-
-            <Button
-                android:id="@+id/import_cloud_dictionary_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="25dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginBottom="20dp"
-                android:padding="10dp"
-                android:text="Download Dictionaries"
-                android:textAllCaps="false"
-                android:textColor="@color/palette4"
-                android:background="@color/palette5"
-                android:textSize="14sp"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </FrameLayout>

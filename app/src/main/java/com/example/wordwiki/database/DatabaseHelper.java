@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.viewpager.widget.PagerAdapter;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,7 +80,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String INFORMATION_COL7 = "rateUp";
     public static final String INFORMATION_COL8 = "rateDown";
     public static final String INFORMATION_COL9 = "created";
-    public static final String INFORMATION_COL10 = "cloudID";
+    public static final String INFORMATION_COL10 = "isDownloaded";
+    public static final String INFORMATION_COL11 = "cloudID";
 
     // TODO connect article/iso table with the information table
 
@@ -313,7 +312,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 INFORMATION_COL7 + " Boolean, " +
                 INFORMATION_COL8 + " Boolean, " +
                 INFORMATION_COL9 + " Boolean, " +
-                INFORMATION_COL10 + " String " +
+                INFORMATION_COL10 + " String, " +
+                INFORMATION_COL11 + " String " +
                 ")");
 
     }
@@ -1058,5 +1058,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return word.getInt(0);
     }
 
+    public void isDictionaryImported(String username, String languageName, String sectionName, String isDownloaded) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        String strSQL = "UPDATE " +  INFORMATION_TABLE_NAME +
+                " SET " + INFORMATION_COL10 + "= '" + isDownloaded + "' " +
+                " WHERE " + INFORMATION_COL2 + "= '" +  username + "' " +
+                " AND " + INFORMATION_COL3 + "= '" +  languageName + "' " +
+                " AND " + INFORMATION_COL4 + "= '" +  sectionName + "' " +
+                ";";
+        Log.i(TAG, "rateDictionary: sql script: " + strSQL);
+        db.execSQL(strSQL);
+        db.close();
+    }
+
+    public Boolean isDictionaryImportedCheck(String username, String languageName, String sectionName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + INFORMATION_COL10 +
+                " FROM " + INFORMATION_TABLE_NAME +
+                " WHERE " + INFORMATION_COL2 + " = '" + username  + "' " +
+                " AND " + INFORMATION_COL3 + " = '" + languageName  + "' " +
+                " AND " + INFORMATION_COL4 + " = '" + sectionName  + "' " +
+                ";";
+        Log.i(TAG, "getRating: sqlite: " + sql);
+        Cursor exportWords = db.rawQuery(sql, null);
+
+        exportWords.moveToFirst();
+
+        if (exportWords.getCount() == 0) {
+            return false;
+        } else {
+            return exportWords.getString(0).equals("1");
+        }
+    }
 }
 

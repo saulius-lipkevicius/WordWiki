@@ -1,0 +1,115 @@
+package com.example.wordwiki.ui_main.profile.classes;
+
+import static android.content.ContentValues.TAG;
+
+import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.blongho.country_data.World;
+import com.example.wordwiki.database.DatabaseHelper;
+import com.example.wordwiki.ui_intro.account.User;
+import com.example.wordwiki.ui_main.profile.models.flagHelper;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+
+public class AsyncTaskClassUploadProfile extends AsyncTask<String, Integer, Integer> {
+    CircleImageView profilePic;
+    TextView usernameView;
+    TextView userDescription;
+    ArrayList<flagHelper> flagLocations;
+    Context context;
+    DatabaseHelper myDb;
+    String country_name;
+    int flag;
+
+    public AsyncTaskClassUploadProfile(CircleImageView profilePic, TextView usernameView, TextView userDescription, ArrayList<flagHelper> flagLocations, Context context) {
+        this.profilePic = profilePic;
+        this.usernameView = usernameView;
+        this.userDescription = userDescription;
+        this.flagLocations = flagLocations;
+        this.context = context;
+    }
+
+    @Override
+    protected Integer doInBackground(String... username) {
+        try {
+            myDb = new DatabaseHelper(context);
+
+            // here starts the algorithm
+            DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
+            referenceProfile.child(username[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User data = snapshot.getValue(User.class);
+
+                    if (data != null) {
+                        usernameView.setText("@" + data.getUsername());
+                        userDescription.setText(data.getDescription());
+
+                        String path = data.getProfile();
+                        Uri pathImage = Uri.parse(path);
+                        //profileImage.setImageURI();
+
+                        Picasso.get().load(pathImage).into(profilePic);
+
+                        // add learning/known languages
+                        data.getProficiency().putAll(data.getLearning());
+
+                        for (String key : data.getProficiency().keySet()) {
+                            country_name = myDb.getFlagISO(key);
+                            flag = World.getFlagOf(country_name);
+
+                            flagLocations.add(new flagHelper(flag, data.getProficiency().get(key)));
+                        }
+                    }
+
+                    Collections.sort(flagLocations, new Comparator<flagHelper>() {
+                        @Override
+                        public int compare(flagHelper lhs, flagHelper rhs) {
+                            return rhs.getLevel() - lhs.getLevel();
+                        }
+                    });
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            myDb.close();
+            return flagLocations.size();
+
+        } catch (Error e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
+
+    @Override
+    protected void onPostExecute(Integer integer) {
+        super.onPostExecute(integer);
+        Log.i(TAG, "onPostExecute: length: " + integer);
+        //profileName.setText("@" + sth.getUsername());
+        // profileDescription.setText(sth.getDescription());
+    }
+}
