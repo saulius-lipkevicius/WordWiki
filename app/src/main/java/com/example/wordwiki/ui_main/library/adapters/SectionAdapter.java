@@ -1,5 +1,6 @@
 package com.example.wordwiki.ui_main.library.adapters;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,13 +36,14 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     List<SectionHelper> sectionListFull;
     final String TAG = "Hi";
     List<SectionHelper> sectionList2;
-
+    Context context;
 
     //private ItemClickListener mClickListener;
 
-    public SectionAdapter(List<SectionHelper> sectionList) {
+    public SectionAdapter(List<SectionHelper> sectionList, Context context) {
         this.sectionList = sectionList;
         sectionListFull = new ArrayList<>(sectionList);
+        this.context = context;
     }
 
     @NonNull
@@ -74,14 +77,17 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
             }
         });
         
-        SubsectionAdapter subsectionAdapter = new SubsectionAdapter(items
-                , holder
+        SubsectionAdapter subsectionAdapter = new SubsectionAdapter(
+                items, holder , context
         );
         holder.subsectionRecyclerView.setAdapter(subsectionAdapter);
         //holder.subsectionRecyclerView.addItemDecoration(new DividerItemDecoration(get, DividerItemDecoration.VERTICAL));
 
         
         Log.i(TAG, "onClick2: " + subsectionAdapter.getItemCount());
+
+
+
 
         // testing deleting items ---> when there is 0 elements in it.
 
@@ -98,7 +104,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView sectionName;
-        ImageView sectionFlag;
+        ImageFilterView sectionFlag;
         RecyclerView subsectionRecyclerView;
 
         public ViewHolder(@NonNull View itemView) {
@@ -112,9 +118,14 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
+            Log.i(TAG, "onClick: check if it is empty: " + sectionList.get(0).getSectionItems().size());
+
+            if (sectionList.get(0).getSectionItems().size() == 0) {
+                sectionList.remove(0);
+                notifyItemRemoved(0);
+            }
             Log.i(TAG, "onClick: cia clickino");
-            sectionList.remove(0);
-            notifyItemRemoved(0);
+
         }
     }
 
@@ -151,8 +162,9 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
                                     , item.getSectionItems().get(i).getExpanded()));
                         }
                     }
-
-                    filteredList.add(new SectionHelper(item.getSectionName(), item.getSectionFlag(), filteredSubList));
+                    if (filteredSubList.size() > 0) {
+                        filteredList.add(new SectionHelper(item.getSectionName(), item.getSectionFlag(), filteredSubList));
+                    }
                 }
             }
 
@@ -164,8 +176,11 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            // filter results, which is removing country name
+
             sectionList.clear();
             sectionList.addAll((List) filterResults.values);
+
             notifyDataSetChanged();
         }
     };

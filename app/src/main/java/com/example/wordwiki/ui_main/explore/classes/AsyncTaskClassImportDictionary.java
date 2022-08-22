@@ -38,6 +38,7 @@ public class AsyncTaskClassImportDictionary extends AsyncTask<String, Integer, V
 
         // save the same data in the myDb to speed up app overall
         myDb = new DatabaseHelper(context);
+        Log.i(TAG, "doInBackground: import dictionary: " + strings[0]  + strings[1] +  strings[2]);
         myDb.isDictionaryImported(strings[0] ,strings[1], strings[2], "1");
 
         return null;

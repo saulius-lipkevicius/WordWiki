@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#E4E1E1">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,6 +12,17 @@
         android:orientation="horizontal"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp">
+
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_gravity="center"
+            android:id="@+id/fragment_library_section_flag"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/es"
+            app:roundPercent="0.2"
+            android:layout_marginStart="20dp"/>
 
         <TextView
             android:layout_marginStart="20dp"
@@ -22,13 +34,6 @@
             android:textColor="@android:color/black"
             android:id="@+id/fragment_library_section_name"/>
 
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/fragment_library_section_flag"
-            android:layout_width="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_height="30dp"
-            android:src="@drawable/es"/>
     </LinearLayout>
 
 

@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
@@ -40,7 +41,7 @@ public class flagAdapter extends RecyclerView.Adapter<flagAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView flag;
+        ImageFilterView flag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

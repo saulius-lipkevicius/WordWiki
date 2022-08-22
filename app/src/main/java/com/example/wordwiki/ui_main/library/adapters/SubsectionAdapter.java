@@ -1,6 +1,7 @@
 package com.example.wordwiki.ui_main.library.adapters;
 
 import android.Manifest;
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,17 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.ViewHolder> {
-
+    Context context;
     private final SectionAdapter.ViewHolder parent;
-
+    DatabaseHelper myDb;
     List<SubsectionHelper> items;
     final String TAG = "subsection item";
-    public SubsectionAdapter(List<SubsectionHelper> items
-            , SectionAdapter.ViewHolder parent) {
+
+    public SubsectionAdapter(List<SubsectionHelper> items, SectionAdapter.ViewHolder parent, Context context) {
         this.items = items;
         this.parent = parent;
+        this.context = context;
     }
-    DatabaseHelper myDb;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -50,8 +52,10 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        myDb = new DatabaseHelper(context);
         SubsectionHelper section = items.get(holder.getAdapterPosition());
+
+        Log.i(TAG, "onBindViewHolder: test filter: " +  section.getSectionName() + " : " +  holder.creatorName);
 
         holder.subsectionName.setText(items.get(holder.getAdapterPosition()).getSubsectionName());
 
@@ -65,12 +69,22 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
         }
 
         // TODO find current username
-       String currentUsername = "testusername";
+       String currentUsername = "saulius";
 
         // TODO add username to an imported dictionary, otherwise it will give an error
        if (section.getCreator().equals(currentUsername)) {
            holder.creatorName.setText("You");
            holder.reportSubsection.setText("Share");
+
+           Boolean isShared = myDb.isYourDictionaryPublished(currentUsername    //holder.creatorName.getText().toString() // it used 'You' which gave an error in the share/shared case
+                   , items.get(holder.getAdapterPosition()).getSectionName()
+                   , holder.subsectionName.getText().toString());
+           if (isShared) {
+               holder.reportSubsection.setText("SharED");
+               holder.reportSubsection.setClickable(false);
+           } else {
+               holder.reportSubsection.setText("Share");
+           }
        } else {
            holder.creatorName.setText(section.getCreator());
            holder.reportSubsection.setText("Report It");
@@ -202,6 +216,11 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
                     dictionaryName.add(section_language);
                     ExportClass.exportCloud(dictionaryName, view.getContext());
 
+                    // change value of isShared in the myDb so it is seen to not overuse the button
+                    myDb.setYourDictionaryPublished(holder.creatorName.getText().toString()
+                            , items.get(holder.getAdapterPosition()).getSectionName()
+                            , holder.subsectionName.getText().toString(), "1");
+
                 } else if(holder.reportSubsection.getText().equals("Report It")){
                     // TODO report a dictionary if that contains some malicious stuff
                     //askForPermission(Manifest.permission.READ_EXTERNAL_STORAGE, READ_EXST);
@@ -220,7 +239,6 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
             }
         });
-
     }
 
     @Override

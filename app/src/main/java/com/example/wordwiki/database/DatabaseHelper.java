@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -81,7 +82,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String INFORMATION_COL8 = "rateDown";
     public static final String INFORMATION_COL9 = "created";
     public static final String INFORMATION_COL10 = "isDownloaded";
-    public static final String INFORMATION_COL11 = "cloudID";
+    public static final String INFORMATION_COL11 = "isShared";
 
     // TODO connect article/iso table with the information table
 
@@ -945,7 +946,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    /** Used in the process of import of new dictionary from local storage
+    /**
+     * Used in the process of import of new dictionary from local storage
      *
      * @param language
      * @param section
@@ -980,13 +982,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exportWords;
     }
 
-    public void deleteDictionary(String language, String section){
+    public void deleteDictionary(String language, String section) {
         Log.i(TAG, "deleteDictionary: " + language + " and " + section);
 
         // from information table
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + INFORMATION_TABLE_NAME +
-                    " WHERE " + INFORMATION_COL3 + "='" + language + "'" +
+                " WHERE " + INFORMATION_COL3 + "='" + language + "'" +
                 " AND " + INFORMATION_COL4 + "= '" + section + "';");
 
         // from the main table with all words
@@ -1002,7 +1004,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (type.equals("up") && rating) {
             down = 0;
             up = 1;
-        } else if (type.equals("down") && rating){
+        } else if (type.equals("down") && rating) {
             down = 1;
             up = 0;
         } else {
@@ -1012,11 +1014,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i(TAG, "rateDictionary: down-" + down + ", up-" + up);
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String strSQL = "UPDATE " +  INFORMATION_TABLE_NAME +
+        String strSQL = "UPDATE " + INFORMATION_TABLE_NAME +
                 " SET " + INFORMATION_COL7 + "=" + up +
                 ", " + INFORMATION_COL8 + "=" + down +
-                " WHERE " + INFORMATION_COL3 + "= '" +  language + "' " +
-                " AND " + INFORMATION_COL4 + "= '" +  section + "' " +
+                " WHERE " + INFORMATION_COL3 + "= '" + language + "' " +
+                " AND " + INFORMATION_COL4 + "= '" + section + "' " +
                 ";";
         Log.i(TAG, "rateDictionary: sql script: " + strSQL);
         db.execSQL(strSQL);
@@ -1031,8 +1033,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String sql = "SELECT " + INFORMATION_COL7 +
                 ", " + INFORMATION_COL8 + " " +
                 " FROM " + INFORMATION_TABLE_NAME +
-                " WHERE " + INFORMATION_COL3 + " = '" + language  + "' " +
-                " AND " + INFORMATION_COL4 + " = '" + section  + "' " +
+                " WHERE " + INFORMATION_COL3 + " = '" + language + "' " +
+                " AND " + INFORMATION_COL4 + " = '" + section + "' " +
                 ";";
         Log.i(TAG, "getRating: sqlite: " + sql);
         Cursor exportWords = db.rawQuery(sql, null);
@@ -1046,12 +1048,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sqliteQuery = "SELECT COUNT( " + COL_9 + " )" +
-                                ", " + COL_2 + " " +
-                                "FROM " + TABLE_NAME + " " +
-                                "WHERE (" + COL_9 + " > 1 " +
-                                " OR " + COL_13 + " > 1 )" +
-                                " AND " + COL_2 + "= '" + languageName + "' " +
-                                " ; ";
+                ", " + COL_2 + " " +
+                "FROM " + TABLE_NAME + " " +
+                "WHERE (" + COL_9 + " > 1 " +
+                " OR " + COL_13 + " > 1 )" +
+                " AND " + COL_2 + "= '" + languageName + "' " +
+                " ; ";
         Cursor word = db.rawQuery(sqliteQuery, null);
         word.moveToFirst();
 
@@ -1061,14 +1063,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void isDictionaryImported(String username, String languageName, String sectionName, String isDownloaded) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String strSQL = "UPDATE " +  INFORMATION_TABLE_NAME +
+
+
+        /*
+        String strSQL = "UPDATE " + INFORMATION_TABLE_NAME +
                 " SET " + INFORMATION_COL10 + "= '" + isDownloaded + "' " +
-                " WHERE " + INFORMATION_COL2 + "= '" +  username + "' " +
-                " AND " + INFORMATION_COL3 + "= '" +  languageName + "' " +
-                " AND " + INFORMATION_COL4 + "= '" +  sectionName + "' " +
+                " WHERE " + INFORMATION_COL2 + "= '" + username + "' " +
+                " AND " + INFORMATION_COL3 + "= '" + languageName + "' " +
+                " AND " + INFORMATION_COL4 + "= '" + sectionName + "' " +
                 ";";
-        Log.i(TAG, "rateDictionary: sql script: " + strSQL);
+                // it doesnt recognize
+
+        Log.i(TAG, "rateDictionary: set to 1 sql script: " + strSQL);
         db.execSQL(strSQL);
+        */
+
+        // TODO ADD Unique key generator and username later on
+        ContentValues cv = new ContentValues();
+        cv.put(INFORMATION_COL2, username);
+        cv.put(INFORMATION_COL3, languageName);
+        cv.put(INFORMATION_COL4, sectionName);
+        cv.put(INFORMATION_COL5, "description");
+        cv.put(INFORMATION_COL7, 0);
+        cv.put(INFORMATION_COL8, 0);
+        cv.put(INFORMATION_COL9, 0);
+        cv.put(INFORMATION_COL10, 1);
+        cv.put(INFORMATION_COL11, 0);
+
+
+        db.insert(INFORMATION_TABLE_NAME, null, cv);
+
         db.close();
     }
 
@@ -1077,9 +1101,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String sql = "SELECT " + INFORMATION_COL10 +
                 " FROM " + INFORMATION_TABLE_NAME +
-                " WHERE " + INFORMATION_COL2 + " = '" + username  + "' " +
-                " AND " + INFORMATION_COL3 + " = '" + languageName  + "' " +
-                " AND " + INFORMATION_COL4 + " = '" + sectionName  + "' " +
+                " WHERE " + INFORMATION_COL2 + " = '" + username + "' " +
+                " AND " + INFORMATION_COL3 + " = '" + languageName + "' " +
+                " AND " + INFORMATION_COL4 + " = '" + sectionName + "' " +
                 ";";
         Log.i(TAG, "getRating: sqlite: " + sql);
         Cursor exportWords = db.rawQuery(sql, null);
@@ -1091,6 +1115,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             return exportWords.getString(0).equals("1");
         }
+    }
+
+    public Boolean isYourDictionaryPublished(String creatorName, String sectionName, String subsectionName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + INFORMATION_COL11 +
+                " FROM " + INFORMATION_TABLE_NAME +
+                " WHERE " + INFORMATION_COL2 + " = '" + creatorName + "' " +
+                " AND " + INFORMATION_COL3 + " = '" + sectionName + "' " +
+                " AND " + INFORMATION_COL4 + " = '" + subsectionName + "' " +
+                ";";
+        Log.i(TAG, "get isShared: sqlite: " + sql);
+        Cursor exportWords = db.rawQuery(sql, null);
+
+        exportWords.moveToFirst();
+
+        if (exportWords.getCount() == 0) {
+            return false;
+        } else {
+            return exportWords.getString(0).equals("1");
+        }
+    }
+
+    public void setYourDictionaryPublished(String creatorName, String sectionName, String subsectionName, String isShared) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String strSQL = "UPDATE " + INFORMATION_TABLE_NAME +
+                " SET " + INFORMATION_COL11 + "= '" + isShared + "' " +
+                " WHERE " + INFORMATION_COL2 + "= '" + creatorName + "' " +
+                " AND " + INFORMATION_COL3 + "= '" + sectionName + "' " +
+                " AND " + INFORMATION_COL4 + "= '" + subsectionName + "' " +
+                ";";
+        Log.i(TAG, "rateDictionary: sql script: " + strSQL);
+        db.execSQL(strSQL);
+        db.close();
     }
 }
 

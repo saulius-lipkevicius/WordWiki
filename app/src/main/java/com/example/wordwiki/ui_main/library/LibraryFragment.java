@@ -146,7 +146,7 @@ public class LibraryFragment extends Fragment {
         //initialize recycle viewers
         initData();
         mainRecyclerView = root.findViewById(R.id.fragment_library_top_recycle_view);
-        sectionAdapter = new SectionAdapter(sectionList);
+        sectionAdapter = new SectionAdapter(sectionList, getContext());
         mainRecyclerView.setAdapter(sectionAdapter);
         //mainRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
@@ -255,17 +255,20 @@ public class LibraryFragment extends Fragment {
             List<SubsectionHelper> sectionItems = new ArrayList<>();
             while (dictionaryInformation.moveToNext()) {
                 Log.i(TAG, "currentLanguage: " + dictionaryInformation.getString(2));
-
+                String countryISO = myDb.getFlagISO(currentLanguage);
+                int flagInt = World.getFlagOf(countryISO);
 
                 if (currentLanguage.length() > 0 && !currentLanguage.equals(dictionaryInformation.getString(2))){
-                    sectionList.add(new SectionHelper(currentLanguage, com.blongho.country_data.R.drawable.gb, sectionItems));
+                    sectionList.add(new SectionHelper(currentLanguage, flagInt, sectionItems));
                     sectionItems = new ArrayList<>();
                     currentLanguage = dictionaryInformation.getString(2);
                 } else if (currentLanguage.length() == 0) {
                     currentLanguage = dictionaryInformation.getString(2);
                 } else if (dictionaryInformation.isLast()) {
                     // to keep the last language entered, because there is no switch in the comparison
-                    sectionList.add(new SectionHelper(currentLanguage, com.blongho.country_data.R.drawable.gb, sectionItems));
+
+
+                    sectionList.add(new SectionHelper(currentLanguage, flagInt, sectionItems));
                 }
 
 
