@@ -156,7 +156,7 @@ public class CreateUsernameFragment extends Fragment {
                 if (editText.length() < 2) {
                     Toast.makeText(getContext(), "Username can't be empty", Toast.LENGTH_SHORT).show();
                 } else {
-                    createNewUser(editText.getText().toString(), null, null, null);
+                    createNewUser(editText.getText().toString());
 
                     NavController navController = Navigation.findNavController(view);
                     navController.navigate(R.id.action_navigation_create_user_username_to_navigation_create_user_known_languages);
@@ -187,19 +187,22 @@ public class CreateUsernameFragment extends Fragment {
     }
 
 
-    private void createNewUser(String username, String nationality, Map<String, String> learningLanguages, Map<String, String> knownLanguages) {
+    private void createNewUser(String username) {
         User user = new User(username.substring(1), null, null, null, null);
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference databaseReference = db.getReference("Users");
 
-        databaseReference.child(username.substring(1)).setValue(user);
+        databaseReference.child(username.substring(1)).child("profileInfo").setValue(user);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        Log.i(TAG, "createNewUser: " + username);
         editor.putString("username", username.substring(1));
-        editor.commit();
+        editor.apply();
+
+
     }
 
 }

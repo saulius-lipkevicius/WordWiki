@@ -170,7 +170,7 @@ public class CreatePictureFragment extends Fragment {
     }
 
     private void uploadImage() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
         String username = sharedPreferences.getString("username", "");
 
         final ProgressDialog pd = new ProgressDialog(getContext());
@@ -229,8 +229,8 @@ public class CreatePictureFragment extends Fragment {
                     //Log.i(TAG, "onComplete: xxxx: " + downloadURL);
 
                     FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                            .child("Users").child(username)
-                            .child("profile").setValue(downloadURL);
+                            .child("Users").child(username).child("profileInfo")
+                            .child("profileImageURL").setValue(downloadURL);
                 } else {
                     // Handle failures
                     // ...

@@ -2,7 +2,9 @@ package com.example.wordwiki.ui_main.actionbar.setting;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -189,6 +191,13 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
             navController.navigate(R.id.action_navigation_setting_to_navigation_about);
 
         } else if (settingsClicked.equals("Logout")) {
+            // clear out all the personal preferences
+            getActivity().getSharedPreferences("general", Context.MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile_language", Context.MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile_language_level", Context.MODE_PRIVATE).edit().clear().apply();
+
+
             ((MainActivity) getActivity()).signOut();
 
         }

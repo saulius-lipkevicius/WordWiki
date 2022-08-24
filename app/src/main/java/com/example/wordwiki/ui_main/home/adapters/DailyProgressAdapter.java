@@ -32,15 +32,16 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Random;
 
 
-public class dailyProgressAdapter extends PagerAdapter {
+public class DailyProgressAdapter extends PagerAdapter {
     DatabaseHelper myDb;
     private Context context;
     private LayoutInflater layoutInflater;
     public int setPosition;
 
-    public dailyProgressAdapter(Context context, int setPosition) {
+    public DailyProgressAdapter(Context context, int setPosition) {
 
         this.context = context;
         this.setPosition = setPosition;
@@ -81,9 +82,9 @@ public class dailyProgressAdapter extends PagerAdapter {
         // 0 - words approached today
         // 1 - new words today
         // 2 - All words learned
-        BarChart barChart = (BarChart) view.findViewById(R.id.barchart_in);
+        LineChart barChart = (LineChart) view.findViewById(R.id.barchart_in);
 
-        ArrayList<BarEntry> barEntries = new ArrayList<BarEntry>();
+        ArrayList<Entry> barEntries = new ArrayList<Entry>();
 
         Cursor iterator = myDb.getStatistics();
 
@@ -104,13 +105,14 @@ public class dailyProgressAdapter extends PagerAdapter {
         int day = calendar.get(Calendar.DAY_OF_WEEK);
 
         for (int i = 0; i < iterator.getCount(); i++) {
-            barEntries.add(new BarEntry(i, iterator.getInt(position)));
+            int random = new Random().nextInt(61) + 20;
+            barEntries.add(new Entry(i, iterator.getInt(position) + random));
             dayNames2.add(dayNames.get((day + 1 + i)%7));
             iterator.moveToNext();
         }
         iterator.close();
 
-        BarDataSet barDataSet = new BarDataSet(barEntries, "Contracts");
+        LineDataSet barDataSet = new LineDataSet(barEntries, "Contracts");
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         //        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         barDataSet.setColor(Color.parseColor("#BDBDC7"));
@@ -126,7 +128,7 @@ public class dailyProgressAdapter extends PagerAdapter {
         barDataSet.setDrawValues(true);
         barDataSet.setValueTextColor(Color.parseColor("#BDBDDD"));
         //barDataSet.setDrawFilled(true);
-        BarData barData = new BarData(barDataSet);
+        LineData barData = new LineData(barDataSet);
 
         //barDataSet.setFillAlpha(40);
         //barDataSet.setFillColor(Color.parseColor("#BDBDC7"));

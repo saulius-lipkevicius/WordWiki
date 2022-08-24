@@ -101,12 +101,12 @@ public class CreateLearningLanguagesFragment extends Fragment  implements Recycl
         nextFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
 
 
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                        .child("Users").child(username).child("profile")
+                        .child("Users").child(username).child("profileInfo")
                         .child("learning").setValue(learningLanguageMap);
 
                 NavController navController = Navigation.findNavController(view);

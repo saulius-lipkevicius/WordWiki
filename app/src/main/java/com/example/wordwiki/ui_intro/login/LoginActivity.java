@@ -263,6 +263,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         FirebaseUser user = mAuth.getCurrentUser();
                         if (user.isEmailVerified()) {
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+
                         } else {
                             Toast.makeText(LoginActivity.this, "Email is not verified", Toast.LENGTH_SHORT).show();
                         }

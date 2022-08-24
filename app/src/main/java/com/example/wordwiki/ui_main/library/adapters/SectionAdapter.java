@@ -25,7 +25,7 @@ import com.github.mikephil.charting.formatter.IFillFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHolder> implements Filterable  {
+public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHolder> implements Filterable {
 
 
     //private ItemClickListener mClickListener;
@@ -56,7 +56,6 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int positionA) {
 
@@ -67,32 +66,26 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
 
         holder.sectionName.setText(sectionName);
         holder.sectionFlag.setImageResource(sectionFlag);
-        // create recycler view for inner list
-        
+
         holder.sectionName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // don't let to remove the row with sections inside it
+
                 sectionList.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
+
+
             }
         });
-        
+
+        // after the seOnClickListener because of the structure, otherwise an user will still be able to press it
+        holder.sectionName.setClickable(false);
+
         SubsectionAdapter subsectionAdapter = new SubsectionAdapter(
-                items, holder , context
+                items, holder, context
         );
         holder.subsectionRecyclerView.setAdapter(subsectionAdapter);
-        //holder.subsectionRecyclerView.addItemDecoration(new DividerItemDecoration(get, DividerItemDecoration.VERTICAL));
-
-        
-        Log.i(TAG, "onClick2: " + subsectionAdapter.getItemCount());
-
-
-
-
-        // testing deleting items ---> when there is 0 elements in it.
-
-
-           
     }
 
     @Override
@@ -101,7 +94,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView sectionName;
         ImageFilterView sectionFlag;

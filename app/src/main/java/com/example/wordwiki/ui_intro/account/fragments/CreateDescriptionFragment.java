@@ -102,13 +102,13 @@ public class CreateDescriptionFragment extends Fragment {
         finishIntroductionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
 
                 String description = editText.getText().toString();
 
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                        .child("Users").child(username).child("profile")
+                        .child("Users").child(username).child("profileInfo")
                         .child("description").setValue(description);
 
                 Intent intent = new Intent(requireActivity(), MainActivity.class);

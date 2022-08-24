@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public String getUsername(){
-        SharedPreferences usernameSharedPreference = getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences usernameSharedPreference = getSharedPreferences("user_profile", MODE_PRIVATE);
         String username = usernameSharedPreference.getString("username", "");
         return username;
     }
@@ -146,9 +146,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void checkUserProfileData(){
         SharedPreferences sharedPreferences = getSharedPreferences("user_profile", MODE_PRIVATE);
-        Boolean isProfileFilled = sharedPreferences.getBoolean("isFilled", false);
+        String isProfileFilled = sharedPreferences.getString("username", "");
 
-        if(!isProfileFilled) {
+        if(isProfileFilled.equals("")) {
             AsyncTaskClassFetchProfileData taskFetchProfileData = new AsyncTaskClassFetchProfileData(this);
             taskFetchProfileData.execute(getUsername());
         }

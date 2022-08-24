@@ -4,16 +4,13 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,8 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -44,16 +39,14 @@ import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.databinding.FragmentHomeBinding;
-import com.example.wordwiki.ui_main.actionbar.notification.NotificationFragment;
 import com.example.wordwiki.ui_main.home.adapters.LanguageSelectionRecycleAdapter;
 import com.example.wordwiki.ui_main.home.adapters.ModeSelectionRecycleAdapter;
 import com.example.wordwiki.ui_main.home.adapters.SectionSelectionRecycleAdapter;
-import com.example.wordwiki.ui_main.home.adapters.dailyProgressAdapter;
+import com.example.wordwiki.ui_main.home.adapters.DailyProgressAdapter;
 import com.example.wordwiki.ui_main.home.classes.AsyncTaskClassGetStatistics;
 import com.example.wordwiki.ui_main.home.models.LanguageSelectionModel;
 import com.example.wordwiki.ui_main.home.models.ModeSelectionModel;
 import com.example.wordwiki.ui_main.home.models.SectionSelectionModel;
-import com.facebook.share.Share;
 import com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator;
 
 import java.util.ArrayList;
@@ -77,7 +70,7 @@ public class HomeFragment extends Fragment {
     // progress viewer and statistics
     ViewPager viewPager;
     SpringDotsIndicator springDotsIndicator;
-    dailyProgressAdapter viewAdapter;
+    DailyProgressAdapter viewAdapter;
 
     Button to_wording_activity_btn, choose_language_btn, choose_section_btn, choose_mode_btn;
     Button dialog_none_btn, dialog_all_btn, dialog_ok_btn;
@@ -165,7 +158,7 @@ public class HomeFragment extends Fragment {
         spinnerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                viewAdapter = new dailyProgressAdapter(getContext(), position);
+                viewAdapter = new DailyProgressAdapter(getContext(), position);
                 viewPager.setCurrentItem(position);
                 viewPager.setAdapter(viewAdapter);
 
