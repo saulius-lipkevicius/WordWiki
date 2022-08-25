@@ -170,10 +170,10 @@ public class HomeFragment extends Fragment {
         spinnerText.setBackground(getResources().getDrawable(R.drawable.home_fragment_selector));
 
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", "saulius");
-        editor.commit();
+        editor.putString("username", null);
+        editor.apply();
 
 
         return root;

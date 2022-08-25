@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.blongho.country_data.World;
 import com.example.wordwiki.database.DatabaseHelper;
@@ -48,13 +47,14 @@ public class AsyncTaskClassUploadProfile extends AsyncTask<String, Integer, Inte
     }
 
     @Override
-    protected Integer doInBackground(String... username) {
+    protected Integer doInBackground(String... Uid) {
         try {
             myDb = new DatabaseHelper(context);
 
             // here starts the algorithm
-            DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
-            referenceProfile.child(username[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users")
+                    .child("Personal").child(Uid[0]);
+            referenceProfile.child("ProfileInfo").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     User data = snapshot.getValue(User.class);
@@ -63,7 +63,7 @@ public class AsyncTaskClassUploadProfile extends AsyncTask<String, Integer, Inte
                         usernameView.setText("@" + data.getUsername());
                         userDescription.setText(data.getDescription());
 
-                        String path = data.getProfile();
+                        String path = data.getProfileImageURL();
                         Uri pathImage = Uri.parse(path);
                         //profileImage.setImageURI();
 

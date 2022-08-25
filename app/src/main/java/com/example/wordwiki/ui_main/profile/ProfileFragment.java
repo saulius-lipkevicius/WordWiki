@@ -54,6 +54,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -83,7 +84,7 @@ public class ProfileFragment extends Fragment {
     DatabaseHelper myDb;
     RecyclerView.Adapter adapter;
     String username;
-
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
     TextView profileName, profileDescription;
 
     // profile describing task
@@ -119,8 +120,8 @@ public class ProfileFragment extends Fragment {
         World.init(getApplicationContext());
         myDb = new DatabaseHelper(getContext());
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("general", Context.MODE_PRIVATE);
-        username = sharedPreferences.getString("username", "");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("username", null);
 
         // cloud storage
         profileImage = root.findViewById(R.id.profile_image);
@@ -159,15 +160,22 @@ public class ProfileFragment extends Fragment {
 
     private void setUpFlagRecycler() {
         SharedPreferences sharedPreferences1 = getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE);
-        String userDescriptionPreference = sharedPreferences1.getString("userDescription", "");
-        Boolean loadUpFirebaseProfile = userDescriptionPreference.equals("");
+        Boolean userDataFilled = sharedPreferences1.getBoolean("isFilled", false);
 
-        if (loadUpFirebaseProfile) {
+        Log.i(TAG, "setUpFlagRecycler: ");
+
+        if (!userDataFilled) {
+            ((MainActivity) getActivity()).checkUserProfileData();
+
             AsyncTaskClassUploadProfile profileInfoTask = new AsyncTaskClassUploadProfile(
                     profileImage, profileName, profileDescription, flagLocations, getContext());
-            profileInfoTask.execute(username);
+            profileInfoTask.execute(mAuth.getUid());
         } else {
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+            String username = sharedPreferences.getString("username", null);
+
             String imagePath = sharedPreferences1.getString("imagePath", "");
+            String userDescription = sharedPreferences1.getString("userDescription", "There is no description");
             Uri profileImageUri = Uri.parse(imagePath);
 
             Glide.with(getContext())
@@ -175,7 +183,7 @@ public class ProfileFragment extends Fragment {
                     .into(profileImage);
 
             profileName.setText(username);
-            profileDescription.setText(userDescriptionPreference);
+            profileDescription.setText(userDescription);
 
             SharedPreferences spLanguage = getActivity().getSharedPreferences("user_profile_language", Context.MODE_PRIVATE);
             SharedPreferences spLevel = getActivity().getSharedPreferences("user_profile_language_level", Context.MODE_PRIVATE);

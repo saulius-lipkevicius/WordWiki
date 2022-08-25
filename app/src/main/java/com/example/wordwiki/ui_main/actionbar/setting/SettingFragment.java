@@ -1,6 +1,7 @@
 package com.example.wordwiki.ui_main.actionbar.setting;
 
 import static android.content.ContentValues.TAG;
+import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
 import android.content.Intent;
@@ -192,11 +193,11 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
 
         } else if (settingsClicked.equals("Logout")) {
             // clear out all the personal preferences
-            getActivity().getSharedPreferences("general", Context.MODE_PRIVATE).edit().clear().apply();
-            getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE).edit().clear().apply();
-            getActivity().getSharedPreferences("user_profile_language", Context.MODE_PRIVATE).edit().clear().apply();
-            getActivity().getSharedPreferences("user_profile_language_level", Context.MODE_PRIVATE).edit().clear().apply();
-
+            getActivity().getSharedPreferences("general", MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile", MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile_language", MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile_language_level", MODE_PRIVATE).edit().clear().apply();
+            getActivity().getSharedPreferences("user_profile", MODE_PRIVATE).edit().putBoolean("isFilled", false).apply();
 
             ((MainActivity) getActivity()).signOut();
 

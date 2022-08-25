@@ -25,6 +25,7 @@ import com.example.wordwiki.R;
 import com.example.wordwiki.databinding.FragmentCreateDescriptionBinding;
 import com.example.wordwiki.ui_intro.account.User;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -102,13 +103,20 @@ public class CreateDescriptionFragment extends Fragment {
         finishIntroductionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
 
                 String description = editText.getText().toString();
 
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                        .child("Users").child(username).child("profileInfo")
+                        .child("Users").child("Personal").child(mAuth.getUid()).child("ProfileInfo")
+                        .child("description").setValue(description);
+
+                // save the same in the public root
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                        .child("Users").child("Public").child(username)
                         .child("description").setValue(description);
 
                 Intent intent = new Intent(requireActivity(), MainActivity.class);

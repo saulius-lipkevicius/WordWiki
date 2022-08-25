@@ -3,7 +3,9 @@ package com.example.wordwiki;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -14,9 +16,12 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.blongho.country_data.World;
 import com.example.wordwiki.classes.AsyncTaskClassFetchProfileData;
 import com.example.wordwiki.databinding.ActivityMainBinding;
+import com.example.wordwiki.ui_intro.account.User;
 import com.example.wordwiki.ui_intro.login.LoginActivity;
+import com.example.wordwiki.ui_main.profile.models.flagHelper;
 import com.facebook.login.LoginManager;
 import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -26,6 +31,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -45,19 +58,40 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
 
+        checkUserProfileData();
+
         setUpView();
         setUpGoogleLogin();
         setUpTrackers();
         bottomNavigationReselection();
-
-        checkUserProfileData();
     }
 
     public String getUsername(){
         SharedPreferences usernameSharedPreference = getSharedPreferences("user_profile", MODE_PRIVATE);
         String username = usernameSharedPreference.getString("username", "");
+
+        /*
+        if (username.equals("")) {
+            FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Authorization")
+                    .child(getInstance().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String username = snapshot.getValue().toString();
+                            Log.i(TAG, "onDataChange: aaaa " + username);
+                            usernameSharedPreference.edit().putString("username", username).apply();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
+        username = usernameSharedPreference.getString("username", "");
+*/
         return username;
     }
+
 
     private void setUpView() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -146,11 +180,14 @@ public class MainActivity extends AppCompatActivity{
 
     public void checkUserProfileData(){
         SharedPreferences sharedPreferences = getSharedPreferences("user_profile", MODE_PRIVATE);
-        String isProfileFilled = sharedPreferences.getString("username", "");
-
-        if(isProfileFilled.equals("")) {
+        Boolean isProfileFilled = sharedPreferences.getBoolean("isFilled", false);
+        Boolean isNewAccount = getSharedPreferences("general", MODE_PRIVATE).getBoolean("new_user", false);
+        if(!isProfileFilled || isNewAccount) {
+            Log.i(TAG, "checkUserProfileData: filling account information from firebase because it is initiated for the first time after the authorization. Given Uid: " + mAuth.getUid());
             AsyncTaskClassFetchProfileData taskFetchProfileData = new AsyncTaskClassFetchProfileData(this);
-            taskFetchProfileData.execute(getUsername());
+            taskFetchProfileData.execute(mAuth.getUid());
+
+            sharedPreferences.edit().putBoolean("isFilled", true).apply();
         }
     }
 }

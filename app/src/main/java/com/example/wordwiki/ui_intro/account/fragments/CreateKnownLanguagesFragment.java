@@ -28,6 +28,7 @@ import com.example.wordwiki.ui_intro.account.classes.RecyclerViewClickInterface;
 import com.example.wordwiki.ui_intro.account.models.KnownLanguageHelper;
 import com.example.wordwiki.ui_main.library.adapters.SectionAdapter;
 import com.example.wordwiki.ui_main.profile.models.progressHelper;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
@@ -102,12 +103,19 @@ public class CreateKnownLanguagesFragment extends Fragment implements RecyclerVi
         nextFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
                 String username = sharedPreferences.getString("username", "");
 
                 FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                        .child("Users").child(username).child("profileInfo")
+                        .child("Users").child("Personal").child(mAuth.getUid()).child("ProfileInfo")
                         .child("proficiency").setValue(knownLanguageMap);
+
+                // save the same in the public root
+                FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                        .child("Users").child("Public").child(username)
+                        .child("proficiency").setValue(knownLanguageMap);
+
 
                 NavController navController = Navigation.findNavController(view);
                 navController.navigate(R.id.action_navigation_create_user_known_languages_to_navigation_create_user_learning_languages);

@@ -1,7 +1,5 @@
 package com.example.wordwiki.ui_intro.account;
 
-import android.net.Uri;
-
 import java.util.Map;
 
 public class User {
@@ -9,25 +7,25 @@ public class User {
     String description;
     Map<String, Integer> learning;
     Map<String, Integer> proficiency;
-    String profile;
+    String profileImageURL;
 
-    public User(String username, String nationality, Map<String, Integer> learning, Map<String, Integer> proficiency, String profile) {
+    public User(String username, String nationality, Map<String, Integer> learning, Map<String, Integer> proficiency, String profileImageURL) {
         this.username = username;
         this.description = nationality;
         this.learning = learning;
         this.proficiency = proficiency;
-        this.profile = profile;
+        this.profileImageURL = profileImageURL;
     }
     public User() {
 
     }
 
-    public String getProfile() {
-        return profile;
+    public String getProfileImageURL() {
+        return profileImageURL;
     }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
+    public void setProfileImageURL(String profileImageURL) {
+        this.profileImageURL = profileImageURL;
     }
 
     public String getUsername() {

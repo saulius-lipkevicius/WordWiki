@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -195,7 +196,7 @@ public class CreatePictureFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext(), "Upload Failed", Toast.LENGTH_SHORT).show();
+                        //Toast toastMessage =  Toast.makeText(getContext(), "Upload Failed", Toast.LENGTH_SHORT);
                         pd.dismiss();
                     }
                 })
@@ -224,12 +225,19 @@ public class CreatePictureFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
                 if (task.isSuccessful()) {
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
                     Uri downloadUri = task.getResult();
                     String downloadURL = downloadUri.toString();
                     //Log.i(TAG, "onComplete: xxxx: " + downloadURL);
 
                     FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
-                            .child("Users").child(username).child("profileInfo")
+                            .child("Users").child("Personal").child(mAuth.getUid()).child("ProfileInfo")
+                            .child("profileImageURL").setValue(downloadURL);
+
+                    // save the same in the public root
+                    FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/").getReference()
+                            .child("Users").child("Public").child(username)
                             .child("profileImageURL").setValue(downloadURL);
                 } else {
                     // Handle failures

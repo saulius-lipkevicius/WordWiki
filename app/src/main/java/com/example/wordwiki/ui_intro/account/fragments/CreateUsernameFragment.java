@@ -33,6 +33,7 @@ import com.example.wordwiki.databinding.FragmentCreateUsernameBinding;
 import com.example.wordwiki.ui_intro.account.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -188,12 +189,13 @@ public class CreateUsernameFragment extends Fragment {
 
 
     private void createNewUser(String username) {
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         User user = new User(username.substring(1), null, null, null, null);
 
         FirebaseDatabase db = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app/");
         DatabaseReference databaseReference = db.getReference("Users");
 
-        databaseReference.child(username.substring(1)).child("profileInfo").setValue(user);
+        databaseReference.child("Personal").child(mAuth.getUid()).child("ProfileInfo").setValue(user);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -202,7 +204,9 @@ public class CreateUsernameFragment extends Fragment {
         editor.putString("username", username.substring(1));
         editor.apply();
 
+        // also save a map of the authorization
 
+        databaseReference.child("Public").child(username.substring(1)).child("username").setValue(username.substring(1));
     }
 
 }

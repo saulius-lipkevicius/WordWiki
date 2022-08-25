@@ -4,17 +4,14 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
 import com.blongho.country_data.World;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_intro.account.User;
-import com.example.wordwiki.ui_main.profile.models.flagHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,7 +29,7 @@ public class AsyncTaskClassFetchProfileData extends AsyncTask<String, Integer, I
     }
 
     @Override
-    protected Integer doInBackground(String... username) {
+    protected Integer doInBackground(String... Uid) {
         try {
             myDb = new DatabaseHelper(context);
 
@@ -40,17 +37,18 @@ public class AsyncTaskClassFetchProfileData extends AsyncTask<String, Integer, I
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             // here starts the algorithm
-            DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users");
-            referenceProfile.child(username[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Users")
+                    .child("Personal");
+            referenceProfile.child(Uid[0]).child("ProfileInfo").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     User data = snapshot.getValue(User.class);
-
+                    Log.i(TAG, "onDataChange: got Uid: " + Uid[0]);
                     if (data != null) {
                         editor.putString("username", "@" + data.getUsername());
                         editor.putString("userDescription", data.getDescription());
 
-                        editor.putString("imagePath", data.getProfile());
+                        editor.putString("imagePath", data.getProfileImageURL());
                         editor.apply();
                         // add learning/known languages
                         data.getProficiency().putAll(data.getLearning());
@@ -76,6 +74,12 @@ public class AsyncTaskClassFetchProfileData extends AsyncTask<String, Integer, I
                         }
                         spLanguageEditor.apply();
                         spLevelEditor.apply();
+
+                        Log.i(TAG, "onDataChange: input data: " + data.getLearning());
+                        Log.i(TAG, "onDataChange: input data: " + data.getProfileImageURL());
+                        Log.i(TAG, "onDataChange: input data: " + data.getUsername());
+                        Log.i(TAG, "onDataChange: input data: " + data.getProficiency());
+                        Log.i(TAG, "onDataChange: input data: " + data.getDescription());
                     }
 
                 }
