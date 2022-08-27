@@ -952,16 +952,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @param language
      * @param section
      */
-    public void enterDictionaryInformation(String language, String section) {
+    public void enterDictionaryInformation(String username, String language, String section, String description, String level) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // TODO ADD Unique key generator and username later on
         ContentValues cv = new ContentValues();
+        cv.put(INFORMATION_COL2, username);
         cv.put(INFORMATION_COL3, language);
         cv.put(INFORMATION_COL4, section);
+        cv.put(INFORMATION_COL5, description);
+        cv.put(INFORMATION_COL6, level);
         cv.put(INFORMATION_COL7, 0);
         cv.put(INFORMATION_COL8, 0);
         cv.put(INFORMATION_COL9, 1);
+        cv.put(INFORMATION_COL10, 0);
+        cv.put(INFORMATION_COL11, 0);
 
         db.insert(INFORMATION_TABLE_NAME, null, cv);
     }

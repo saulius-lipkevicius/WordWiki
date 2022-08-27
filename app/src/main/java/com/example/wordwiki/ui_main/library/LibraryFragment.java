@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -85,7 +87,9 @@ public class LibraryFragment extends Fragment {
 
     ArrayList<ExcelParsing> uploadData;
     DatabaseHelper myDb;
+    String dictionaryLevel;
 
+    AppCompatButton isA1, isA2, isB1, isB2, isC1, isC2;
 
     Map<String, String> language_suggestions_map = new HashMap<String, String>() {
         {
@@ -148,6 +152,8 @@ public class LibraryFragment extends Fragment {
         mainRecyclerView = root.findViewById(R.id.fragment_library_top_recycle_view);
         sectionAdapter = new SectionAdapter(sectionList, getContext());
         mainRecyclerView.setAdapter(sectionAdapter);
+
+
         //mainRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         addDictionary = root.findViewById(R.id.library_add);
@@ -238,6 +244,14 @@ public class LibraryFragment extends Fragment {
     }
 
 
+    /**
+     * logic map:
+     *      1. define objects
+     *      2. get language following Map image and items
+     *          2.1. items are added until new language is approached, then language is changed and
+     *          in next iteration we create new listItem for languages
+     *      3. final if is added to confirm that the last language is added, because of the way of defining.
+     */
     private void initData() {
         // TODO create sep. table for information about dictionaries for information storage - description, level...
         /**
@@ -258,40 +272,40 @@ public class LibraryFragment extends Fragment {
                 String countryISO = myDb.getFlagISO(currentLanguage);
                 int flagInt = World.getFlagOf(countryISO);
 
-                if (currentLanguage.length() > 0 && !currentLanguage.equals(dictionaryInformation.getString(2))){
+                if (currentLanguage.length() > 0 && !currentLanguage.equals(dictionaryInformation.getString(2))) {
+                    Log.i(TAG, "currentLanguage added is: " + dictionaryInformation.getString(2));
                     sectionList.add(new SectionHelper(currentLanguage, flagInt, sectionItems));
                     sectionItems = new ArrayList<>();
                     currentLanguage = dictionaryInformation.getString(2);
                 } else if (currentLanguage.length() == 0) {
                     currentLanguage = dictionaryInformation.getString(2);
-                } else if (dictionaryInformation.isLast()) {
-                    // to keep the last language entered, because there is no switch in the comparison
-
-
-                    sectionList.add(new SectionHelper(currentLanguage, flagInt, sectionItems));
                 }
 
 
-                /*
-                if (dictionaryInformation.getString(1).equals(currentUser)){
-                    String username = "you";
-                } else {
-                    String username = dictionaryInformation.getString(1);
-                }
-                 */
 
                 Cursor ratingCursor = myDb.getRating(dictionaryInformation.getString(2)
-                        ,  dictionaryInformation.getString(3));
-                Log.i(TAG, "initData: " + ratingCursor.getString(0).equals("1") + ", down:" +ratingCursor.getString(1).equals("1"));
+                        , dictionaryInformation.getString(3));
+                Log.i(TAG, "initData: " + ratingCursor.getString(0).equals("1") + ", down:" + ratingCursor.getString(1).equals("1"));
                 sectionItems.add(new SubsectionHelper(dictionaryInformation.getString(2)
-                        ,  dictionaryInformation.getString(3)
+                        , dictionaryInformation.getString(3)
                         , dictionaryInformation.getString(4)
                         , dictionaryInformation.getString(1)
                         , dictionaryInformation.getString(5)
                         , ratingCursor.getString(0).equals("1")
                         , ratingCursor.getString(1).equals("1")
-                        ,false));
+                        , false));
                 //ratingCursor.close();
+
+
+                if (dictionaryInformation.isLast()) {
+                    // to keep the last language entered, because there is no switch in the comparison
+
+                    countryISO = myDb.getFlagISO(currentLanguage);
+                    flagInt = World.getFlagOf(countryISO);
+
+                    Log.i(TAG, "currentLanguage3: " + dictionaryInformation.getString(2));
+                    sectionList.add(new SectionHelper(currentLanguage, flagInt, sectionItems));
+                }
 
             }
 
@@ -336,7 +350,7 @@ public class LibraryFragment extends Fragment {
      *
      * @return
      */
-    private void readExcelData(String filePath, String language, String section) {
+    private void readExcelData(String filePath, String language, String section, String description, String level) {
         Log.d(TAG, "readExcelData: Reading Excel File.");
 
         //declares input file
@@ -373,7 +387,7 @@ public class LibraryFragment extends Fragment {
             Log.d(TAG, "readExcelData: STRINGBUILDER: " + sb.toString());
 
             Log.d(TAG, "readExcelData: parsingSize: " + sb.length());
-            parseStringBuilder(sb, language, section);
+            parseStringBuilder(sb, language, section, description, level);
             sb = new StringBuilder();
 
         } catch (FileNotFoundException e) {
@@ -386,7 +400,7 @@ public class LibraryFragment extends Fragment {
     /**
      * Method for parsing imported data and storing in ArrayList<XYValue>
      */
-    public void parseStringBuilder(StringBuilder mStringBuilder, String language, String section) {
+    public void parseStringBuilder(StringBuilder mStringBuilder, String language, String section, String description, String level) {
         Log.d(TAG, "parseStringBuilder: Started parsing.");
 
         // splits the sb into rows.
@@ -425,10 +439,10 @@ public class LibraryFragment extends Fragment {
 
             }
         }
-        printDataToLog(language, section);
+        printDataToLog(language, section, description, level);
     }
 
-    private void printDataToLog(String language, String section) {
+    private void printDataToLog(String language, String section, String description, String level) {
 
         Log.d(TAG, "printDataToLog: Printing data to log...");
         Log.d(TAG, "printDataToLog: (x,y): (" + language + "," + section + ")");
@@ -436,8 +450,9 @@ public class LibraryFragment extends Fragment {
             // initial entry creates information table row
             if (i == 0) {
                 // TODO add username to the user in the cloud.
-                //String username =
-                myDb.enterDictionaryInformation(language, section);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+                String username = sharedPreferences.getString("username", "");
+                myDb.enterDictionaryInformation(username, language, section, description, level);
             }
 
 
@@ -495,7 +510,7 @@ public class LibraryFragment extends Fragment {
 
 
         int width = (int) (getResources().getDisplayMetrics().widthPixels * 0.90);
-        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.40);
+        int height = (int) (getResources().getDisplayMetrics().heightPixels * 0.50);
 
         dialog.getWindow().setLayout(width, height);
         dialog.setCancelable(false); //Optional
@@ -514,6 +529,93 @@ public class LibraryFragment extends Fragment {
         ArrayAdapter<String> complete_section_adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, section_suggestions);
         input_section.setAdapter(complete_section_adapter);
 
+        // Description field
+        TextView input_description = dialog.findViewById(R.id.enter_description_txt);
+
+        // Level buttons
+        // TODO implement click callback to get back level pressed
+
+        isA1 = dialog.findViewById(R.id.fragment_library_import_dictionary_level_bar_a1);
+        isA2 = dialog.findViewById(R.id.fragment_library_import_dictionary_level_bar_a2);
+        isB1 = dialog.findViewById(R.id.fragment_library_import_dictionary_level_bar_b1);
+        isB2 = dialog.findViewById(R.id.fragment_library_import_dictionary_level_bar_b2);
+        isC1 = dialog.findViewById(R.id.fragment_library_import_dictionary_level_bar_c1);
+        isC2 = dialog.findViewById(R.id.fragment_library_import_dictionary_level_bar_c2);
+
+        // functionality of the dictionary level bar
+        isA1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // function to nullify all values, then select the chosen one
+                unselectDictionaryLevel();
+                selectDictionaryLevel(1);
+
+                // change text of level which later is used to store data of dictionary and etc
+                dictionaryLevel = "A1";
+            }
+        });
+
+        isA2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // function to nullify all values, then select the chosen one
+                unselectDictionaryLevel();
+                selectDictionaryLevel(2);
+
+                // change text of level which later is used to store data of dictionary and etc
+                dictionaryLevel = "A2";
+            }
+        });
+
+        isB1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // function to nullify all values, then select the chosen one
+                unselectDictionaryLevel();
+                selectDictionaryLevel(3);
+
+                // change text of level which later is used to store data of dictionary and etc
+                dictionaryLevel = "B1";
+            }
+        });
+
+        isB2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // function to nullify all values, then select the chosen one
+                unselectDictionaryLevel();
+                selectDictionaryLevel(4);
+
+                // change text of level which later is used to store data of dictionary and etc
+                dictionaryLevel = "B2";
+            }
+        });
+
+        isC1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // function to nullify all values, then select the chosen one
+                unselectDictionaryLevel();
+                selectDictionaryLevel(5);
+
+                // change text of level which later is used to store data of dictionary and etc
+                dictionaryLevel = "C1";
+            }
+        });
+
+        isC2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // function to nullify all values, then select the chosen one
+                unselectDictionaryLevel();
+                selectDictionaryLevel(6);
+
+                // change text of level which later is used to store data of dictionary and etc
+                dictionaryLevel = "C2";
+            }
+        });
+
+
         Button btn_okay = (Button) dialog.findViewById(R.id.btn_okay);
         Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
 
@@ -525,6 +627,7 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+                // TODO make other fields optional???
                 if (!TextUtils.isEmpty(input_language.getText().toString()) && !TextUtils.isEmpty(input_section.getText().toString())) {
                     dialog.dismiss();
 
@@ -538,7 +641,12 @@ public class LibraryFragment extends Fragment {
                     // instantly create loading dialog
                     loadingDialog.startLoadingDialog();
 
-                    readExcelData(lastDirectory, input_language.getText().toString(), input_section.getText().toString());
+                    // TODO add levels
+                    Log.i(TAG, "onClick: to readExcelData, par[0] - " + input_language.getText().toString());
+                    Log.i(TAG, "onClick: to readExcelData, par[0] - " + input_section.getText().toString());
+                    Log.i(TAG, "onClick: to readExcelData, par[0] - " + input_description.getText().toString());
+                    Log.i(TAG, "onClick: to readExcelData, par[0] - " + dictionaryLevel);
+                    readExcelData(lastDirectory, input_language.getText().toString(), input_section.getText().toString(), input_description.getText().toString(), dictionaryLevel);
 
 
                     // toastMessage("Importing Words Now...");
@@ -591,6 +699,32 @@ public class LibraryFragment extends Fragment {
             }
         });
 
+    }
+
+    private void selectDictionaryLevel(int i) {
+        Log.i(TAG, "selectDictionaryLevel: selected dictionary level: " + i);
+        if (i == 1) {
+            isA1.setBackgroundColor(Color.GRAY);
+        } else if (i == 2) {
+            isA2.setBackgroundColor(Color.GRAY);
+        } else if (i == 3) {
+            isB1.setBackgroundColor(Color.GRAY);
+        } else if (i == 4) {
+            isB2.setBackgroundColor(Color.GRAY);
+        } else if (i == 5) {
+            isC1.setBackgroundColor(Color.GRAY);
+        } else if (i == 6) {
+            isC2.setBackgroundColor(Color.GRAY);
+        }
+    }
+
+    private void unselectDictionaryLevel() {
+        isA1.setBackgroundColor(Color.TRANSPARENT);
+        isA2.setBackgroundColor(Color.TRANSPARENT);
+        isB1.setBackgroundColor(Color.TRANSPARENT);
+        isB2.setBackgroundColor(Color.TRANSPARENT);
+        isC1.setBackgroundColor(Color.TRANSPARENT);
+        isC2.setBackgroundColor(Color.TRANSPARENT);
     }
 
     private void toastMessage(String message) {

@@ -7,8 +7,7 @@ public class ImportModel {
     private String learningLanguage;
     private Integer downloadCount;
     private String sectionLevel;
-    private Integer starsGiven;
-    private Integer peopleVoted;
+    private Integer likesSum;
     private Integer wordsCount;
     private String sectionName;
     private ArrayList<String> words;
@@ -16,14 +15,13 @@ public class ImportModel {
     private Boolean checkBox;
 
     public ImportModel(String nativeLanguage, String learningLanguage, Integer downloadCount
-            , String sectionLevel, Integer starsGiven, Integer peopleVoted, Integer wordsCount
+            , String sectionLevel, Integer likesSum, Integer wordsCount
             , String sectionName, ArrayList<String> words, ArrayList<String> translations, Boolean checkBox) {
         this.nativeLanguage = nativeLanguage;
         this.learningLanguage = learningLanguage;
         this.downloadCount = downloadCount;
         this.sectionLevel = sectionLevel;
-        this.starsGiven = starsGiven;
-        this.peopleVoted = peopleVoted;
+        this.likesSum = likesSum;
         this.wordsCount = wordsCount;
         this.sectionName = sectionName;
         this.words = words;
@@ -63,22 +61,6 @@ public class ImportModel {
         this.sectionLevel = sectionLevel;
     }
 
-    public Integer getStarsGiven() {
-        return starsGiven;
-    }
-
-    public void setStarsGiven(Integer starsGiven) {
-        this.starsGiven = starsGiven;
-    }
-
-    public Integer getPeopleVoted() {
-        return peopleVoted;
-    }
-
-    public void setPeopleVoted(Integer peopleVoted) {
-        this.peopleVoted = peopleVoted;
-    }
-
     public Integer getWordsCount() {
         return wordsCount;
     }
@@ -93,6 +75,14 @@ public class ImportModel {
 
     public void setSectionName(String sectionName) {
         this.sectionName = sectionName;
+    }
+
+    public Integer getLikesSum() {
+        return likesSum;
+    }
+
+    public void setLikesSum(Integer likesSum) {
+        this.likesSum = likesSum;
     }
 
     public String getNativeLanguage() {

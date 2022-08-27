@@ -2,6 +2,7 @@ package com.example.wordwiki.ui_main.library.adapters;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +70,9 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
         }
 
         // TODO find current username
-       String currentUsername = "saulius";
+       SharedPreferences sharedPreferences = context.getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+       String currentUsername = sharedPreferences.getString("username", "UNKNOWN");
+
 
         // TODO add username to an imported dictionary, otherwise it will give an error
        if (section.getCreator().equals(currentUsername)) {
@@ -85,9 +88,17 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
            } else {
                holder.reportSubsection.setText("Share");
            }
+
+           // hide like/dislike buttons to remove self-evaluation
+           holder.rateUp.setVisibility(View.GONE);
+           holder.rateDown.setVisibility(View.GONE);
        } else {
            holder.creatorName.setText(section.getCreator());
            holder.reportSubsection.setText("Report It");
+
+           // recreate like/dislike buttons
+           holder.rateUp.setVisibility(View.VISIBLE);
+           holder.rateDown.setVisibility(View.VISIBLE);
        }
 
 
@@ -209,12 +220,13 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
             @Override
             public void onClick(View view) {
                 Log.i(TAG, "onClick: report it." );
-                ArrayList<String> dictionaryName = new ArrayList<>();
-                String section_language = "{" + parent.sectionName.getText().toString() + "}_{" + holder.subsectionName.getText().toString() + "}";
 
                 if (holder.reportSubsection.getText().equals("Share")){
-                    dictionaryName.add(section_language);
-                    ExportClass.exportCloud(dictionaryName, view.getContext());
+                    // export to the cloud class
+                    ExportClass.exportCloud(parent.sectionName.getText().toString()
+                            , holder.subsectionName.getText().toString()
+                            , holder.description.getText().toString()
+                            , holder.subsectionLevel.getText().toString(), view.getContext());
 
                     // change value of isShared in the myDb so it is seen to not overuse the button
                     myDb.setYourDictionaryPublished(holder.creatorName.getText().toString()
@@ -228,7 +240,9 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
                     //Toast.makeText(ExportActivity.this, "Excel is exported " + checkedItems, Toast.LENGTH_SHORT).show();
                     // TODO export dictionary to an excel sheet, through fileManager
-                    ExportClass.export(dictionaryName, view.getContext());
+                    // TODO should export it to excel and not in report it case
+                    // TODO !!!!!!!!!!!!!!!!!
+                    // ExportClass.export(dictionaryName, view.getContext());
 
                     // TODO loadup screen and dialog that it was written in downloads
                     //final LoadingDialog loadingDialog = new LoadingDialog(view.getAct);

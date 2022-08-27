@@ -120,9 +120,6 @@ public class ProfileFragment extends Fragment {
         World.init(getApplicationContext());
         myDb = new DatabaseHelper(getContext());
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", Context.MODE_PRIVATE);
-        username = sharedPreferences.getString("username", null);
-
         // cloud storage
         profileImage = root.findViewById(R.id.profile_image);
 
@@ -194,8 +191,11 @@ public class ProfileFragment extends Fragment {
 
 
         adapter = new flagAdapter(flagLocations);
+
         flagRecycler.setLayoutManager(layoutManagerHorizontal);
         flagRecycler.setAdapter(adapter);
+
+
     }
 
 /*

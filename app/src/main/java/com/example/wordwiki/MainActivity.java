@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity{
 
     public String getUsername(){
         SharedPreferences usernameSharedPreference = getSharedPreferences("user_profile", MODE_PRIVATE);
-        String username = usernameSharedPreference.getString("username", "");
+        String usernameFunction = usernameSharedPreference.getString("username", "");
 
         /*
         if (username.equals("")) {
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity{
         }
         username = usernameSharedPreference.getString("username", "");
 */
-        return username;
+        return usernameFunction;
     }
 
 

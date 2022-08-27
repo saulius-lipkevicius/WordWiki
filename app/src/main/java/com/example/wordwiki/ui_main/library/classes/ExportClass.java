@@ -38,6 +38,7 @@ public class ExportClass {
 
     /**
      * function to export db dictionary to an excel
+     *
      * @param checkedItemsList
      * @param context
      */
@@ -131,99 +132,47 @@ public class ExportClass {
     }
 
     /**
-     *  function to export an excel to a cloud
-     * @param checkedItemsList
-     * @param context
+     * function to export an excel to a cloud
      */
-    public static void exportCloud(ArrayList<String> checkedItemsList, Context context) {
+    public static void exportCloud(String languageName, String sectionName, String description, String level, Context context) {
         // TODO insert true measures that go to the firebase
-        /*
-        ValueEventListener valueEventListener = new ValueEventListener() {
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot snapshot_iter : snapshot.getChildren()) {
-                        Languages lng = snapshot_iter.getValue(Languages.class);
-                        Log.d("a", "onCreate: change " + lng.getLearningLanguage());
-                    }
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-         */
-
 
         DatabaseHelper myDb = new DatabaseHelper(context);
         // get language and section to have continues flow for every language
         ArrayList<String> words = new ArrayList();
         ArrayList<String> translations = new ArrayList();
-        String lastLanguage = "";
-        String currentLanguage = "";
-        String currentSection = "";
-        // go through all values to create a mapping between language and its sections for later exportation
-        for (String currentX : checkedItemsList) {
-            Pattern regex = Pattern.compile("\\{(.*?)\\}");
-            Matcher regexMatcher = regex.matcher(currentX);
 
-            int i = 0;
-            while (regexMatcher.find()) {//Finds Matching Pattern in String
-                String currentString = regexMatcher.group(1);
-                if (i == 0) {
-                    currentLanguage = currentString;
-                } else {
-                    currentSection = currentString;
-                }
 
-                i++;
+        Cursor exportWords = myDb.exportWords(languageName, sectionName);
+        Log.d(TAG, "exportCloud: size of cloud: " + exportWords.getCount() + ": " + languageName + ": " + sectionName);
+        if (exportWords == null)
+            return; // can't do anything with a null cursor.
+        try {
+            while (exportWords.moveToNext()) {
+                words.add(exportWords.getString(0));
+                translations.add(exportWords.getString(1));
             }
-
-            words = new ArrayList();
-            translations = new ArrayList();
-            Log.d(TAG, "exportCloud: 1: " + currentLanguage + " 2: " + currentSection);
-            Cursor exportWords = myDb.exportWords(currentLanguage, currentSection);
-            Log.d(TAG, "exportCloud: size of cloud: " + exportWords.getCount() + ": " + currentSection + ": " + currentLanguage);
-            if (exportWords == null)
-                return; // can't do anything with a null cursor.
-            try {
-                while (exportWords.moveToNext()) {
-                    words.add(exportWords.getString(0));
-                    translations.add(exportWords.getString(1));
-                }
-            } finally {
-                exportWords.close();
-            }
-
-            SharedPreferences sharedPreferences = context.getSharedPreferences("user_profile", Context.MODE_PRIVATE);
-
-
-            // TODO add native language indicator
-            ExportedDictionaryHelper emp = new ExportedDictionaryHelper("English"
-                    , currentLanguage
-                    , 0
-                    , "A1"
-                    , 0
-                    , 0
-                    , words.size()
-                    , currentSection
-                    , words
-                    , translations
-                    , sharedPreferences.getString("username", "").substring(1)
-            );
-            ExportedDictionaryCloudAdapter model = new ExportedDictionaryCloudAdapter();
-            model.add(emp);
-
-            //DatabaseReference dbLanguage = FirebaseDatabase.getInstance("https://virtual-dictionary-3444b-default-rtdb.europe-west1.firebasedatabase.app").getReference("Languages");
-            //dbLanguage.addListenerForSingleValueEvent(valueEventListener);
-
-            i = 0;
+        } finally {
+            exportWords.close();
         }
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("user_profile", Context.MODE_PRIVATE);
+
+        // TODO add native language indicator
+        ExportedDictionaryHelper emp = new ExportedDictionaryHelper("English"
+                , languageName
+                , 0
+                , level
+                , 0
+                , words.size()
+                , sectionName
+                , words
+                , translations
+                , sharedPreferences.getString("username", "")
+                , description
+        );
+
+        ExportedDictionaryCloudAdapter model = new ExportedDictionaryCloudAdapter();
+        model.add(emp);
     }
 }

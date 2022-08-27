@@ -45,6 +45,7 @@ public class AsyncTaskClassFetchProfileData extends AsyncTask<String, Integer, I
                     User data = snapshot.getValue(User.class);
                     Log.i(TAG, "onDataChange: got Uid: " + Uid[0]);
                     if (data != null) {
+                        Log.i(TAG, "onDataChange: setting an username to : " + data.getUsername());
                         editor.putString("username", "@" + data.getUsername());
                         editor.putString("userDescription", data.getDescription());
 

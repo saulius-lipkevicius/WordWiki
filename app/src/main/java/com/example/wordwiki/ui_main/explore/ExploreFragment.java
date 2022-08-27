@@ -123,8 +123,7 @@ public class ExploreFragment extends Fragment{
                             , lng.getLearningLanguage()
                             , lng.getDownloadCount()
                             , lng.getSectionLevel()
-                            , lng.getStarsGiven()
-                            , lng.getPeopleVoted()
+                            , lng.getLikesSum()
                             , lng.getWordsCount()
                             , lng.getSectionName()
                             , null //lng.getWords()
@@ -175,7 +174,9 @@ public class ExploreFragment extends Fragment{
 
         // execute a task that creats a small loading screen and then pops up
         AsyncTaskClassesGetCloudDictionaries taskClassesGetCloudDictionaries = new AsyncTaskClassesGetCloudDictionaries(dbLanguage, valueEventListener);
-        taskClassesGetCloudDictionaries.execute();
+
+        String[] inputLanguageInfo = {"Danish", "A1"};
+        taskClassesGetCloudDictionaries.execute(inputLanguageInfo);
 
         //
 
