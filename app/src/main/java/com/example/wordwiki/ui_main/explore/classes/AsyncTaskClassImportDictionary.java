@@ -31,7 +31,7 @@ public class AsyncTaskClassImportDictionary extends AsyncTask<String, Integer, V
     @Override
     protected Void doInBackground(String... strings) {
         // import language
-        languageImporter.importCloud(strings[0] ,strings[1], strings[2], context);
+        languageImporter.importCloud(strings[0] ,strings[1], strings[2], strings[3], context);
 
         // send the data confirmation to the firebase
         //

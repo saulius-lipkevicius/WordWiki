@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class ImportModel {
     private String nativeLanguage;
     private String learningLanguage;
+    private String username;
     private Integer downloadCount;
     private String sectionLevel;
     private Integer likesSum;
@@ -14,11 +15,12 @@ public class ImportModel {
     private ArrayList<String> translations;
     private Boolean checkBox;
 
-    public ImportModel(String nativeLanguage, String learningLanguage, Integer downloadCount
+    public ImportModel(String nativeLanguage, String learningLanguage, String username, Integer downloadCount
             , String sectionLevel, Integer likesSum, Integer wordsCount
             , String sectionName, ArrayList<String> words, ArrayList<String> translations, Boolean checkBox) {
         this.nativeLanguage = nativeLanguage;
         this.learningLanguage = learningLanguage;
+        this.username = username;
         this.downloadCount = downloadCount;
         this.sectionLevel = sectionLevel;
         this.likesSum = likesSum;
@@ -43,6 +45,14 @@ public class ImportModel {
 
     public void setTranslations(ArrayList<String> translations) {
         this.translations = translations;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getDownloadCount() {

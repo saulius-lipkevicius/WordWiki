@@ -29,8 +29,6 @@ import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.databinding.FragmentExploreBinding;
 import com.example.wordwiki.ui_main.explore.adapters.ImportAdapter;
 import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassesGetCloudDictionaries;
-import com.example.wordwiki.ui_main.explore.classes.OnItemClickImport;
-import com.example.wordwiki.ui_main.explore.classes.languageImporter;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
 import com.example.wordwiki.ui_main.explore.models.LanguageModel;
 import com.google.firebase.database.DataSnapshot;
@@ -121,6 +119,7 @@ public class ExploreFragment extends Fragment{
 
                     sectionsList.add(new ImportModel( lng.getNativeLanguage()
                             , lng.getLearningLanguage()
+                            , lng.getUsername()
                             , lng.getDownloadCount()
                             , lng.getSectionLevel()
                             , lng.getLikesSum()

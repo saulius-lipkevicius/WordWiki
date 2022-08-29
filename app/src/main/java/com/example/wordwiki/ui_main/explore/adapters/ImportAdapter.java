@@ -21,8 +21,11 @@ import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassImportDictionary;
-import com.example.wordwiki.ui_main.explore.classes.languageImporter;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +45,9 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
         TextView language_name;
         ImageButton downloadBtn;
         TextView username;
+        TextView likeCount;
+        TextView downloadCount;
+
 
         ImportLanguageViewHolder(View itemView) {
             super(itemView);
@@ -50,6 +56,10 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
             section_name = itemView.findViewById(R.id.import_cloud_section);
             language_name = itemView.findViewById(R.id.import_cloud_language);
             downloadBtn = itemView.findViewById(R.id.fragment_explore_downloan_dictionary);
+
+            // stats of a dictionary
+            likeCount = itemView.findViewById(R.id.fragment_explore_dictionary_likes);
+            downloadCount = itemView.findViewById(R.id.fragment_explore_download_count);
         }
     }
 
@@ -77,6 +87,11 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
 
         holder.section_name.setText(currentItem.getSectionName());
         holder.language_name.setText(currentItem.getLearningLanguage());
+        holder.username.setText(currentItem.getUsername());
+
+        // set counters to its values
+        holder.likeCount.setText(currentItem.getLikesSum().toString());
+        holder.downloadCount.setText(currentItem.getDownloadCount() + " downloads");
 
         String country_name = myDb.getFlagISO(currentItem.getLearningLanguage());
         int flag = World.getFlagOf(country_name);
@@ -108,8 +123,13 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
                         holder.username.getText().toString()
                         , currentItem.getLearningLanguage()
                         , currentItem.getSectionName()
+                        , currentItem.getSectionLevel()
                 };
 
+                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[0]);
+                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[1]);
+                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[2]);
+                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[3]);
 
                 AsyncTaskClassImportDictionary taskClassImportDictionary = new AsyncTaskClassImportDictionary(holder.downloadBtn, context);
                 taskClassImportDictionary.execute(dictionaryName);
@@ -119,6 +139,23 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
                 //                  , currentItem.getSectionName(), context);
 
                 //mCallback.onClick(currentItem.getSectionName(), currentItem.getLearningLanguage(), currentItem.getCheckBox());
+
+                // TODO confirm it is successfully downloaded before we add to the count
+                // add to the count of downloadCount
+                updateDownloadCount();
+            }
+
+            private void updateDownloadCount() {
+                int currentDownloadCount = currentItem.getDownloadCount();
+
+                // send it back to the server with addition + 1
+                currentDownloadCount = currentDownloadCount + 1;
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries")
+                        .child(currentItem.getLearningLanguage()).child(currentItem.getSectionLevel()).child(currentItem.getUsername() + "_" + currentItem.getSectionName());
+                mDatabase.child("downloadCount").setValue(currentDownloadCount);
+
+                holder.downloadCount.setText(currentDownloadCount + " downloads");
             }
         });
     }

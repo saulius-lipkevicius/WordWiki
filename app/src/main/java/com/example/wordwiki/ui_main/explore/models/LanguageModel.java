@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class LanguageModel {
     private String nativeLanguage;
     private  String learningLanguage;
+    private String username;
     private Integer downloadCount;
     private String sectionLevel;
     private Integer likesSum;
@@ -14,11 +15,13 @@ public class LanguageModel {
     private ArrayList<String> translations;
 
     public LanguageModel(){};
-    public LanguageModel(String nativeLanguage, String learningLanguage, Integer downloadCount
+    public LanguageModel(String nativeLanguage, String learningLanguage, String username
+            , Integer downloadCount
             , String sectionLevel, Integer likesSum, Integer wordsCount
             , String sectionName, ArrayList<String> words, ArrayList<String> translations) {
         this.nativeLanguage = nativeLanguage;
         this.learningLanguage = learningLanguage;
+        this.username = username;
         this.downloadCount = downloadCount;
         this.sectionLevel = sectionLevel;
         this.likesSum = likesSum;
@@ -42,6 +45,14 @@ public class LanguageModel {
 
     public void setTranslations(ArrayList<String> translations) {
         this.translations = translations;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Integer getDownloadCount() {

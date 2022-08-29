@@ -229,9 +229,10 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
                             , holder.subsectionLevel.getText().toString(), view.getContext());
 
                     // change value of isShared in the myDb so it is seen to not overuse the button
-                    myDb.setYourDictionaryPublished(holder.creatorName.getText().toString()
+                    myDb.setYourDictionaryPublished(currentUsername
                             , items.get(holder.getAdapterPosition()).getSectionName()
                             , holder.subsectionName.getText().toString(), "1");
+                    holder.reportSubsection.setText("SharED");
 
                 } else if(holder.reportSubsection.getText().equals("Report It")){
                     // TODO report a dictionary if that contains some malicious stuff
