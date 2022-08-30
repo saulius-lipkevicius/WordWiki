@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +32,8 @@ import com.example.wordwiki.classes.LoadingDialog;
 import com.example.wordwiki.classes.SuccessDialog;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.databinding.FragmentExploreBinding;
+import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
+import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.FeedbackFragmentDialog;
 import com.example.wordwiki.ui_main.explore.adapters.ImportAdapter;
 import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassesGetCloudDictionaries;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
@@ -42,7 +49,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExploreFragment extends Fragment{
+public class ExploreFragment extends Fragment implements View.OnClickListener {
     FragmentExploreBinding binding;
     final String TAG = "Dictionary Importing";
 
@@ -51,11 +58,12 @@ public class ExploreFragment extends Fragment{
     private List<ImportModel> sectionsListFull;
     private ArrayList<String> checkedItems;
     private ImportAdapter adapter;
-    Button downloadBtn;
 
     private DatabaseHelper myDb;
     DatabaseReference dbLanguage;
     private String learningLanguageFiller, sectionNameFiller;
+
+    ImageButton searchDictionary, filterDictionaries;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +80,21 @@ public class ExploreFragment extends Fragment{
         binding = FragmentExploreBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        Toolbar tb = root.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(tb);
+
+        searchDictionary = root.findViewById(R.id.explore_search);
+
+        searchDictionary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // implement it later
+            }
+        });
+
+        filterDictionaries = root.findViewById(R.id.explore_filter);
+        filterDictionaries.setOnClickListener(this);
+
         setUpRecyclerView();
 
         //fillSectionsList();
@@ -82,26 +105,11 @@ public class ExploreFragment extends Fragment{
         return root;
     }
 
-    /*
+
     private void setUpButtons() {
-        downloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Dictionaries are finally loaded up :)", Toast.LENGTH_SHORT).show();
 
-                //Log.d(TAG, "onClick: 2222: " + checkedItems.size());
-                //languageImporter.importCloud(languageName, sectionName, getContext());
-
-                // TODO loadup screen and dialog that it was written in downloads
-                //final LoadingDialog loadingDialog = new LoadingDialog(ImportCloudActivity.this);
-                //final SuccessDialog successDialog = new SuccessDialog(ImportCloudActivity.this);
-
-                //showAlert();
-            }
-        });
     }
 
-     */
 
     ValueEventListener valueEventListener = new ValueEventListener() {
 
@@ -252,5 +260,14 @@ public class ExploreFragment extends Fragment{
                 });
             }
         }, 5000);
+    }
+
+    @Override
+    public void onClick(View view) {
+        FragmentManager fm = ExploreFragment.this.getParentFragmentManager();
+        DialogFragment dialogFragment = ExploreFilterFragmentDialog.newInstance();
+        dialogFragment.setTargetFragment(this,
+                0);
+        dialogFragment.show(fm, "TAG");
     }
 }

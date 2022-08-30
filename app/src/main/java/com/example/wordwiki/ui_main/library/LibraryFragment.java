@@ -83,7 +83,6 @@ public class LibraryFragment extends Fragment {
     RecyclerView mainRecyclerView;
     SectionAdapter sectionAdapter;
 
-    NavController navController;
 
     ArrayList<ExcelParsing> uploadData;
     DatabaseHelper myDb;

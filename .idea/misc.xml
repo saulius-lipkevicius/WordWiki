@@ -21,6 +21,8 @@
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_expand_more_small.xml" value="0.2675" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_explore_fill0_nav.xml" value="0.2985" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_explore_fill1_nav.xml" value="0.2985" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_filter_24.xml" value="0.205" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_filter_40.xml" value="0.205" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.335" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.195" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/drawable/ic_password.xml" value="0.195" />
@@ -84,7 +86,10 @@
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_create_user_learning_language_item.xml" value="0.24003623188405798" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_create_username.xml" value="0.33" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_explore.xml" value="0.22" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_explore_filter_dialog.xml" value="0.24114583333333334" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_explore_import_language_item.xml" value="0.5" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_explore_language.xml" value="0.25" />
+        <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_explore_level.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_feedback.xml" value="0.20104166666666667" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_help.xml" value="0.24909420289855072" />
         <entry key="..\:/Users/saulius/AndroidStudioProjects/WordWiki/app/src/main/res/layout/fragment_home.xml" value="0.2826086956521739" />

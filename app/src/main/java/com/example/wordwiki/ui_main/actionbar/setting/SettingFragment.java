@@ -83,7 +83,6 @@ public class SettingFragment extends Fragment implements SettingListAdapter.OnSe
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         settingListRecycle.setLayoutManager(layoutManager);
 
-
         settingListRecycle.setAdapter(settingAdapter);
     }
 

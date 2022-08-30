@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui_main.actionbar.setting.sub_settings.dialogs.FeedbackFragmentDialog">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/actionbar_dialog_fragment_closing" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Language"
+            android:layout_marginStart="30sp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_explore_filter_dialog_language_recycler"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:orientation="vertical"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Level"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="30sp"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"/>
+
+        <LinearLayout
+            android:id="@+id/fragment_library_import_dictionary_level_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/enter_description_txt">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_explore_filter_dictionary_level_bar_a1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="A1"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_explore_filter_dictionary_level_bar_a2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="A2"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_explore_filter_dictionary_level_bar_b1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="B1"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_explore_filter_dictionary_level_bar_b2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="B2"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_explore_filter_dictionary_level_bar_c1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="C1"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/fragment_explore_filter_dictionary_level_bar_c2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="C2"
+                android:textColor="@android:color/black"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/fragment_explore_filter_submit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:background="@android:color/transparent"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"/>
+
+    </LinearLayout>
+</FrameLayout>
