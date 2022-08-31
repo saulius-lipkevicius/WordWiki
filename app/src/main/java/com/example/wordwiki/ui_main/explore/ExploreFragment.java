@@ -1,6 +1,10 @@
 package com.example.wordwiki.ui_main.explore;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +25,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -38,6 +44,8 @@ import com.example.wordwiki.ui_main.explore.adapters.ImportAdapter;
 import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassesGetCloudDictionaries;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
 import com.example.wordwiki.ui_main.explore.models.LanguageModel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -64,6 +72,9 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
     private String learningLanguageFiller, sectionNameFiller;
 
     ImageButton searchDictionary, filterDictionaries;
+
+    String filterLanguage;
+    String filterLevel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +112,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
 
         //setUpButtons();
-
+        filterDictionaries.callOnClick();
         return root;
     }
 
@@ -177,17 +188,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         sectionsListFull = new ArrayList<>();
         adapter = new ImportAdapter(sectionsList, getContext());
         recyclerView.setAdapter(adapter);
-
-
-        // execute a task that creats a small loading screen and then pops up
-        AsyncTaskClassesGetCloudDictionaries taskClassesGetCloudDictionaries = new AsyncTaskClassesGetCloudDictionaries(dbLanguage, valueEventListener);
-
-        String[] inputLanguageInfo = {"Danish", "A1"};
-        taskClassesGetCloudDictionaries.execute(inputLanguageInfo);
-
-        //
-
-
     }
 
 
@@ -264,10 +264,46 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        changeStatusBarColor(false);
+
         FragmentManager fm = ExploreFragment.this.getParentFragmentManager();
         DialogFragment dialogFragment = ExploreFilterFragmentDialog.newInstance();
         dialogFragment.setTargetFragment(this,
                 0);
         dialogFragment.show(fm, "TAG");
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Make sure fragment codes match up
+        Log.i(TAG, "onActivityResult:::" + requestCode);
+
+        if (requestCode == 0) {
+            changeStatusBarColor(true);
+
+            filterLanguage = data.getStringExtra("language");
+            filterLevel = data.getStringExtra("level");
+
+            sectionsList.clear();
+            // execute a task that creats a small loading screen and then pops up
+            AsyncTaskClassesGetCloudDictionaries taskClassesGetCloudDictionaries = new AsyncTaskClassesGetCloudDictionaries(dbLanguage, valueEventListener);
+
+            String[] inputLanguageInfo = {filterLanguage, filterLevel};
+            taskClassesGetCloudDictionaries.execute(inputLanguageInfo);
+
+            Log.i(TAG, "onActivityResult: got language: " + filterLanguage + " and level: " + filterLevel);
+        }
+    }
+
+    public void changeStatusBarColor(Boolean isDismissed){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window =  getActivity().getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            if (isDismissed) {
+                window.setStatusBarColor(Color.BLACK);
+            } else {
+                window.setStatusBarColor(Color.TRANSPARENT);
+            }
+
+        }
     }
 }
