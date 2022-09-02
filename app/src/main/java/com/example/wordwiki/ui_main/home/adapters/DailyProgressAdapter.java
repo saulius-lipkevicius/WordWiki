@@ -5,12 +5,14 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -29,6 +31,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,8 +100,6 @@ public class DailyProgressAdapter extends PagerAdapter {
         dayNames.add("Thu");
         dayNames.add("Fri");
 
-
-
         ArrayList<String> dayNames2 = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
@@ -114,73 +115,64 @@ public class DailyProgressAdapter extends PagerAdapter {
 
         LineDataSet barDataSet = new LineDataSet(barEntries, "Contracts");
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-        //        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        barDataSet.setColor(Color.parseColor("#BDBDC7"));
+
+        //barDataSet.setColor(Color.parseColor("#FFFFFF"));
+        barDataSet.setColor(Color.BLACK); // SET LINE COLOR
+
         barDataSet.setHighlightEnabled(true);
         barDataSet.setHighLightColor(Color.RED);
-        //barDataSet.setLineWidth(3);
-        //barDataSet.setDrawCircles(false);
-
-        // naujas
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dayNames2));
-        barDataSet.setValueFormatter(new DefaultValueFormatter(1));
-        barDataSet.setValueTextSize(10);
+        barDataSet.setValueFormatter(new DefaultValueFormatter(0));
+        barDataSet.setValueTextSize(12);
         barDataSet.setDrawValues(true);
-        barDataSet.setValueTextColor(Color.parseColor("#BDBDDD"));
-        //barDataSet.setDrawFilled(true);
+        barDataSet.setValueTextColor(Color.BLACK); // POINT VALUE COLOR
+        barDataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER); // set type of connecting points
+        barDataSet.setCircleColor(Color.BLACK);
+
+        // fill below line
+        barDataSet.setDrawFilled(true);
+        if (Utils.getSDKInt() >= 18) {
+            // fill drawable only supported on api level 18 and above
+            Drawable drawable = ContextCompat.getDrawable(context, R.drawable.fade_red);
+            barDataSet.setFillDrawable(drawable);
+        } else {
+            barDataSet.setFillColor(Color.BLACK);
+        }
+
+
         LineData barData = new LineData(barDataSet);
 
-        //barDataSet.setFillAlpha(40);
-        //barDataSet.setFillColor(Color.parseColor("#BDBDC7"));
-        //barDataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-        barChart.getDescription().setTextSize(12);
         barChart.setDrawMarkers(false);
-        //barChart.getAxisLeft().addLimitLine(lowerLimitLine(2,"Minimum",2,12,5,5));
-        //barChart.getAxisLeft().addLimitLine(upperLimitLine(5,"Target",2,12,5,5));
-        //barChart.getAxisLeft().setAxisMinimum(0);
         barChart.getDescription().setText("");
         barChart.getLegend().setEnabled(false);
         barChart.getAxisRight().setEnabled(false);
-        //remove top border
         barChart.getXAxis().setDrawAxisLine(false);
         barChart.getAxisLeft().setEnabled(false);
-        //barChart.getAxisLeft().setLabelCount(0);
-        //barChart.setDrawValueAboveBar(true);
 
-        //remove left border
+        //remove left/right border
         barChart.getAxisLeft().setDrawAxisLine(false);
-
-        //remove right border
         barChart.getAxisRight().setDrawAxisLine(false);
+
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.setDrawMarkers(false);
         barChart.setTouchEnabled(false);
         barChart.getAxisLeft().setDrawZeroLine(true);
-        barChart.getAxisLeft().setGridColor(Color.parseColor("#f3f2f2"));
 
-
-        barChart.setGridBackgroundColor(Color.parseColor("#A574AA"));
         XAxis xAxis = barChart.getXAxis();
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
         barChart.getXAxis().setDrawGridLines(false);
         barChart.getXAxis().setDrawAxisLine(false);
-        //barChart.getXAxis().setLabelCount(10);
-        //barChart.getXAxis().setLabelCount(10);
 
-        //if (position == 1) {
-        //    barChart.animateY(3500);
-        //} else {
-        //    barChart.animateY(1500);
-        //}
+
         xAxis.setDrawLabels(true);
+
         barChart.clearAnimation();
-        //barChart.getXAxis().setGranularityEnabled(true);
-        //barChart.getXAxis().setGranularity(5.0f);
-        //barChart.getXAxis().setLabelCount(barDataSet.getEntryCount());
 
         barChart.setData(barData);
+
+
     }
 
 

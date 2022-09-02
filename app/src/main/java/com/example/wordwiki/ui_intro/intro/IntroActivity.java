@@ -120,15 +120,15 @@ public class IntroActivity extends Activity {
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(getResources().getColor(R.color.black));
+            dots[i].setTextColor(getResources().getColor(R.color.palette2));
             dots[i].setPadding(5, 0, 5, 0);
-            dots[i].setTextSize(50);
+            dots[i].setTextSize(30);
             dots[i].setGravity(Gravity.CENTER);
             dotsLayout.addView(dots[i]);
         }
 
         if (dots.length > 0)
-            dots[currentPage].setTextColor(getResources().getColor(R.color.purple_200));
+            dots[currentPage].setTextColor(getResources().getColor(R.color.black));
     }
 
     private int getItem(int i) {

@@ -19,16 +19,55 @@
             android:layout_marginStart="25dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
+            <RelativeLayout
+                android:id="@+id/explore_fragment_empty_filler_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/explore_fragment_empty_filler_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_email"/>
+
+                <TextView
+                    android:id="@+id/explore_fragment_empty_filler_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Use filter to find dictionaries"
+                    android:gravity="center"
+                    android:layout_below="@+id/explore_fragment_empty_filler_image"/>
+
+                <Button
+                    android:id="@+id/explore_fragment_empty_filler_filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/explore_fragment_empty_filler_text"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/ap_transparent"
+                    android:text="Filter"
+                    android:textColor="@color/black"
+                    android:drawableEnd="@drawable/ic_filter_24"/>
+
+
+            </RelativeLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/import_cloud_recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:padding="5dp"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:visibility="visible"/>
 
         </LinearLayout>
     </LinearLayout>

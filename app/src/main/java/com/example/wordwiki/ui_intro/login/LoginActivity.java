@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         mode_mDialog.show();
 
         Button dialog_btn = convertView.findViewById(R.id.forgot_password_send_btn);
-        TextInputEditText dialog_code = convertView.findViewById(R.id.forgot_password_send_code);
+        //TextInputEditText dialog_code = convertView.findViewById(R.id_.forgot_password_send_code);
         TextInputEditText dialog_email = convertView.findViewById(R.id.forgot_password_send_email);
 
 

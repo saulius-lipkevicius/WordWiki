@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.example.wordwiki.R;
 import com.example.wordwiki.ui_intro.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -88,6 +90,7 @@ public class RegistrationActivity extends AppCompatActivity {
         String email = etRegEmail.getText().toString();
         String password = etRegPassword.getText().toString();
 
+        View parentLayout = findViewById(R.id.registration_main_layout);
 
         if (TextUtils.isEmpty(email)) {
             etRegEmail.setError("Email cannot be empty");
@@ -103,17 +106,25 @@ public class RegistrationActivity extends AppCompatActivity {
                         mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(RegistrationActivity.this, "Please verify your email address", Toast.LENGTH_SHORT).show();
+                                hideKeyboard(parentLayout);
                                 startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
                                 overridePendingTransition(R.anim.enter_to_right, R.anim.exit_to_left);
                             }
                         });
-                        Toast.makeText(RegistrationActivity.this, "User registered successfully", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(parentLayout, "User registered successfully. Please verify your email address" , Snackbar.LENGTH_LONG).show();
+                        hideKeyboard(parentLayout);
                     } else {
-                        Toast.makeText(RegistrationActivity.this, "Registration Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        Snackbar.make(parentLayout, "Registration Error: " + task.getException().getMessage(), Snackbar.LENGTH_LONG).show();
+                        hideKeyboard(parentLayout);
                     }
                 }
             });
         }
+    }
+
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

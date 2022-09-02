@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/palette3"
     android:orientation="vertical"
     android:theme="@style/Theme.WordWiki.noBar"
     tools:context=".ui_intro.login.LoginActivity">
@@ -33,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/login_mail_inputs"
                 android:hint="@string/email_hint"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|textNoSuggestions"
                 android:paddingStart="40dp"
                 android:paddingEnd="0dp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -46,6 +47,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="30dp"
+            app:hintEnabled="false"
             app:startIconDrawable="@drawable/ic_password">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -54,10 +56,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_mail_inputs"
                 android:hint="@string/password_hint"
-                android:inputType="textPassword"
+                android:inputType="textPassword|textNoSuggestions"
                 android:paddingStart="40dp"
-                android:paddingEnd="0dp"
-                app:hintEnabled="false" />
+                android:importantForAutofill="no"
+                android:paddingEnd="0dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -67,6 +69,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
+            android:backgroundTint="@color/palette2"
             android:text="@string/login_hint" />
 
         <TextView
@@ -161,9 +164,9 @@
             android:id="@+id/login_button_google222"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="@drawable/button_custom_login_google"
-            android:layout_gravity="center_horizontal"
             android:clickable="true">
 
             <androidx.cardview.widget.CardView
@@ -230,15 +233,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="70dp"
-        android:text="By continueing Sign up with any authentication method, you agree to the Terms of Use and Privacy Policy"
-        android:textColor="#7E8C94"/>
-
 
 </LinearLayout>

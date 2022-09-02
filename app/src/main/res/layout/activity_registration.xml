@@ -15,15 +15,16 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/registration_main_layout">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Your information is used only to store your progress and "
-            android:textSize="22sp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="20dp"
+            android:text="Your information is used only to store your progress and avoid malicious users"
+            android:textSize="18sp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
             android:textStyle="bold"
             android:layout_marginBottom="20dp"/>
 
@@ -62,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_mail_inputs"
                 android:hint="@string/password_hint"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:importantForAutofill="no"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -85,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/register_activity_already_reg"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <TextView
@@ -94,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="@string/login_hint"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

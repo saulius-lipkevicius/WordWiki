@@ -71,6 +71,12 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
         int flag = World.getFlagOf(countryISO);
         holder.countryImage.setImageResource(flag);
 
+        if (sharedPreferences.getInt(sectionsList.get(position).getLanguageName(), 0) == 1) {
+            holder.itemView.setBackgroundColor(Color.GRAY);
+        } else {
+            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+        }
+
         /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +123,8 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
         @Override
         public void onClick(View v) {
             int clickedPosition = getAdapterPosition();
-            Log.i(TAG, "onClick: asdasdsadsadsadsad");
+            Log.i(TAG, "onClick: language is clicked bool is: " + sectionsList.get(clickedPosition).getLanguageName() + " with bool of " + sharedPreferences.getInt(sectionsList.get(clickedPosition).getLanguageName(), 0));
+
 
 
             if (sharedPreferences.getInt(sectionsList.get(clickedPosition).getLanguageName(), 0) == 1) {

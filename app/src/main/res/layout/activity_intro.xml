@@ -5,7 +5,8 @@
     android:id="@+id/activity_intro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_intro.intro.IntroActivity">
+    tools:context=".ui_intro.intro.IntroActivity"
+    android:background="@color/palette3">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
@@ -29,16 +30,14 @@
             android:background="@android:color/transparent"
             android:onClick="btnSkipClick"
             android:text="@string/intro_activity_skip_btn"
-            android:textColor="#447798" />
+            android:textColor="@android:color/black" />
 
         <LinearLayout
             android:id="@+id/layoutDots"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginTop="-5dp"
             android:orientation="horizontal" />
 
         <Button
@@ -50,7 +49,7 @@
             android:background="@android:color/transparent"
             android:onClick="btnNextClick"
             android:text="@string/intro_activity_next_btn"
-            android:textColor="#447798" />
+            android:textColor="@android:color/black" />
     </LinearLayout>
 </RelativeLayout>
 

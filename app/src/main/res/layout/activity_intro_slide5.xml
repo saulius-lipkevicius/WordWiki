@@ -14,33 +14,33 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="30dp"
-        android:src="@drawable/illiustration_algorithm" />
+        android:src="@drawable/ic_thumb_up" />
 
     <TextView
         android:id="@+id/final_text_into"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_below="@+id/intro_slide5_image"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="40dp"
         android:gravity="center"
         android:text="Relax and let us to do all the work for you"
         android:textColor="@color/black"
         android:textSize="22sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/intro_to_signin_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/final_text_into"
-        android:backgroundTint="#E2E9ED"
         android:layout_marginStart="70dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="70dp"
-        android:textColor="@color/black"
-        android:text="@string/intro_activity_start_btn" />
+        android:backgroundTint="@color/palette2"
+        android:text="@string/intro_activity_start_btn"
+        android:textColor="@color/palette3" />
 
 
 </RelativeLayout>

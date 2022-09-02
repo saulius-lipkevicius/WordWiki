@@ -67,6 +67,8 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
     RecyclerView filteringRecycler;
     LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
     ExistingLanguageAdapter adapter;
+
+    SharedPreferences sp;
     public static ExploreFilterFragmentDialog newInstance() {
         return new ExploreFilterFragmentDialog();
     }
@@ -95,6 +97,9 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
         ImageButton closeDialog = view.findViewById(R.id.toolbar_back_btn);
         closeDialog.setOnClickListener(this);
 
+        Button removeFilters = view.findViewById(R.id.fragment_explore_filter_clear_btn);
+        removeFilters.setOnClickListener(this);
+
         Button searchDictionaries = view.findViewById(R.id.fragment_explore_filter_submit_btn);
         searchDictionaries.setOnClickListener(this);
 
@@ -112,6 +117,48 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
         isC1.setOnClickListener(this);
         isC2.setOnClickListener(this);
 
+        // remember states of it
+        sp = getActivity().getSharedPreferences("filters", MODE_PRIVATE);
+
+        if (sp.getBoolean("A1", false)){
+            isA1.setBackgroundColor(Color.GRAY);
+        } else {
+            isA1.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        if (sp.getBoolean("A2", false)){
+            isA2.setBackgroundColor(Color.GRAY);
+        } else {
+            isA2.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        if (sp.getBoolean("B1", false)){
+            isB1.setBackgroundColor(Color.GRAY);
+        } else {
+            isB1.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        if (sp.getBoolean("B2", false)){
+            isB2.setBackgroundColor(Color.GRAY);
+        } else {
+            isB2.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        if (sp.getBoolean("C1", false)){
+            isC1.setBackgroundColor(Color.GRAY);
+        } else {
+            isC1.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        if (sp.getBoolean("C2", false)){
+            isC2.setBackgroundColor(Color.GRAY);
+        } else {
+            isC2.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        // create a single value to trace if it was visited for a first time
+
+
         filteringRecycler = view.findViewById(R.id.fragment_explore_filter_dialog_language_recycler);
         setUpLanguageRecycler();
 
@@ -121,8 +168,6 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
     }
 
     public void setUpLanguageRecycler(){
-
-
         DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Metadate");
         referenceProfile.child("ExistingLanguages").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -145,11 +190,6 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
             }
 
         });
-
-        // set the recycler itself
-
-
-
     }
 
     private void onProgressListClick(int i, Boolean isSelected) {
@@ -167,7 +207,7 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
     @Override
     public void onClick(View view) {
-
+        sp = requireContext().getSharedPreferences("filters", MODE_PRIVATE);
         int id = view.getId();
 
         switch (id){
@@ -177,6 +217,24 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
                 // send results back
                 sendResultsSettings(0);
+
+
+                //sp.edit().clear().apply();
+                break;
+
+            case R.id.fragment_explore_filter_clear_btn:
+                Log.i(TAG, "onClick: clear filters button is pressed");
+                
+                // remove language
+                selectedLanguageList.clear();
+                selectedLevelList.clear();
+
+                sp.edit().clear().apply();
+
+                // unselect all levels
+                selectDictionaryLevel(0);
+                // refresh language part
+                filteringRecycler.setAdapter(adapter);
                 break;
 
             case R.id.fragment_explore_filter_submit_btn:
@@ -184,6 +242,8 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
                 // send results
                 sendResultsSettings(0);
+
+                //sp.edit().clear().apply();
                 break;
 
             case R.id.fragment_explore_filter_dictionary_level_bar_a1:
@@ -216,6 +276,7 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
                 break;
         }
+
     }
 
     private void selectDictionaryLevel(int i) {
@@ -223,6 +284,7 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         SharedPreferences sp = getActivity().getSharedPreferences("filters", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
+
 
 
         if (i == 1) {
@@ -303,6 +365,13 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
                 selectedLevelList.add("C2");
             }
+        } else if (i == 0) {
+            isA1.setBackgroundColor(Color.TRANSPARENT);
+            isA2.setBackgroundColor(Color.TRANSPARENT);
+            isB1.setBackgroundColor(Color.TRANSPARENT);
+            isB2.setBackgroundColor(Color.TRANSPARENT);
+            isC1.setBackgroundColor(Color.TRANSPARENT);
+            isC2.setBackgroundColor(Color.TRANSPARENT);
         }
 
         editor.apply();
@@ -316,14 +385,19 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
     }
 
     public void sendResultsSettings(int requestCode) {
-        // identify sender
-        Intent intent = new Intent();
-        intent.putExtra("level",  selectedLevelList.iterator().next());
-        intent.putExtra("language", selectedLanguageList.iterator().next());
+        if (!selectedLevelList.isEmpty() && !selectedLanguageList.isEmpty()){
+            // identify sender
+            Intent intent = new Intent();
+            intent.putExtra("level",  selectedLevelList.iterator().next());
+            intent.putExtra("language", selectedLanguageList.iterator().next());
 
 
-        getTargetFragment().onActivityResult(
-                getTargetRequestCode(), 0, intent);
+            getTargetFragment().onActivityResult(
+                    getTargetRequestCode(), 0, intent);
+        } else {
+            getTargetFragment().onActivityResult(
+                    getTargetRequestCode(), 0, new Intent());
+        }
     }
 
     public void hideKeyboard(View view) {

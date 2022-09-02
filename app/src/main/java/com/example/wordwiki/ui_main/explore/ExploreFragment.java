@@ -2,7 +2,9 @@ package com.example.wordwiki.ui_main.explore;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,6 +32,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,8 +64,8 @@ import java.util.List;
 public class ExploreFragment extends Fragment implements View.OnClickListener {
     FragmentExploreBinding binding;
     final String TAG = "Dictionary Importing";
-
-
+    RecyclerView recyclerView;
+    RelativeLayout emptyStateFiller;
     private List<ImportModel> sectionsList;
     private List<ImportModel> sectionsListFull;
     private ArrayList<String> checkedItems;
@@ -75,6 +79,8 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
     String filterLanguage;
     String filterLevel;
+
+    SharedPreferences sp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,8 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         binding = FragmentExploreBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        sp = getActivity().getSharedPreferences("filters", Context.MODE_PRIVATE);
 
         Toolbar tb = root.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(tb);
@@ -108,17 +116,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
         setUpRecyclerView();
 
-        //fillSectionsList();
-
-
-        //setUpButtons();
-        filterDictionaries.callOnClick();
         return root;
-    }
-
-
-    private void setUpButtons() {
-
     }
 
 
@@ -170,6 +168,16 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
             if (sectionsListFull == null || sectionsListFull.size() < sectionsList.size()){
                 sectionsListFull = sectionsList;
             }
+
+            Log.i(TAG, "setUpRecyclerView: sectionList size: " + sectionsList.size());
+            if (sectionsList.size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                emptyStateFiller.setVisibility(View.VISIBLE);
+
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                emptyStateFiller.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -180,7 +188,10 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
 
     private void setUpRecyclerView() {
-        RecyclerView recyclerView = binding.getRoot().findViewById(R.id.import_cloud_recycler_view);
+        // define layout layer that pops up a image in case we have an empty recycler
+        emptyStateFiller = binding.getRoot().findViewById(R.id.explore_fragment_empty_filler_layout);
+
+        recyclerView = binding.getRoot().findViewById(R.id.import_cloud_recycler_view);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -188,6 +199,16 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         sectionsListFull = new ArrayList<>();
         adapter = new ImportAdapter(sectionsList, getContext());
         recyclerView.setAdapter(adapter);
+
+        Log.i(TAG, "setUpRecyclerView: sectionList size: " + sectionsList.size());
+        if (sectionsList.size() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyStateFiller.setVisibility(View.VISIBLE);
+
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyStateFiller.setVisibility(View.GONE);
+        }
     }
 
 
@@ -280,17 +301,27 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         if (requestCode == 0) {
             changeStatusBarColor(true);
 
+
             filterLanguage = data.getStringExtra("language");
             filterLevel = data.getStringExtra("level");
 
-            sectionsList.clear();
-            // execute a task that creats a small loading screen and then pops up
-            AsyncTaskClassesGetCloudDictionaries taskClassesGetCloudDictionaries = new AsyncTaskClassesGetCloudDictionaries(dbLanguage, valueEventListener);
+            if (filterLanguage== null){
+                recyclerView.setVisibility(View.GONE);
+                emptyStateFiller.setVisibility(View.VISIBLE);
+            } else {
+                Log.i(TAG, "onActivityResult: " + filterLanguage + " : " + filterLanguage);
 
-            String[] inputLanguageInfo = {filterLanguage, filterLevel};
-            taskClassesGetCloudDictionaries.execute(inputLanguageInfo);
+                sectionsList.clear();
+                // execute a task that creats a small loading screen and then pops up
+                AsyncTaskClassesGetCloudDictionaries taskClassesGetCloudDictionaries = new AsyncTaskClassesGetCloudDictionaries(dbLanguage, valueEventListener);
 
-            Log.i(TAG, "onActivityResult: got language: " + filterLanguage + " and level: " + filterLevel);
+                String[] inputLanguageInfo = {filterLanguage, filterLevel};
+                taskClassesGetCloudDictionaries.execute(inputLanguageInfo);
+
+                Log.i(TAG, "onActivityResult: got language: " + filterLanguage + " and level: " + filterLevel);
+
+
+            }
         }
     }
 
