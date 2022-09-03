@@ -105,6 +105,7 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
         if (isDictionaryDownloaded) {
             holder.downloadBtn.setClickable(false);
             holder.downloadBtn.setImageResource(R.drawable.ic_checked);
+            holder.downloadBtn.setFocusable(false);
         } else {
             holder.downloadBtn.setImageResource(R.drawable.ic_download);
         }
@@ -112,37 +113,38 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isDictionaryDownloaded) {
+                    /* constructing AsyncTask to change the icon of downloadBtn after the sharing is done
+                     * also to speed up and let user to navigate and look for other dictionaries
+                     * paramaters:
+                     * input is a row of strings to identify unique dictionary name;
+                     * additionaly task takes holder.downloadBtn ImageView
+                     */
+                    String[] dictionaryName = {
+                            holder.username.getText().toString()
+                            , currentItem.getLearningLanguage()
+                            , currentItem.getSectionName()
+                            , currentItem.getSectionLevel()
+                    };
 
-                /* constructing AsyncTask to change the icon of downloadBtn after the sharing is done
-                 * also to speed up and let user to navigate and look for other dictionaries
-                 * paramaters:
-                 * input is a row of strings to identify unique dictionary name;
-                 * additionaly task takes holder.downloadBtn ImageView
-                 */
-                String[] dictionaryName = {
-                        holder.username.getText().toString()
-                        , currentItem.getLearningLanguage()
-                        , currentItem.getSectionName()
-                        , currentItem.getSectionLevel()
-                };
+                    Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[0]);
+                    Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[1]);
+                    Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[2]);
+                    Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[3]);
 
-                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[0]);
-                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[1]);
-                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[2]);
-                Log.i(TAG, "onClick: importing dictionary with parameters: " + dictionaryName[3]);
+                    AsyncTaskClassImportDictionary taskClassImportDictionary = new AsyncTaskClassImportDictionary(holder.downloadBtn, context);
+                    taskClassImportDictionary.execute(dictionaryName);
 
-                AsyncTaskClassImportDictionary taskClassImportDictionary = new AsyncTaskClassImportDictionary(holder.downloadBtn, context);
-                taskClassImportDictionary.execute(dictionaryName);
+                    // older version
+                    //languageImporter.importCloud(holder.username.getText().toString() ,currentItem.getLearningLanguage()
+                    //                  , currentItem.getSectionName(), context);
 
-                // older version
-                //languageImporter.importCloud(holder.username.getText().toString() ,currentItem.getLearningLanguage()
-                //                  , currentItem.getSectionName(), context);
+                    //mCallback.onClick(currentItem.getSectionName(), currentItem.getLearningLanguage(), currentItem.getCheckBox());
 
-                //mCallback.onClick(currentItem.getSectionName(), currentItem.getLearningLanguage(), currentItem.getCheckBox());
-
-                // TODO confirm it is successfully downloaded before we add to the count
-                // add to the count of downloadCount
-                updateDownloadCount();
+                    // TODO confirm it is successfully downloaded before we add to the count
+                    // add to the count of downloadCount
+                    updateDownloadCount();
+                }
             }
 
             private void updateDownloadCount() {

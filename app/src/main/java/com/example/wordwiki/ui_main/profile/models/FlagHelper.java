@@ -1,10 +1,10 @@
 package com.example.wordwiki.ui_main.profile.models;
 
-public class flagHelper {
+public class FlagHelper {
     private int flag;
     private int level;
 
-    public flagHelper(int flag, int level) {
+    public FlagHelper(int flag, int level) {
         this.flag = flag;
         this.level = level;
     }

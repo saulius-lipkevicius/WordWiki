@@ -34,8 +34,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="0dp"
                     android:src="@drawable/ic_profile"
@@ -55,33 +55,32 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/profile_flag_recycler"
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_gravity="top"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" />
 
             </LinearLayout>
 
 
         </RelativeLayout>
 
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_flag_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_gravity="top"
+            android:layout_marginStart="100dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" />
         <!--TODO make it eraser like to edit profile overall -->
         <TextView
             android:id="@+id/settings_profile_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginBottom="20dp"
             android:text="View and edit profile"
             android:textColor="@android:color/black"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="normal" />
 
 

@@ -1,13 +1,11 @@
 package com.example.wordwiki.ui_main.explore;
 
-import static android.content.ContentValues.TAG;
 import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,32 +20,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.ui_main.explore.adapters.ExistingLanguageAdapter;
 import com.example.wordwiki.ui_main.explore.models.ExistingLanguageHelper;
-import com.example.wordwiki.ui_main.profile.FullScreenDialog;
-import com.example.wordwiki.ui_main.profile.ProfileFragment;
-import com.example.wordwiki.ui_main.profile.adapters.progressAdapter;
-import com.example.wordwiki.ui_main.profile.models.progressHelper;
-import com.facebook.share.Share;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.impl.STHexColorRGBImpl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ExploreFilterFragmentDialog  extends DialogFragment implements View.OnClickListener{
@@ -69,6 +52,18 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
     ExistingLanguageAdapter adapter;
 
     SharedPreferences sp;
+
+
+    // this is for passing an arraylist to the dialogFragment
+    private ArrayList<ExistingLanguageHelper> list;
+    // testas
+    private Bundle savedState = null;
+    private TextView vstup;
+
+    public void setData(ArrayList<ExistingLanguageHelper> list){
+        this.list = list;
+    }
+
     public static ExploreFilterFragmentDialog newInstance() {
         return new ExploreFilterFragmentDialog();
     }
@@ -89,6 +84,9 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explore_filter_dialog, container, false);
+
+        Log.i(TAG, "onCreateView: testing: " + list.size() + " " + list.get(0).getLanguageName() + " " + list.get(1).getLanguageName());
+
 
         // to get the intended resize when we have focus on the text field
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -158,16 +156,23 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         // create a single value to trace if it was visited for a first time
 
-
+        languageList = list;
         filteringRecycler = view.findViewById(R.id.fragment_explore_filter_dialog_language_recycler);
+        adapter = new ExistingLanguageAdapter(languageList, getContext(), this::onProgressListClick);
         setUpLanguageRecycler();
 
 
-        adapter = new ExistingLanguageAdapter(languageList, getContext(), this::onProgressListClick);
+
         return view;
     }
 
     public void setUpLanguageRecycler(){
+        // Async to load up language with its number
+
+        filteringRecycler.setLayoutManager(layoutManager);
+        filteringRecycler.setAdapter(adapter);
+
+ /*
         DatabaseReference referenceProfile = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Metadate");
         referenceProfile.child("ExistingLanguages").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -176,7 +181,13 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
                     // create an unique language list of possible dictionaries to choose from
                     //languageList.add(language.getKey());
                     String languageText = language.getKey();
-                    languageList.add(new ExistingLanguageHelper(languageText));
+
+                    Log.i(TAG, "onDataChange: 1: " + language.getValue());
+
+
+                    long dictionaryCount = (long) language.getValue();
+                    int dictionaryCountInt = (int) dictionaryCount;
+                    languageList.add(new ExistingLanguageHelper(languageText, dictionaryCountInt));
                     Log.i(TAG, "onDataChange: added: " + languageText);
                 }
 
@@ -190,6 +201,8 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
             }
 
         });
+
+  */
     }
 
     private void onProgressListClick(int i, Boolean isSelected) {
@@ -404,5 +417,4 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
         InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
 }

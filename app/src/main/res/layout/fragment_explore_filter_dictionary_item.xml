@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:orientation="horizontal">
 
 
     <androidx.constraintlayout.utils.widget.ImageFilterView
@@ -19,11 +19,22 @@
         android:id="@+id/explore_filter_language"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif"
-        android:text="section name"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
+        android:fontFamily="sans-serif"
         android:gravity="center"
+        android:text="section name"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/explore_filter_dictionary_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="center"
+        android:text="5"
+        android:textSize="12sp" />
 </LinearLayout>

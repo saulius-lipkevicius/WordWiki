@@ -9,6 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,13 +19,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
+import com.example.wordwiki.ui_main.home.adapters.DailyProgressAdapter;
+import com.example.wordwiki.ui_main.home.classes.AsyncTaskClassGetStatistics;
 
 public class FullScreenDialog extends DialogFragment implements View.OnClickListener{
 
     private Callback callback;
+
+    // progress viewer and statistics
+    ViewPager viewPager;
+    DailyProgressAdapter viewAdapter;
+    TextView viewpagerText;
+    int mCurCheckPosition;
+
 
     public static FullScreenDialog newInstance() {
         return new FullScreenDialog();
@@ -47,22 +61,51 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile_fullscreen_dialog, container, false);
+        View root = inflater.inflate(R.layout.fragment_profile_fullscreen_dialog, container, false);
 
         Bundle bundle = getArguments();
         String dialogTitleText = bundle.getString("title","");
         int dialogFlag = bundle.getInt("flag", 0);
 
-        ImageButton closeDialog = view.findViewById(R.id.dialog_back);
-        TextView titleDialog = view.findViewById(R.id.dialog_title);
-        ImageView flagDialog = view.findViewById(R.id.dialog_flag);
+        ImageButton closeDialog = root.findViewById(R.id.dialog_back);
+        TextView titleDialog = root.findViewById(R.id.dialog_title);
+        ImageView flagDialog = root.findViewById(R.id.dialog_flag);
 
         closeDialog.setOnClickListener(this);
         titleDialog.setText(dialogTitleText);
         flagDialog.setImageResource(dialogFlag);
 
 
-        return view;
+        // stats
+        viewpagerText = root.findViewById(R.id.viewpager_text);
+        viewPager = root.findViewById(R.id.view_pager);
+        AsyncTaskClassGetStatistics taskClassGetStatistics = new AsyncTaskClassGetStatistics(viewPager, viewAdapter, getContext());
+        taskClassGetStatistics.execute(mCurCheckPosition);
+
+
+        String[] stats = getResources().getStringArray(R.array.home_stats);
+        ArrayAdapter statsAdapter = new ArrayAdapter(requireContext(), R.layout.home_dropdown_stats, stats);
+
+        AutoCompleteTextView spinnerText = root.findViewById(R.id.viewpager_text);
+        spinnerText.setAdapter(statsAdapter);
+        spinnerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                viewAdapter = new DailyProgressAdapter(getContext(), position);
+                viewPager.setCurrentItem(position);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = position;
+            }
+        });
+        spinnerText.setBackground(getResources().getDrawable(R.drawable.home_fragment_selector));
+
+
+        // recycler view for section stats
+        RecyclerView sectionStatsRecycler = root.findViewById(R.id.stats_recycler);
+
+
+        return root;
     }
 
     @Override

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,7 +46,9 @@ import com.example.wordwiki.databinding.FragmentExploreBinding;
 import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
 import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.FeedbackFragmentDialog;
 import com.example.wordwiki.ui_main.explore.adapters.ImportAdapter;
+import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassLoadMetadata;
 import com.example.wordwiki.ui_main.explore.classes.AsyncTaskClassesGetCloudDictionaries;
+import com.example.wordwiki.ui_main.explore.models.ExistingLanguageHelper;
 import com.example.wordwiki.ui_main.explore.models.ImportModel;
 import com.example.wordwiki.ui_main.explore.models.LanguageModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -81,10 +84,26 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
     String filterLevel;
 
     SharedPreferences sp;
+    Button filterDictionariesFillerBtn;
+
+    ArrayList<ExistingLanguageHelper> listToFilter = new ArrayList<>();
+    // testas
+    //private static final String BUNDLE_RECYCLER_LAYOUT = "recycler_layout";
+    //private static String LIST_STATE = "list_state";
+    //private Parcelable savedRecyclerLayoutState;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // creating an array to push it to the dialogFragment
+        // input - listToFilter
+        if (listToFilter.size() == 0) {
+            Log.i(TAG, "onCreate: 1111111111");
+            AsyncTaskClassLoadMetadata taskClassLoadMetadata = new AsyncTaskClassLoadMetadata(listToFilter, getContext());
+            taskClassLoadMetadata.execute();
+        }
     }
 
     // TODO create minimized recycle view where you tag libraries you want to import.
@@ -96,6 +115,10 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         binding = FragmentExploreBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+
+
+
 
         sp = getActivity().getSharedPreferences("filters", Context.MODE_PRIVATE);
 
@@ -114,11 +137,18 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         filterDictionaries = root.findViewById(R.id.explore_filter);
         filterDictionaries.setOnClickListener(this);
 
+        filterDictionariesFillerBtn = root.findViewById(R.id.explore_fragment_empty_filler_filter);
+        filterDictionariesFillerBtn.setOnClickListener(this);
+
         setUpRecyclerView();
+
+
+        // asycn task to load all existing languages with its respective count in the firebase database
+
+
 
         return root;
     }
-
 
     ValueEventListener valueEventListener = new ValueEventListener() {
 
@@ -291,6 +321,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         DialogFragment dialogFragment = ExploreFilterFragmentDialog.newInstance();
         dialogFragment.setTargetFragment(this,
                 0);
+        ((ExploreFilterFragmentDialog) dialogFragment).setData(listToFilter);
         dialogFragment.show(fm, "TAG");
     }
 
@@ -337,4 +368,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
 
         }
     }
+
+
 }

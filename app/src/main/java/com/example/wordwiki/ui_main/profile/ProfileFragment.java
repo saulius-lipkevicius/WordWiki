@@ -9,7 +9,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
@@ -41,35 +40,24 @@ import com.example.wordwiki.MainActivity;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.databinding.FragmentProfileBinding;
-import com.example.wordwiki.databinding.FragmentSettingBinding;
-import com.example.wordwiki.ui_intro.account.User;
-import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
-import com.example.wordwiki.ui_main.actionbar.setting.sub_settings.dialogs.HelpFragmentDialog;
-import com.example.wordwiki.ui_main.profile.adapters.flagAdapter;
-import com.example.wordwiki.ui_main.profile.adapters.progressAdapter;
+import com.example.wordwiki.ui_main.profile.adapters.FlagAdapter;
+import com.example.wordwiki.ui_main.profile.adapters.ProgressAdapter;
+import com.example.wordwiki.ui_main.profile.classes.AsyncTaskClassLanguageProgress;
 import com.example.wordwiki.ui_main.profile.classes.AsyncTaskClassUploadProfile;
-import com.example.wordwiki.ui_main.profile.models.flagHelper;
-import com.example.wordwiki.ui_main.profile.models.progressHelper;
+import com.example.wordwiki.ui_main.profile.models.FlagHelper;
+import com.example.wordwiki.ui_main.profile.models.ProgressHelper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -82,13 +70,14 @@ public class ProfileFragment extends Fragment {
 
 
     DatabaseHelper myDb;
-    RecyclerView.Adapter adapter;
+    RecyclerView.Adapter flagAdapter;
+    ProgressAdapter adapter;
     String username;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     TextView profileName, profileDescription;
 
     // profile describing task
-    ArrayList<flagHelper> flagLocations = new ArrayList<>();
+    ArrayList<FlagHelper> flagLocations = new ArrayList<>();
     LinearLayoutManager layoutManagerHorizontal = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
 
 
@@ -101,7 +90,7 @@ public class ProfileFragment extends Fragment {
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
     // list of the progress
-    ArrayList<progressHelper> progressList = new ArrayList<>();
+    ArrayList<ProgressHelper> progressList = new ArrayList<>();
 
     FragmentProfileBinding binding;
 
@@ -185,15 +174,15 @@ public class ProfileFragment extends Fragment {
             SharedPreferences spLanguage = getActivity().getSharedPreferences("user_profile_language", Context.MODE_PRIVATE);
             SharedPreferences spLevel = getActivity().getSharedPreferences("user_profile_language_level", Context.MODE_PRIVATE);
             for (String keyValue : spLanguage.getAll().keySet()) {
-                flagLocations.add(new flagHelper(spLanguage.getInt(keyValue, 0), spLevel.getInt(keyValue, 0)));
+                flagLocations.add(new FlagHelper(spLanguage.getInt(keyValue, 0), spLevel.getInt(keyValue, 0)));
             }
         }
 
 
-        adapter = new flagAdapter(flagLocations);
+        flagAdapter = new FlagAdapter(flagLocations);
 
         flagRecycler.setLayoutManager(layoutManagerHorizontal);
-        flagRecycler.setAdapter(adapter);
+        flagRecycler.setAdapter(flagAdapter);
 
 
     }
@@ -270,15 +259,24 @@ public class ProfileFragment extends Fragment {
         }
 
          */
+
+        // TODO create async task to get data from mydb
+        adapter = new ProgressAdapter(progressList, this::onProgressListClick, getContext());
+        AsyncTaskClassLanguageProgress taskClassLanguageProgress = new AsyncTaskClassLanguageProgress(progressList, progressRecycler, adapter, layoutManager, getContext());
+        taskClassLanguageProgress.execute();
+
+        /*
         progressList.add(new progressHelper("English", " words in " + "N" + " days"));
         progressList.add(new progressHelper("German", " words in " + "N" + " days"));
         progressList.add(new progressHelper("Estonian", " words in " + "N" + " days"));
         progressList.add(new progressHelper("French", " words in " + "N" + " days"));
         progressList.add(new progressHelper("Latvian", " words in " + "N" + " days"));
         progressList.add(new progressHelper("Lithuanian", " words in " + "N" + " days"));
-        adapter = new progressAdapter(progressList, this::onProgressListClick, getContext());
+
         progressRecycler.setLayoutManager(layoutManager);
         progressRecycler.setAdapter(adapter);
+
+         */
     }
 
 

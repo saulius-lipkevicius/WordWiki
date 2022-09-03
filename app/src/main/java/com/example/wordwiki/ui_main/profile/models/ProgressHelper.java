@@ -1,12 +1,12 @@
 package com.example.wordwiki.ui_main.profile.models;
 
-public class progressHelper {
+public class ProgressHelper {
 
     String title;
     String wordCounter;
     String topicCounter;
 
-    public progressHelper(String title, String wordCounter) {
+    public ProgressHelper(String title, String wordCounter) {
         this.title = title;
         this.wordCounter = wordCounter;
     }

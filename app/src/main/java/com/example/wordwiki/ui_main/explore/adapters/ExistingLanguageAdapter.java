@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,11 +17,7 @@ import com.blongho.country_data.World;
 import com.example.wordwiki.R;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_main.explore.models.ExistingLanguageHelper;
-import com.example.wordwiki.ui_main.explore.models.ImportModel;
-import com.example.wordwiki.ui_main.profile.adapters.progressAdapter;
-import com.facebook.share.Share;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLanguageAdapter.ExistingLanguageViewHolder>{
@@ -77,6 +72,9 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
             holder.itemView.setBackgroundColor(Color.TRANSPARENT);
         }
 
+        // set dictionaryCounter
+        holder.dictionaryCounter.setText("(" + currentItem.getDictionaryCounter() + ")");
+
         /*
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +108,7 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
     public class ExistingLanguageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageFilterView countryImage;
         TextView languageName;
+        TextView dictionaryCounter;
 
         public ExistingLanguageViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,6 +117,7 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
             // change ids
             languageName = itemView.findViewById(R.id.explore_filter_language);
             countryImage = itemView.findViewById(R.id.explore_filter_flag);
+            dictionaryCounter = itemView.findViewById(R.id.explore_filter_dictionary_count);
         }
 
         @Override
@@ -138,6 +138,8 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
             }
 
             editor.apply();
+
+            // TODO make it async task after language is pressed
         }
     }
 }

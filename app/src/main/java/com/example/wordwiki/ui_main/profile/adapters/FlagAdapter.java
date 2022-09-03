@@ -3,22 +3,21 @@ package com.example.wordwiki.ui_main.profile.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
-import com.example.wordwiki.ui_main.profile.models.flagHelper;
+import com.example.wordwiki.ui_main.profile.models.FlagHelper;
 
 import java.util.ArrayList;
 
-public class flagAdapter extends RecyclerView.Adapter<flagAdapter.ViewHolder> {
+public class FlagAdapter extends RecyclerView.Adapter<FlagAdapter.ViewHolder> {
 
-    ArrayList<flagHelper> flagLocations;
+    ArrayList<FlagHelper> flagLocations;
 
-    public flagAdapter(ArrayList<flagHelper> flagLocations) {
+    public FlagAdapter(ArrayList<FlagHelper> flagLocations) {
         this.flagLocations = flagLocations;
     }
 
@@ -26,12 +25,12 @@ public class flagAdapter extends RecyclerView.Adapter<flagAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_profile_flag_item, parent, false);
-        return new flagAdapter.ViewHolder(view);
+        return new FlagAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        flagHelper progressHelper = flagLocations.get(position);
+        FlagHelper progressHelper = flagLocations.get(position);
         holder.flag.setImageResource(progressHelper.getFlag());
     }
 

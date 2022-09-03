@@ -1,9 +1,7 @@
 package com.example.wordwiki;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,14 +14,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.blongho.country_data.World;
 import com.example.wordwiki.classes.AsyncTaskClassFetchProfileData;
 import com.example.wordwiki.databinding.ActivityMainBinding;
-import com.example.wordwiki.ui_intro.account.User;
 import com.example.wordwiki.ui_intro.login.LoginActivity;
-import com.example.wordwiki.ui_main.profile.models.flagHelper;
 import com.facebook.login.LoginManager;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -31,14 +25,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
-
-import java.util.Collections;
-import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity{
 

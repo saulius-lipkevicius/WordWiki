@@ -69,7 +69,6 @@ public class HomeFragment extends Fragment {
 
     // progress viewer and statistics
     ViewPager viewPager;
-    SpringDotsIndicator springDotsIndicator;
     DailyProgressAdapter viewAdapter;
 
     Button to_wording_activity_btn, choose_language_btn, choose_section_btn, choose_mode_btn;
@@ -134,20 +133,9 @@ public class HomeFragment extends Fragment {
         chooseLanguageDialog();
         chooseSectionDialog();
 
-        // Construction is under development here
 
         AsyncTaskClassGetStatistics taskClassGetStatistics = new AsyncTaskClassGetStatistics(viewPager, viewAdapter, getContext());
         taskClassGetStatistics.execute(mCurCheckPosition);
-
-
-
-        /// OLD CODE
-        //viewAdapter = new dailyProgressAdapter(getContext(), mCurCheckPosition);
-        //viewPager.setCurrentItem(mCurCheckPosition);
-        //viewPager.setAdapter(viewAdapter);
-
-
-
 
 
         String[] stats = getResources().getStringArray(R.array.home_stats);

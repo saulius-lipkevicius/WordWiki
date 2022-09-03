@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import com.blongho.country_data.World;
 import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_intro.account.User;
-import com.example.wordwiki.ui_main.profile.models.flagHelper;
+import com.example.wordwiki.ui_main.profile.models.FlagHelper;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,13 +32,13 @@ public class AsyncTaskClassUploadProfile extends AsyncTask<String, Integer, Inte
     CircleImageView profilePic;
     TextView usernameView;
     TextView userDescription;
-    ArrayList<flagHelper> flagLocations;
+    ArrayList<FlagHelper> flagLocations;
     Context context;
     DatabaseHelper myDb;
     String country_name;
     int flag;
 
-    public AsyncTaskClassUploadProfile(CircleImageView profilePic, TextView usernameView, TextView userDescription, ArrayList<flagHelper> flagLocations, Context context) {
+    public AsyncTaskClassUploadProfile(CircleImageView profilePic, TextView usernameView, TextView userDescription, ArrayList<FlagHelper> flagLocations, Context context) {
         this.profilePic = profilePic;
         this.usernameView = usernameView;
         this.userDescription = userDescription;
@@ -76,13 +76,13 @@ public class AsyncTaskClassUploadProfile extends AsyncTask<String, Integer, Inte
                             country_name = myDb.getFlagISO(key);
                             flag = World.getFlagOf(country_name);
 
-                            flagLocations.add(new flagHelper(flag, data.getProficiency().get(key)));
+                            flagLocations.add(new FlagHelper(flag, data.getProficiency().get(key)));
                         }
                     }
 
-                    Collections.sort(flagLocations, new Comparator<flagHelper>() {
+                    Collections.sort(flagLocations, new Comparator<FlagHelper>() {
                         @Override
-                        public int compare(flagHelper lhs, flagHelper rhs) {
+                        public int compare(FlagHelper lhs, FlagHelper rhs) {
                             return rhs.getLevel() - lhs.getLevel();
                         }
                     });

@@ -35,7 +35,7 @@
                     android:id="@+id/explore_fragment_empty_filler_image"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:src="@drawable/ic_email"/>
+                    android:src="@drawable/ic_email" />
 
                 <TextView
                     android:id="@+id/explore_fragment_empty_filler_text"
@@ -53,9 +53,9 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/ap_transparent"
+                    android:drawableEnd="@drawable/ic_filter_24"
                     android:text="Filter"
-                    android:textColor="@color/black"
-                    android:drawableEnd="@drawable/ic_filter_24"/>
+                    android:textColor="@color/black" />
 
 
             </RelativeLayout>

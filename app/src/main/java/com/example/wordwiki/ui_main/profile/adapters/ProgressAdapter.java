@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,16 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
 import com.example.wordwiki.ui_main.profile.classes.AsyncTaskClassProfileProgress;
-import com.example.wordwiki.ui_main.profile.models.progressHelper;
+import com.example.wordwiki.ui_main.profile.models.ProgressHelper;
 
 import java.util.ArrayList;
 
-public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneViewHold>  {
+public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.PhoneViewHold>  {
     Context context;
-    ArrayList<progressHelper> progressList;
+    ArrayList<ProgressHelper> progressList;
     final private ListItemClickListener mOnClickListener;
 
-    public progressAdapter(ArrayList<progressHelper> phoneLaocations, ListItemClickListener listener, Context context) {
+    public ProgressAdapter(ArrayList<ProgressHelper> phoneLaocations, ListItemClickListener listener, Context context) {
         this.progressList = phoneLaocations;
         mOnClickListener = listener;
         this.context = context;
@@ -46,10 +47,7 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
         // where ImageView for it is on the adapter
         // and create a context that is global in adapter
 
-
-
-
-        progressHelper progressItem = progressList.get(position);
+        ProgressHelper progressItem = progressList.get(position);
 
         AsyncTaskClassProfileProgress profileProgressTask = new AsyncTaskClassProfileProgress(holder.image, context);
         Log.i(TAG, "onBindViewHolder: " + progressItem.getTitle() + " : " + progressItem.getWordCounter());
@@ -57,8 +55,6 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
 
         holder.title.setText(progressItem.getTitle());
         holder.wordCounter.setText(progressItem.getWordCounter());
-
-
     }
 
     @Override
@@ -74,6 +70,7 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
         ImageView image;
         TextView title;
         TextView wordCounter;
+        ImageView expandProgress;
 
         public PhoneViewHold(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +80,7 @@ public class progressAdapter extends RecyclerView.Adapter<progressAdapter.PhoneV
             image = itemView.findViewById(R.id.phone_image);
             title = itemView.findViewById(R.id.phone_title);
             wordCounter = itemView.findViewById(R.id.number_of_words);
+            expandProgress = itemView.findViewById(R.id.entrance_more_about_language);
         }
 
         @Override

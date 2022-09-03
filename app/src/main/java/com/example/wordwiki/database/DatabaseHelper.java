@@ -1156,5 +1156,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(strSQL);
         db.close();
     }
+
+    // function to get all information for profile progress dialogFragment
+    public Cursor getLanguageProgress() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + COL_2 + ", " +
+                " MIN(" + COL_8  + "), " +
+                " COUNT(" + COL_9  + ") " +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COL_8 + " IS NOT NULL " +
+                " GROUP BY " + COL_2 +
+                ";";
+        Log.i(TAG, "get isShared: sqlite: " + sql);
+        Cursor exportWords = db.rawQuery(sql, null);
+
+        exportWords.moveToFirst();
+
+
+        return exportWords;
+
+    }
 }
 

@@ -9,10 +9,10 @@ import android.widget.ImageView;
 
 import com.blongho.country_data.World;
 import com.example.wordwiki.database.DatabaseHelper;
-import com.example.wordwiki.ui_main.profile.models.progressHelper;
+import com.example.wordwiki.ui_main.profile.models.ProgressHelper;
 
 
-public class AsyncTaskClassProfileProgress extends AsyncTask<progressHelper, Integer, Integer> {
+public class AsyncTaskClassProfileProgress extends AsyncTask<ProgressHelper, Integer, Integer> {
     ImageView flag;
     Context context;
     DatabaseHelper myDb;
@@ -29,7 +29,7 @@ public class AsyncTaskClassProfileProgress extends AsyncTask<progressHelper, Int
 
 
     @Override
-    protected Integer doInBackground(progressHelper... helpers) {
+    protected Integer doInBackground(ProgressHelper... helpers) {
         Log.i(TAG, "doInBackground: " + helpers[0].getTitle() + " : " + helpers[0].getWordCounter());
         try {
             myDb = new DatabaseHelper(context);
