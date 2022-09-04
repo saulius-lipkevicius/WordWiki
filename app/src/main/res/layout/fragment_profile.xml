@@ -98,6 +98,30 @@
             android:text="Progress"
             android:textSize="20sp" />
 
+        <RelativeLayout
+            android:id="@+id/explore_fragment_empty_filler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/explore_fragment_empty_filler_image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_email" />
+
+            <TextView
+                android:id="@+id/explore_fragment_empty_filler_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You are still to begin"
+                android:gravity="center"
+                android:layout_below="@+id/explore_fragment_empty_filler_image"/>
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/profile_fragment_language_recycleview"

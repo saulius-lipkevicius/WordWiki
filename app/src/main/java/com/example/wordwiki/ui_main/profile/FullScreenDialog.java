@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -26,6 +27,11 @@ import com.example.wordwiki.R;
 import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
 import com.example.wordwiki.ui_main.home.adapters.DailyProgressAdapter;
 import com.example.wordwiki.ui_main.home.classes.AsyncTaskClassGetStatistics;
+import com.example.wordwiki.ui_main.library.adapters.SectionAdapter;
+import com.example.wordwiki.ui_main.profile.adapters.ProgressSectionAdapter;
+import com.example.wordwiki.ui_main.profile.models.ProgressSectionHelper;
+
+import java.util.ArrayList;
 
 public class FullScreenDialog extends DialogFragment implements View.OnClickListener{
 
@@ -36,7 +42,7 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
     DailyProgressAdapter viewAdapter;
     TextView viewpagerText;
     int mCurCheckPosition;
-
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
     public static FullScreenDialog newInstance() {
         return new FullScreenDialog();
@@ -102,8 +108,15 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
 
 
         // recycler view for section stats
-        RecyclerView sectionStatsRecycler = root.findViewById(R.id.stats_recycler);
+        ArrayList<ProgressSectionHelper> sectionList = new ArrayList<>();
 
+        sectionList.add(new ProgressSectionHelper("introduction", 11, 50));
+        sectionList.add(new ProgressSectionHelper("introduction2", 11, 60));
+
+        RecyclerView sectionStatsRecycler = root.findViewById(R.id.stats_recycler);
+        ProgressSectionAdapter sectionAdapter = new ProgressSectionAdapter(sectionList, getContext());
+        sectionStatsRecycler.setLayoutManager(layoutManager);
+        sectionStatsRecycler.setAdapter(sectionAdapter);
 
         return root;
     }

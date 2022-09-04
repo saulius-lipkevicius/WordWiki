@@ -27,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +84,7 @@ public class LibraryFragment extends Fragment {
     RecyclerView mainRecyclerView;
     SectionAdapter sectionAdapter;
 
+    RelativeLayout emptyStateFiller;
 
     ArrayList<ExcelParsing> uploadData;
     DatabaseHelper myDb;
@@ -143,6 +145,11 @@ public class LibraryFragment extends Fragment {
         binding = FragmentLibraryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // layout for a filler
+        emptyStateFiller = binding.getRoot().findViewById(R.id.explore_fragment_empty_filler_layout);
+
+
+
         Toolbar tb = root.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(tb);
         myDb = new DatabaseHelper(getContext());
@@ -152,6 +159,16 @@ public class LibraryFragment extends Fragment {
         sectionAdapter = new SectionAdapter(sectionList, getContext());
         mainRecyclerView.setAdapter(sectionAdapter);
 
+
+        //TODO move it to async task later
+        if (sectionList.size() == 0) {
+            mainRecyclerView.setVisibility(View.GONE);
+            emptyStateFiller.setVisibility(View.VISIBLE);
+
+        } else {
+            mainRecyclerView.setVisibility(View.VISIBLE);
+            emptyStateFiller.setVisibility(View.GONE);
+        }
 
         //mainRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 

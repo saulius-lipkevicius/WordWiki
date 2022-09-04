@@ -3,6 +3,8 @@ package com.example.wordwiki.ui_main.profile.classes;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.RelativeLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,21 +20,22 @@ public class AsyncTaskClassLanguageProgress extends AsyncTask<Void, Integer, Voi
     ProgressAdapter adapter;
     ArrayList<ProgressHelper> list;
     LinearLayoutManager layoutManager;
+    RelativeLayout emptyStateFiller;
     Context context;
 
     DatabaseHelper myDb;
 
-    public AsyncTaskClassLanguageProgress(ArrayList<ProgressHelper> list, RecyclerView recyclerView, ProgressAdapter adapter, LinearLayoutManager layoutManager, Context context) {
+    public AsyncTaskClassLanguageProgress(ArrayList<ProgressHelper> list, RecyclerView recyclerView, ProgressAdapter adapter, LinearLayoutManager layoutManager, RelativeLayout emptyStateFiller, Context context) {
         this.list = list;
         this.recyclerView = recyclerView;
         this.adapter = adapter;
         this.layoutManager = layoutManager;
+        this.emptyStateFiller = emptyStateFiller;
         this.context = context;
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-
         myDb = new DatabaseHelper(context);
 
         Cursor progressDataCursor = myDb.getLanguageProgress();
@@ -50,12 +53,22 @@ public class AsyncTaskClassLanguageProgress extends AsyncTask<Void, Integer, Voi
         }
 
 
-
-
-
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void unused) {
+        super.onPostExecute(unused);
+
+        if (list.size() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            emptyStateFiller.setVisibility(View.VISIBLE);
+
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            emptyStateFiller.setVisibility(View.GONE);
+        }
     }
 }

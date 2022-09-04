@@ -21,6 +21,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,7 +68,7 @@ public class ProfileFragment extends Fragment {
     public CircleImageView profileImage;
     public Uri imageUri;
     RecyclerView flagRecycler;
-
+    RelativeLayout emptyStateFiller; // layout for a filler
 
     DatabaseHelper myDb;
     RecyclerView.Adapter flagAdapter;
@@ -108,6 +109,9 @@ public class ProfileFragment extends Fragment {
 
         World.init(getApplicationContext());
         myDb = new DatabaseHelper(getContext());
+
+        // layout for a filler
+        emptyStateFiller = binding.getRoot().findViewById(R.id.explore_fragment_empty_filler_layout);
 
         // cloud storage
         profileImage = root.findViewById(R.id.profile_image);
@@ -262,8 +266,9 @@ public class ProfileFragment extends Fragment {
 
         // TODO create async task to get data from mydb
         adapter = new ProgressAdapter(progressList, this::onProgressListClick, getContext());
-        AsyncTaskClassLanguageProgress taskClassLanguageProgress = new AsyncTaskClassLanguageProgress(progressList, progressRecycler, adapter, layoutManager, getContext());
+        AsyncTaskClassLanguageProgress taskClassLanguageProgress = new AsyncTaskClassLanguageProgress(progressList, progressRecycler, adapter, layoutManager, emptyStateFiller, getContext());
         taskClassLanguageProgress.execute();
+
 
         /*
         progressList.add(new progressHelper("English", " words in " + "N" + " days"));

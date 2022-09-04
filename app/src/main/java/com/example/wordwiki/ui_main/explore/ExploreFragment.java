@@ -117,9 +117,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
         View root = binding.getRoot();
 
 
-
-
-
         sp = getActivity().getSharedPreferences("filters", Context.MODE_PRIVATE);
 
         Toolbar tb = root.findViewById(R.id.toolbar);
