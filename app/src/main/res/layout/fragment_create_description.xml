@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_intro.account.fragments.CreateDescriptionFragment">
+    tools:context=".ui_intro.account.fragments.CreateDescriptionFragment"
+    android:background="@color/palette_background">
 
 
     <LinearLayout
@@ -23,7 +24,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:text="Tell us about yourself"
-            android:textColor="@android:color/black"
+            android:textColor="@color/palette_text"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -33,7 +34,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="It will be visible on your profile"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/palette_special_text"
             android:textSize="14sp"
             android:textStyle="normal" />
 
@@ -46,16 +47,17 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:hint="Description"
-            android:padding="10dp">
+            android:hint="Description">
 
             <!-- TODO create an indexer for the letter count, and keep it short and simple -->
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/outlined_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textColor="@color/palette_text"
                 android:inputType="textPassword|textVisiblePassword|textCapSentences"
                 android:maxLength="150"
+                android:background="@drawable/login_mail_inputs"
                 android:gravity="top|start" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -95,10 +97,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center"
-                android:text="Finish"
-                android:textColor="@android:color/black" />
+                android:text="Finish" />
         </LinearLayout>
     </LinearLayout>
 

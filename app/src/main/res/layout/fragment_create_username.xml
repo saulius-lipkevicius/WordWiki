@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_intro.account.fragments.CreateUsernameFragment">
+    tools:context=".ui_intro.account.fragments.CreateUsernameFragment"
+    android:background="@color/palette_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,8 +24,8 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:text="You'll need an username"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textColor="@color/palette_text"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -33,7 +34,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="Make sure it does not contain symbols"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/palette_special_text"
             android:textSize="14sp"
             android:textStyle="normal" />
 
@@ -59,6 +60,8 @@
                 android:inputType="textPassword|textVisiblePassword"
                 android:maxLength="20"
                 android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:background="@drawable/login_mail_inputs"
 
                 android:textColorHighlight="@android:color/transparent" />
 
@@ -92,10 +95,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center"
-                android:text="Next"
-                android:textColor="@android:color/black" />
+                android:text="Next" />
 
         </LinearLayout>
     </LinearLayout>

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/palette_background"
     tools:context=".ui_intro.account.fragments.CreateLearningLanguagesFragment">
 
     <LinearLayout
@@ -15,32 +16,34 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Languages you want to improve or start learning?"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:layout_marginEnd="10dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"/>
+            android:layout_marginEnd="20dp"
+            android:text="Languages you want to improve or start learning?"
+            android:textColor="@color/palette_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="It will be visible on your profile"
-            android:textStyle="normal"
-            android:textSize="14sp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:textColor="@android:color/darker_gray"/>
+            android:layout_marginEnd="20dp"
+            android:text="It will be visible on your profile"
+            android:textColor="@color/palette_special_text"
+            android:textSize="14sp"
+            android:textStyle="normal" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginBottom="20dp"
+            android:id="@+id/fragment_create_learning_language_recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fragment_create_learning_language_recycle_view"/>
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,20 +61,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center_horizontal|center"
-                android:text="Skip for now"
-                android:textColor="@android:color/black"/>
+                android:text="Skip for now"/>
 
             <Button
                 android:id="@+id/fragment_username_next_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center"
-                android:text="Next"
-                android:textColor="@android:color/black" />
+                android:text="Next" />
 
         </LinearLayout>
     </LinearLayout>

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
@@ -207,7 +208,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
 
     class ViewHolder extends RecyclerView.ViewHolder{
         private TextView languageName;
-        private ImageView flag;
+        private ImageFilterView flag;
         private AppCompatButton a1, a2, b1, b2, c1, c2, isNative;
 
         public ViewHolder(@NonNull View itemView) {

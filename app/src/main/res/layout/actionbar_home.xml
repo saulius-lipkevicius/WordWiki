@@ -2,38 +2,37 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@android:color/transparent">
+    android:background="@color/palette_actiobar">
 
     <LinearLayout
-
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-
+>
         <TextView
             android:id="@+id/tvTitle"
             style="?android:textAppearanceLarge"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="20dp"
             android:gravity="start|center_vertical"
             android:text="WordWiki"
-            android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textColor="@color/palette_text"
+            android:textSize="18sp"
             android:textStyle="bold" />
-
 
         <ImageButton
             android:id="@+id/home_notification"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:gravity="bottom|center_horizontal"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_toolbar_notification"
             android:textColor="@color/white"

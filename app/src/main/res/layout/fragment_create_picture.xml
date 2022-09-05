@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/palette_background"
     tools:context=".ui_intro.account.fragments.CreatePictureFragment">
 
     <LinearLayout
@@ -13,35 +14,39 @@
         android:orientation="vertical">
 
         <include layout="@layout/actionbar_create_account_full" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Pick your profile photo"
-            android:textStyle="bold"
-            android:textSize="24sp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"/>
+            android:layout_marginEnd="20dp"
+            android:text="Pick your profile photo"
+            android:textColor="@color/palette_text"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="It does not have to be a selfy"
-            android:textStyle="normal"
-            android:textSize="14sp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:textColor="@android:color/darker_gray"/>
+            android:layout_marginEnd="20dp"
+            android:text="It does not have to be a selfy"
+            android:textColor="@color/palette_special_text"
+            android:textSize="14sp"
+            android:textStyle="normal" />
 
 
-<de.hdodenhof.circleimageview.CircleImageView
-    android:layout_width="150dp"
-    android:layout_height="150dp"
-    android:layout_gravity="center"
-    android:layout_marginTop="30dp"
-    android:id="@+id/profile_pic"
-    app:civ_border_color="@android:color/black"
-    app:civ_border_width="1dp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_pic"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/ic_face_48"
+            app:civ_border_color="@color/palette_text"
+            app:civ_border_width="2dp" />
 
 
         <LinearLayout
@@ -60,20 +65,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center_horizontal|center"
-                android:text="Skip for now"
-                android:textColor="@android:color/black" />
+                android:text="Skip for now" />
 
             <Button
                 android:id="@+id/fragment_username_next_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center"
-                android:text="Next"
-                android:textColor="@android:color/black" />
+                android:text="Next" />
 
         </LinearLayout>
     </LinearLayout>

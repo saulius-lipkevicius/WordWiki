@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar_about"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    android:background="@android:color/transparent">
+    android:background="@color/palette_actiobar">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:orientation="horizontal"
         android:layout_marginEnd="10dp">
@@ -15,7 +15,7 @@
         <ImageButton
             android:id="@+id/toolbar_back_btn"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:background="@android:color/transparent"
             android:gravity="center"
@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Title"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/palette_text"/>
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

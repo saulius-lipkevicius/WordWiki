@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
@@ -67,7 +68,7 @@ public class LearningLanguageAdapter extends RecyclerView.Adapter<LearningLangua
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView languageName;
-        private ImageView flag;
+        private ImageFilterView flag;
         private ImageButton isChecked;
 
         public ViewHolder(@NonNull View itemView) {

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui_intro.account.fragments.CreateKnownLanguagesFragment">
+    tools:context=".ui_intro.account.fragments.CreateKnownLanguagesFragment"
+    android:background="@color/palette_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,9 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:text="How proficient you are in languages?"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
+            android:textColor="@color/palette_text"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -28,8 +30,9 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="Select languages to personalize your WordWiki experience and further learning"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/palette_special_text"
             android:textSize="14sp"
+            android:layout_marginEnd="20dp"
             android:textStyle="normal" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -37,6 +40,8 @@
             android:layout_width="match_parent"
             android:layout_height="400dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginBottom="20dp" />
 
 
@@ -56,20 +61,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="50dp"
-                android:background="@android:color/transparent"
+                android:backgroundTint="@color/palette_button"
                 android:gravity="center_horizontal|center"
-                android:text="Skip for now"
-                android:textColor="@android:color/black" />
+                android:text="Skip for now" />
 
             <Button
                 android:id="@+id/fragment_username_next_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="50dp"
-                android:background="@android:color/transparent"
                 android:gravity="center"
                 android:text="Next"
-                android:textColor="@android:color/black" />
+                android:backgroundTint="@color/palette_button"/>
 
 
         </LinearLayout>

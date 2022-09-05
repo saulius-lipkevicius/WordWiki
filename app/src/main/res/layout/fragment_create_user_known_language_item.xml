@@ -3,51 +3,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginTop="10dp"
     android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/fragment_library_subsection_item_bg">
+    android:background="@drawable/fragment_library_subsection_item_bg"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageView
+        <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/fragment_create_user_known_language_flag"
-            android:layout_width="50dp"
+            android:layout_width="40dp"
             android:layout_height="30dp"
-            android:src="@drawable/es"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:scaleType="fitXY"
-            android:layout_marginBottom="5dp"/>
+            android:src="@drawable/es"
+            app:roundPercent="0.2" />
 
 
         <TextView
-            android:layout_gravity="center"
             android:id="@+id/fragment_create_user_known_language_name"
-            android:layout_marginStart="20sp"
-            android:gravity="start|center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20sp"
+            android:textColor="@color/palette_text"
+            android:layout_marginEnd="20dp"
+            android:textAlignment="center"
             android:text="name"
-            android:textSize="14sp"/>
+            android:textSize="14sp" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/black"/>
+        android:background="@color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
-
 
 
     </LinearLayout>
@@ -58,43 +60,42 @@
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:minHeight="0dp"
-            android:minWidth="0dp"
             android:id="@+id/know_language_btn_a1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A1"
+            android:layout_height="30dp"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:textSize="12sp"
-            android:textStyle="normal"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:text="A1"
             android:textAllCaps="false"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
+            android:textColor="@color/palette_text"
+            android:textSize="12sp"
+            android:textStyle="normal" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:minHeight="0dp"
-            android:minWidth="0dp"
             android:id="@+id/know_language_btn_a2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="30dp"
             android:text="A2"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
+            android:textColor="@color/palette_text"
+            android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:minHeight="0dp"
-            android:minWidth="0dp"
             android:id="@+id/know_language_btn_b1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="30dp"
             android:text="B1"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
-
+            android:textColor="@color/palette_text"
+            android:textSize="12sp" />
 
 
     </LinearLayout>
@@ -106,52 +107,52 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:minHeight="0dp"
-            android:minWidth="0dp"
             android:id="@+id/know_language_btn_b2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="30dp"
             android:text="B2"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
+            android:textColor="@color/palette_text"
+            android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:minHeight="0dp"
-            android:minWidth="0dp"
             android:id="@+id/know_language_btn_c1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="30dp"
             android:text="C1"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
+            android:textColor="@color/palette_text"
+            android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:minHeight="0dp"
-            android:minWidth="0dp"
             android:id="@+id/know_language_btn_c2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@android:color/transparent"
+            android:minWidth="0dp"
+            android:minHeight="30dp"
             android:text="C2"
-            android:textSize="12sp"
-            android:textColor="@android:color/black"
-            android:layout_weight="1"/>
+            android:textColor="@color/palette_text"
+            android:textSize="12sp" />
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:minHeight="0dp"
-        android:minWidth="0dp"
         android:id="@+id/know_language_btn_native"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@android:color/transparent"
+        android:minWidth="0dp"
+        android:minHeight="30dp"
         android:text="Native"
-        android:textSize="12sp"
-        android:textColor="@android:color/black"
-        android:layout_weight="1"/>
+        android:textColor="@color/palette_text"
+        android:textSize="12sp" />
 
 </LinearLayout>

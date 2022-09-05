@@ -81,7 +81,19 @@ public class CreatePictureFragment extends Fragment {
         setButtons();
 
         profilePic = root.findViewById(R.id.profile_pic);
+        profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickProfileImage();
+            }
+        });
+        pickProfileImage();
 
+
+        return root;
+    }
+
+    private void pickProfileImage() {
         Intent pickIntent = new Intent();
         pickIntent.setType("image/*");
         pickIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -97,9 +109,6 @@ public class CreatePictureFragment extends Fragment {
                 );
 
         startActivityForResult(chooserIntent, SELECT_PICTURE);
-
-
-        return root;
     }
 
 
