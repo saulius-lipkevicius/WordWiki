@@ -120,7 +120,7 @@ public class IntroActivity extends Activity {
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(getResources().getColor(R.color.palette2));
+            dots[i].setTextColor(getResources().getColor(R.color.palette_button));
             dots[i].setPadding(5, 0, 5, 0);
             dots[i].setTextSize(30);
             dots[i].setGravity(Gravity.CENTER);

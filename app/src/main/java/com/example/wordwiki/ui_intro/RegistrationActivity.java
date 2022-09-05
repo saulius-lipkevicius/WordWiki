@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class RegistrationActivity extends AppCompatActivity {
     TextView tvLoginHere;
     Button btnRegister;
 
+    LinearLayout regLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,14 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
 
+
+        regLayout = findViewById(R.id.registration_main_layout);
+        regLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard(view);
+            }
+        });
 
 
         etRegEmail = findViewById(R.id.etRegEmail);

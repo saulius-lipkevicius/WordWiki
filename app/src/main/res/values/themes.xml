@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:elevation">1dp</item>
     </style>
 
     <style name="Theme.WordWiki.noBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -31,6 +32,7 @@
         <item name="android:navigationBarColor">@color/black</item>
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+        <item name="android:elevation">1dp</item>
     </style>
 
 

@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.utils.widget.ImageFilterView;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -42,7 +43,7 @@ public class PlayFragment extends Fragment {
     DatabaseHelper myDb;
 
     Integer valueOfStoredCount, newWordsTodayCounter, wordsRevisedCounter, wordsRevisedTotalCounter;
-    ImageView languageImage;
+    ImageFilterView languageImage;
     String word_to_fit, translation_to_fit, cursorWordHidden, cursorWordBolded, cursorWord;
     EditText shownWord, shownTranslation;
     TextView wordsToday, newWordsTotal, newWordsToday, languageShown, sectionShown, wordsRevisedTotal;

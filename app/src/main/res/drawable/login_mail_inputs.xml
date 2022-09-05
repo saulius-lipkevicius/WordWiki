@@ -2,6 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle" android:padding="10dp">
     <!-- you can use any color you want I used here gray color-->
-    <solid android:color="#4f4d4b"/>
+    <solid android:color="@color/white"/>
     <corners android:radius="3dp"/>
+    <stroke android:width="1dp"
+        android:color="@color/palette_text"/>
 </shape>

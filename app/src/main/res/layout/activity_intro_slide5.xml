@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:background="@color/palette_background"
     android:orientation="vertical">
 
 
@@ -26,7 +26,7 @@
         android:layout_marginEnd="40dp"
         android:gravity="center"
         android:text="Relax and let us to do all the work for you"
-        android:textColor="@color/black"
+        android:textColor="@color/palette_text"
         android:textSize="22sp"
         android:textStyle="bold" />
 
@@ -38,9 +38,9 @@
         android:layout_marginStart="70dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="70dp"
-        android:backgroundTint="@color/palette2"
+        android:backgroundTint="@color/palette_button"
         android:text="@string/intro_activity_start_btn"
-        android:textColor="@color/palette3" />
+        android:textColor="@color/palette_text" />
 
 
 </RelativeLayout>

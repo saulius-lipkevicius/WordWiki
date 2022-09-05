@@ -35,6 +35,15 @@
     <color name="palette5">#EF8A84</color>
     <color name="palette6">#EFEDF0</color>
 
+    <!-- TEST -->
+    <color name="palette_background">#fcfbfc</color>
+    <color name="palette_actiobar">#ffffff</color>
+    <color name="palette_text">#0f0f0f</color>
+    <color name="palette_button">#917148</color>
+    <color name="palette_special_text">#917148</color>
+
+
+
     <!-- First Palette  -->
     <color name="col1">#ccd5ae</color>
     <color name="col2">#e9edc9</color>
