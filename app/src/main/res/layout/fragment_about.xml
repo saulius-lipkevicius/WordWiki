@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui_main.actionbar.setting.sub_settings.AboutFragment">
 
     <ScrollView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".aboutUs.AboutUsActivity">
 
         <LinearLayout
-
+            android:background="@color/palette_background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -25,7 +25,6 @@
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -33,9 +32,9 @@
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Virtual Dictionary's purpose is to benefit language learning enthusiasts by acting as an easily accessible multi-language dictionary that can be used in many various ways to improve core memory and revise already mastered words. "
+                    android:text="Virtual Dictionary's purpose is to benefit language learning enthusiasts by acting as an easily accessible dictionary library."
                     android:textAlignment="center"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
                 <ImageView
                     android:layout_width="64dp"
@@ -43,22 +42,15 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="30dp"
-                    android:background="@android:color/transparent"
                     android:src="@drawable/vision_about" />
 
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/palette4"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -67,7 +59,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="10dp"
-                    android:background="@android:color/transparent"
                     android:src="@drawable/explore_about" />
 
                 <TextView
@@ -77,49 +68,39 @@
                     android:layout_marginEnd="30dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Anyone is allowed to add or edit dictionaries. Anyone can contribute. In this way, we are helping each other to avoid the tedious and cumbersome work that is required to created informative dictionaries."
-                    android:textColor="@color/palette4"
+                    android:text="Anyone can contribute. In this way, we are helping each other to avoid the tedious and cumbersome work that is required to created informative dictionaries."
+                    android:textColor="@color/palette_text"
                     android:textSize="14sp" />
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/palette4"
+                android:backgroundTint="@color/palette_text"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="The timing between words of repetition is perfected by a rigid algorithm, which increases the spacing between revisions of a word to avoid overlearning."
+                    android:textColor="@color/palette_text"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/algorithm_about" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="30dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="The timing between words of repetition is perfected by a rigid algorithm, which increases the spacing between revisions of a word to avoid overlearning. That lets you learn more words at the same time."
-                    android:textColor="@color/palette4"
-                    android:textSize="14sp" />
+                    android:src="@drawable/algorithm_about" />
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -129,25 +110,23 @@
 
                 <androidx.constraintlayout.utils.widget.ImageFilterView
                     android:id="@+id/image_top"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="20dp"
                     android:padding="0dp"
                     android:src="@drawable/profile_app"
-                    app:roundPercent="1" />
+                    app:roundPercent="0.2" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="20dp"
                     android:gravity="center_vertical"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingTop="40dp"
                     android:text="Saulius Lipkevičius"
-                    android:textColor="@color/palette4"
+                    android:textColor="@color/palette_text"
                     android:textSize="20sp"
+                    android:layout_marginStart="20dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -156,62 +135,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="20dp"
                 android:paddingStart="50dp"
                 android:paddingTop="10dp"
                 android:paddingEnd="30dp"
                 android:text="I am Data Scientist with a background in Mathematics who specializes in machine learning. In my spare time, I go into android development/Kaggle competitions. Let's connect."
-                android:textColor="@color/palette4"
+                android:textColor="@color/palette_text"
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
 
-                <ImageButton
+                <androidx.constraintlayout.utils.widget.ImageFilterView
                     android:id="@+id/toLinkedn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/linkedin_about" />
+                    android:scaleType="fitXY"
 
-                <ImageButton
+                    android:src="@drawable/ic_linkedin" />
+
+                <androidx.constraintlayout.utils.widget.ImageFilterView
                     android:id="@+id/toGit"
-                    android:scaleType="fitXY"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_margin="10dp"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/git_about" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_github" />
 
-                <ImageButton
+                <androidx.constraintlayout.utils.widget.ImageFilterView
                     android:id="@+id/toGmail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:scaleType="fitXY"
-                    android:layout_margin="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/gmail_about" />
-
-                <ImageButton
-                    android:id="@+id/toFeedback"
-                    android:scaleType="fitXY"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/question_about" />
-
+                    android:src="@drawable/ic_gmail_icon" />
 
             </LinearLayout>
         </LinearLayout>
-
     </ScrollView>
-
 </FrameLayout>

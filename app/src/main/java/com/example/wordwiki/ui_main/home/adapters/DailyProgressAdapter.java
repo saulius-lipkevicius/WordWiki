@@ -120,7 +120,6 @@ public class DailyProgressAdapter extends PagerAdapter {
         barDataSet.setColor(Color.BLACK); // SET LINE COLOR
 
         barDataSet.setHighlightEnabled(true);
-        barDataSet.setHighLightColor(Color.RED);
         barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(dayNames2));
         barDataSet.setValueFormatter(new DefaultValueFormatter(0));
         barDataSet.setValueTextSize(12);

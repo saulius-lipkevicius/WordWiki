@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui_main.actionbar.setting.sub_settings.dialogs.FeedbackFragmentDialog">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/palette_background"
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
@@ -19,36 +20,38 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20sp"
+            android:layout_marginTop="20dp"
             android:text="Select a Language"
-            android:layout_marginStart="30sp"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"/>
+            android:textColor="@color/palette_text"
+            android:textSize="20sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_explore_filter_dialog_language_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:background="@drawable/fragment_home_tab_bg"
             android:layout_marginBottom="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:orientation="vertical"/>
+            android:orientation="vertical" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="What Level Level are you looking for?"
-            android:layout_marginEnd="20dp"
             android:layout_marginStart="30sp"
-            android:textSize="20sp"
-            android:textColor="@android:color/black"/>
+            android:layout_marginEnd="20dp"
+            android:text="What Level are you looking for?"
+            android:textColor="@color/palette_text"
+            android:textSize="20sp" />
 
         <LinearLayout
             android:id="@+id/fragment_library_import_dictionary_level_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
@@ -59,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
@@ -75,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
@@ -89,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
@@ -104,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
@@ -118,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
@@ -132,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:minWidth="0dp"
                 android:minHeight="0dp"
                 android:paddingTop="10dp"
@@ -146,8 +149,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="100dp">
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/fragment_explore_filter_clear_btn"
@@ -155,19 +158,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="Clear"
-                android:textColor="@android:color/black" />
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="20dp"
+                android:backgroundTint="@color/palette_button"
+                android:text="Clear" />
 
             <Button
                 android:id="@+id/fragment_explore_filter_submit_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="40dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="Search"
-                android:textColor="@android:color/black" />
+                android:backgroundTint="@color/palette_button"
+                android:text="Search" />
 
         </LinearLayout>
 

@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/palette_background">
 
         <include layout="@layout/actionbar_explore" />
 
@@ -41,9 +42,11 @@
                     android:id="@+id/explore_fragment_empty_filler_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Use filter to find dictionaries"
+                    android:layout_below="@+id/explore_fragment_empty_filler_image"
                     android:gravity="center"
-                    android:layout_below="@+id/explore_fragment_empty_filler_image"/>
+                    android:text="Use filter to find dictionaries"
+                    android:textColor="@color/palette_text"
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/explore_fragment_empty_filler_filter"
@@ -51,11 +54,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/explore_fragment_empty_filler_text"
                     android:layout_centerInParent="true"
-                    android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/ap_transparent"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/palette_button"
                     android:drawableEnd="@drawable/ic_filter_24"
-                    android:text="Filter"
-                    android:textColor="@color/black" />
+                    android:drawableTint="@android:color/white"
+                    android:text="Filter" />
 
 
             </RelativeLayout>

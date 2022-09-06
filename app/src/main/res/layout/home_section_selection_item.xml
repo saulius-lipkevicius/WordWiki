@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/palette3"
+        android:background="@color/palette_background"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -18,11 +18,10 @@
 
             <ImageView
                 android:id="@+id/section_selection_row_image"
-                android:layout_width="30dp"
+                android:layout_width="50dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp" />
+                android:layout_gravity="center" />
         </LinearLayout>
 
 
@@ -36,11 +35,11 @@
                 android:id="@+id/section_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="50dp"
                 android:fontFamily="sans-serif"
                 android:text="section name"
-                android:textColor="@color/palette4"
+                android:textColor="@color/palette_text"
                 android:textSize="16sp" />
 
             <TextView
@@ -51,7 +50,7 @@
                 android:layout_marginBottom="15dp"
                 android:fontFamily="sans-serif"
                 android:text="language name"
-                android:textColor="@color/palette4"
+                android:textColor="@color/palette_text"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -66,9 +65,10 @@
                 android:id="@+id/check_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/palette4"
+                android:layout_gravity="center_vertical"
+                android:buttonTint="@color/palette_text"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="10dp"/>
         </LinearLayout>

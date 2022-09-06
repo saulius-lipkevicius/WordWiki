@@ -16,7 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@color/palette_background">
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -46,7 +47,7 @@
                         android:layout_weight="1"
                         android:text="Term of Use  |"
                         android:gravity="end"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@color/palette_text"/>
 
                     <TextView
                         android:id="@+id/fragment_settings_privacy"
@@ -55,7 +56,7 @@
                         android:layout_weight="1"
                         android:text="  Privacy Policy"
                         android:gravity="start"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@color/palette_text"/>
                 </LinearLayout>
 
 
@@ -64,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Version 1.0.0"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/palette_text"
                     android:textStyle="bold"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="20dp"/>

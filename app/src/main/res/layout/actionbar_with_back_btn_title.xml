@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Title"
-            android:textStyle="bold"
+            android:textColor="@color/palette_text"
             android:textSize="18sp"
-            android:textColor="@color/palette_text"/>
+            android:textStyle="bold" />
     </RelativeLayout>
 </androidx.appcompat.widget.Toolbar>

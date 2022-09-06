@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/palette3">
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/mode_name"
@@ -19,7 +19,7 @@
             android:layout_marginRight="150dp"
             android:fontFamily="sans-serif"
             android:text="section name"
-            android:textColor="@color/palette4"
+            android:textColor="@color/palette_text"
             android:textSize="16dp"
             android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="sans-serif"
             android:text="subtext"
-            android:textColor="@color/palette4"
+            android:textColor="@color/palette_text"
             android:textSize="12dp"
             android:textStyle="italic" />
 
@@ -45,7 +45,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="15dp"
-            android:buttonTint="@color/palette4" />
+            android:buttonTint="@color/palette_text" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

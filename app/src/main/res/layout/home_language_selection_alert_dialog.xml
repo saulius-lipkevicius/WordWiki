@@ -9,14 +9,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:background="@color/palette_background">
         <LinearLayout
             android:layout_width="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/palette2"
             android:id="@+id/toolbar"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/palette_background">
 
             <TextView
                 android:layout_width="match_parent"
@@ -24,8 +26,8 @@
                 android:fontFamily="sans-serif"
                 android:text="Languages"
                 android:textAlignment="center"
-                android:textColor="@color/palette4"
-                android:textSize="25sp"
+                android:textColor="@color/palette_text"
+                android:textSize="20sp"
                 android:textStyle="italic"/>
         </LinearLayout>
 
@@ -35,25 +37,12 @@
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_below="@id/toolbar"
-            android:layout_marginTop="1dp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/palette5"
-            android:layout_below="@id/toolbar"
-            android:id="@+id/view"/>
-
-        <View
-            android:id="@+id/view_above_buttons"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/recycleView"
-            android:background="@color/palette5" />
+            android:layout_marginTop="1dp"
+            android:background="@color/palette_background" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/recycleView"
             android:layout_centerHorizontal="true">
 
@@ -62,14 +51,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="None"
-                android:textColor="@color/palette4"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textAllCaps="false"
                 android:layout_margin="10dp"
                 android:textStyle="bold"
+                android:text="NONE"
                 android:layout_weight="1"
-                android:background="@drawable/home_selection_dialog_btn"/>
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/palette_button"/>
 
             <Button
                 android:id="@+id/select_all"
@@ -77,13 +66,13 @@
                 android:layout_height="wrap_content"
                 android:text="All"
                 android:layout_marginTop="15dp"
-                android:textColor="@color/palette4"
                 android:textSize="13sp"
                 android:textAllCaps="false"
                 android:layout_margin="10dp"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:background="@drawable/home_selection_dialog_btn"/>
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/palette_button"/>
 
             <Button
                 android:id="@+id/ok"
@@ -92,12 +81,12 @@
                 android:layout_height="wrap_content"
                 android:text="OK"
                 android:textAllCaps="false"
-                android:textColor="@color/palette4"
                 android:textSize="13sp"
                 android:layout_margin="10dp"
                 android:textStyle="bold"
                 android:layout_weight="1"
-                android:background="@drawable/home_selection_dialog_btn"/>
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/palette_button"/>
 
         </LinearLayout>
     </RelativeLayout>

@@ -10,6 +10,7 @@
         android:id="@+id/linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/palette_background"
         android:orientation="vertical">
 
         <include layout="@layout/actionbar_profile" />
@@ -51,7 +52,7 @@
                     android:layout_marginTop="38dp"
                     android:gravity="center_vertical"
                     android:text="User Name"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/palette_text"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -66,7 +67,8 @@
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:layout_gravity="top"
-            android:layout_marginStart="100dp"
+            android:layout_marginTop="-5dp"
+            android:layout_marginStart="105dp"
             android:layout_marginBottom="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal" />
@@ -86,25 +88,26 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:background="@color/black" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp"
             android:text="Progress"
+            android:textColor="@color/palette_text"
             android:textSize="20sp" />
 
         <RelativeLayout
             android:id="@+id/explore_fragment_empty_filler_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_gravity="center"
             android:gravity="center"
+            android:orientation="vertical"
             android:visibility="visible">
 
             <ImageView
@@ -117,9 +120,11 @@
                 android:id="@+id/explore_fragment_empty_filler_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You are still to begin"
+                android:layout_below="@+id/explore_fragment_empty_filler_image"
                 android:gravity="center"
-                android:layout_below="@+id/explore_fragment_empty_filler_image"/>
+                android:text="You are still to begin"
+                android:textColor="@color/palette_text"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

@@ -72,7 +72,7 @@ public class CreateLearningLanguagesFragment extends Fragment  implements Recycl
         learningLanguages.add(new LearningLanguageHelper("Italian", com.blongho.country_data.R.drawable.it, false));
         learningLanguages.add(new LearningLanguageHelper("French", com.blongho.country_data.R.drawable.fr, false));
 
-        LearningLanguageAdapter languageAdapter = new LearningLanguageAdapter(learningLanguages, this::onItemClick);
+        LearningLanguageAdapter languageAdapter = new LearningLanguageAdapter(learningLanguages, this::onItemClick, getContext());
         recyclerView.setAdapter(languageAdapter);
         // TODO create an adapter for it and item (fragment_create_user_known_language_item)
 

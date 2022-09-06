@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/palette_background">
 
     <include layout="@layout/actionbar_profile_dialog" />
 
@@ -13,14 +14,15 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
-        android:text="Most learnt"
-        android:textColor="@android:color/black" />
+        android:textSize="18sp"
+        android:text="Progress"
+        android:textColor="@color/palette_text" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/stats_recycler"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="30dp"
+        android:layout_margin="20dp"
         android:orientation="vertical" />
 
     <RelativeLayout
@@ -29,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginBottom="50dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/white"
         android:gravity="bottom"
 
@@ -46,10 +49,59 @@
             android:background="@android:color/transparent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/words_repeated"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/fragment_home_tab_clicked_bg"
+                    android:textColor="@android:color/white"
+                    android:text="Repeated"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/words_approached"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/fragment_home_tab_bg"
+                    android:textColor="@android:color/black"
+                    android:text="Approached"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/words_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/fragment_home_tab_bg"
+                    android:textColor="@android:color/black"
+                    android:text="New"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    android:textAllCaps="false"/>
+
+
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextBlockStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/viewpager_text"

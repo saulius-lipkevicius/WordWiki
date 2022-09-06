@@ -10,7 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/palette_background">
 
         <include layout="@layout/actionbar_with_back_btn_title" />
 
@@ -19,10 +20,11 @@
             android:layout_height="wrap_content"
             android:text="Pick your language"
             android:textStyle="bold"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:textColor="@android:color/black"/>
+            android:layout_marginEnd="30dp"
+            android:textColor="@color/palette_text"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -30,8 +32,9 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
             android:text="More languages are incoming. Press to request your language"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp"
+            android:textColor="@color/palette_special_text"
+            android:layout_marginEnd="30dp"
+            android:textSize="16sp"
             android:textStyle="normal" />
 
         <androidx.recyclerview.widget.RecyclerView

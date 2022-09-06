@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_marginTop="5dp"
     android:layout_marginBottom="5dp"
-    android:background="#F3F1F1">
+    android:background="@color/palette_button">
 
     <TextView
         android:layout_marginStart="10dp"
@@ -18,9 +18,9 @@
         android:paddingStart="20dp"
         android:gravity="center_vertical"
         android:text="name"
-        android:textColor="#FFBCBC"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        android:textColor="@color/red"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

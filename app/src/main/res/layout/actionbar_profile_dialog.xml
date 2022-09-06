@@ -32,6 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:text="Title"
             android:textColor="@color/palette_text" />
 

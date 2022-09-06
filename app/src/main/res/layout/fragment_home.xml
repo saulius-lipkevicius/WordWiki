@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/palette3"
+    android:background="@color/palette_background"
     android:orientation="vertical">
 
     <include layout="@layout/actionbar_home" />
@@ -12,9 +12,8 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="70dp"
-        android:background="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="100dp"
         android:gravity="center">
 
         <LinearLayout
@@ -30,11 +29,11 @@
                 android:id="@+id/button_to_second_activity"
                 android:layout_width="0dp"
                 android:layout_height="80dp"
+                android:layout_margin="3dp"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:drawableTop="@drawable/ic_home_play"
                 android:text="Play"
-                android:layout_margin="3dp"
                 android:textAllCaps="false"
                 android:textColor="@android:color/black"
                 android:textSize="10sp"
@@ -92,8 +91,8 @@
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginBottom="50dp"
-        android:gravity="bottom"
         android:background="@android:color/white"
+        android:gravity="bottom"
 
         android:scrollbarTrackHorizontal="@drawable/ic_home_play"
         app:layout_constraintTop_toBottomOf="parent">
@@ -103,23 +102,71 @@
             android:id="@+id/viewpager_bottom"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@android:color/transparent"
+            android:background="@color/palette_background"
             android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/words_repeated"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/fragment_home_tab_clicked_bg"
+                    android:textColor="@android:color/white"
+                    android:text="Repeated"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/words_approached"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/fragment_home_tab_bg"
+                    android:textColor="@android:color/black"
+                    android:text="Approached"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:textAllCaps="false"/>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/words_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/fragment_home_tab_bg"
+                    android:textColor="@android:color/black"
+                    android:text="New"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    android:textAllCaps="false"/>
+
+
+            </LinearLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextBlockStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@color/palette_background"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/viewpager_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@drawable/home_fragment_selector"
                     android:gravity="center"
                     android:inputType="none"
                     android:text="@string/home_stats_first"
@@ -131,7 +178,8 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="wrap_content"
-                android:layout_height="220dp" />
+                android:layout_height="match_parent"
+                android:background="@color/palette_background" />
 
         </LinearLayout>
 

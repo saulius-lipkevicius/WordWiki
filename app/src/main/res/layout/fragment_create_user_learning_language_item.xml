@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_marginTop="10dp"
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
@@ -13,13 +13,14 @@
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/fragment_create_user_learning_language_flag"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
             android:scaleType="fitXY"
             android:src="@drawable/es"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
             app:roundPercent="0.2" />
 
 
@@ -30,6 +31,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
             android:gravity="start|center_vertical"
             android:text="name"
             android:textSize="16sp"

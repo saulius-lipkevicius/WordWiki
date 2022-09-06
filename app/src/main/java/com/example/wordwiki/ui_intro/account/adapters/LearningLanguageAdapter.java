@@ -1,6 +1,8 @@
 package com.example.wordwiki.ui_intro.account.adapters;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +23,12 @@ public class LearningLanguageAdapter extends RecyclerView.Adapter<LearningLangua
     final String TAG = "LearningLanguageAdapter";
     List<LearningLanguageHelper> learningLanguageList;
     private RecyclerViewClickInterface recyclerViewClickInterface;
+    Context context;
 
-    public LearningLanguageAdapter(List<LearningLanguageHelper> learningLanguageList, RecyclerViewClickInterface recyclerViewClickInterface) {
+    public LearningLanguageAdapter(List<LearningLanguageHelper> learningLanguageList, RecyclerViewClickInterface recyclerViewClickInterface, Context context) {
         this.learningLanguageList = learningLanguageList;
         this.recyclerViewClickInterface = recyclerViewClickInterface;
+        this.context = context;
     }
 
     @NonNull
@@ -43,20 +47,21 @@ public class LearningLanguageAdapter extends RecyclerView.Adapter<LearningLangua
         holder.languageName.setText(section.getLanguageName());
         holder.flag.setImageResource(section.getFlag());
 
-        holder.isChecked.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // change color of RecyclerView if it is checked.
                 if (section.isChecked()) {
-                    holder.isChecked.setImageResource(R.drawable.ic_check_box);
+                   // holder.isChecked.setImageResource(R.drawable.ic_check_box);
                     holder.itemView.getBackground().setTint(Color.TRANSPARENT);
+                    holder.itemView.setBackgroundResource(R.drawable.fragment_library_subsection_item_bg);
                 } else {
-                    holder.isChecked.setImageResource(R.drawable.ic_checked);
-                    holder.itemView.getBackground().setTint(Color.GRAY);
+                    //holder.isChecked.setImageResource(R.drawable.ic_checked);
+                    holder.itemView.getBackground().setTint(context.getResources().getColor(R.color.palette_button));
+                    holder.itemView.setBackgroundResource(R.drawable.fragment_library_subsection_item_bg);
                 }
                 section.setChecked(!section.isChecked());
-
-                holder.itemView.performClick();
+                recyclerViewClickInterface.onItemClick(holder.getAdapterPosition());
             }
         });
     }
@@ -77,13 +82,6 @@ public class LearningLanguageAdapter extends RecyclerView.Adapter<LearningLangua
             languageName = itemView.findViewById(R.id.fragment_create_user_learning_language_name);
             flag = itemView.findViewById(R.id.fragment_create_user_learning_language_flag);
             isChecked = itemView.findViewById(R.id.fragment_create_user_known_language_check);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recyclerViewClickInterface.onItemClick(getAdapterPosition());
-                }
-            });
         }
     }
 }

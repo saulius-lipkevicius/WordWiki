@@ -44,6 +44,9 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
     int mCurCheckPosition;
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
+    // tabs for the spinner
+    TextView newWords, approachedWords, repeatedWords;
+
     public static FullScreenDialog newInstance() {
         return new FullScreenDialog();
     }
@@ -94,6 +97,8 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
 
         AutoCompleteTextView spinnerText = root.findViewById(R.id.viewpager_text);
         spinnerText.setAdapter(statsAdapter);
+
+        /*
         spinnerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -104,7 +109,74 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
                 mCurCheckPosition = position;
             }
         });
+
+         */
         spinnerText.setBackground(getResources().getDrawable(R.drawable.home_fragment_selector));
+
+
+        newWords = root.findViewById(R.id.words_new);
+        newWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter = new DailyProgressAdapter(getContext(), 2);
+                viewPager.setCurrentItem(2);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = 2;
+
+                newWords.setTextColor(getResources().getColor(R.color.white));
+                newWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
+
+                approachedWords.setTextColor(getResources().getColor(R.color.black));
+                approachedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+
+                repeatedWords.setTextColor(getResources().getColor(R.color.black));
+                repeatedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+            }
+        });
+
+        approachedWords = root.findViewById(R.id.words_approached);
+        approachedWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter = new DailyProgressAdapter(getContext(), 1);
+                viewPager.setCurrentItem(1);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = 1;
+
+                approachedWords.setTextColor(getResources().getColor(R.color.white));
+                approachedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
+
+                repeatedWords.setTextColor(getResources().getColor(R.color.black));
+                repeatedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+
+                newWords.setTextColor(getResources().getColor(R.color.black));
+                newWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+            }
+        });
+
+        repeatedWords = root.findViewById(R.id.words_repeated);
+        repeatedWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter = new DailyProgressAdapter(getContext(), 0);
+                viewPager.setCurrentItem(0);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = 0;
+
+                repeatedWords.setTextColor(getResources().getColor(R.color.white));
+                repeatedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
+
+                approachedWords.setTextColor(getResources().getColor(R.color.black));
+                approachedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+
+                newWords.setTextColor(getResources().getColor(R.color.black));
+                newWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+            }
+        });
+
 
 
         // recycler view for section stats

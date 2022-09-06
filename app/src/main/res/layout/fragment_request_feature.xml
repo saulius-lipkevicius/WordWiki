@@ -9,15 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:background="@color/palette_background">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clickable="true"
-
             android:focusable="true"
-
             android:focusableInTouchMode="true"
             android:orientation="vertical">
 
@@ -28,10 +27,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="20dp"
                 android:text="What would you love to see?"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
+                android:textColor="@color/palette_text"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -40,8 +39,9 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:text="Define where and what should be improved"
-                android:textColor="@android:color/darker_gray"
+                android:textColor="@color/palette_special_text"
                 android:textSize="14sp"
+                android:layout_marginEnd="20dp"
                 android:textStyle="normal" />
 
 
@@ -54,17 +54,17 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:hint="Description"
-                android:padding="10dp">
+                android:background="@drawable/fragment_home_tab_bg">
 
                 <!-- TODO create an indexer for the letter count, and keep it short and simple -->
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/outlined_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textAlignment="gravity"
                     android:gravity="top|start"
                     android:inputType="textPassword|textVisiblePassword|textCapSentences|textMultiLine"
-                    android:maxLength="200" />
+                    android:maxLength="200"
+                    android:textAlignment="gravity" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,15 +89,15 @@
                 android:padding="5dp">
 
                 <Button
-                    android:drawableEnd="@drawable/ic_send"
                     android:id="@+id/dialog_fragment_send"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:gravity="center"
                     android:layout_marginEnd="10dp"
-                    android:text="Send"
-                    android:textColor="@android:color/black" />
+                    android:backgroundTint="@color/palette_button"
+                    android:drawableEnd="@drawable/ic_send"
+                    android:drawableTint="@android:color/white"
+                    android:gravity="center"
+                    android:text="Send" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -9,14 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/palette2"
             android:id="@+id/toolbar"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/section_title"
@@ -25,9 +25,9 @@
                 android:fontFamily="sans-serif"
                 android:text="Sections"
                 android:textAlignment="center"
-                android:textColor="@color/palette4"
-                android:textSize="25sp"
-                android:textStyle="italic"/>
+                android:textColor="@color/palette_text"
+                android:textSize="20sp"
+                android:textStyle="italic" />
         </LinearLayout>
 
 
@@ -38,23 +38,10 @@
             android:layout_below="@id/toolbar"
             android:layout_marginTop="1dp" />
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/toolbar"
-            android:background="@color/palette5" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/palette5"
-        android:layout_below="@id/recycleView"
-        android:id="@+id/view_above_buttons"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/recycleView"
             android:layout_centerHorizontal="true">
 
@@ -64,13 +51,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/home_selection_dialog_btn"
+                android:layout_weight="1"
+                android:backgroundTint="@color/palette_button"
                 android:text="None"
-                android:textAllCaps="false"
-                android:textColor="@color/palette4"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/select_all"
@@ -78,13 +65,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/home_selection_dialog_btn"
+                android:layout_weight="1"
+                android:backgroundTint="@color/palette_button"
                 android:text="All"
-                android:textAllCaps="false"
-                android:textColor="@color/palette4"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/ok"
@@ -92,13 +79,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/home_selection_dialog_btn"
+                android:layout_weight="1"
+                android:backgroundTint="@color/palette_button"
                 android:text="OK"
-                android:textAllCaps="false"
-                android:textColor="@color/palette4"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                android:layout_weight="1"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
     </RelativeLayout>

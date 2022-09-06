@@ -67,9 +67,10 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
         holder.countryImage.setImageResource(flag);
 
         if (sharedPreferences.getInt(sectionsList.get(position).getLanguageName(), 0) == 1) {
-            holder.itemView.setBackgroundColor(Color.GRAY);
+
+            holder.itemView.setBackground(context.getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
+            holder.itemView.setBackground(context.getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         // set dictionaryCounter
@@ -128,11 +129,11 @@ public class ExistingLanguageAdapter extends RecyclerView.Adapter<ExistingLangua
 
 
             if (sharedPreferences.getInt(sectionsList.get(clickedPosition).getLanguageName(), 0) == 1) {
-                itemView.setBackgroundColor(Color.TRANSPARENT);
+                itemView.setBackground(context.getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putInt(sectionsList.get(clickedPosition).getLanguageName(), 0);
                 mOnClickListener.onProgressListClick(clickedPosition, false);
             } else {
-                itemView.setBackgroundColor(Color.GRAY);
+                itemView.setBackground(context.getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putInt(sectionsList.get(clickedPosition).getLanguageName(), 1);
                 mOnClickListener.onProgressListClick(clickedPosition, true);
             }

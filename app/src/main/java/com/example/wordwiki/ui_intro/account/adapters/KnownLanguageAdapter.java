@@ -55,7 +55,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isA1()){
                     section.setChosen(1);
-                    holder.a1.setBackgroundColor(Color.BLACK);
+                    holder.a1.setBackgroundResource(R.color.palette_button);
 
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);
                     holder.b1.setBackgroundColor(Color.TRANSPARENT);
@@ -76,7 +76,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isA2()){
                     section.setChosen(2);
-                    holder.a2.setBackgroundColor(Color.BLACK);
+                    holder.a2.setBackgroundResource(R.color.palette_button);
 
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     holder.b1.setBackgroundColor(Color.TRANSPARENT);
@@ -98,7 +98,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isB1()){
                     section.setChosen(3);
-                    holder.b1.setBackgroundColor(Color.BLACK);
+                    holder.b1.setBackgroundResource(R.color.palette_button);
 
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);
@@ -119,7 +119,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isB2()){
                     section.setChosen(4);
-                    holder.b2.setBackgroundColor(Color.BLACK);
+                    holder.b2.setBackgroundResource(R.color.palette_button);
 
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);
@@ -140,7 +140,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isC1()){
                     section.setChosen(5);
-                    holder.c1.setBackgroundColor(Color.BLACK);
+                    holder.c1.setBackgroundResource(R.color.palette_button);
 
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);
@@ -161,7 +161,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isC2()){
                     section.setChosen(6);
-                    holder.c2.setBackgroundColor(Color.BLACK);
+                    holder.c2.setBackgroundResource(R.color.palette_button);
 
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);
@@ -183,7 +183,7 @@ public class KnownLanguageAdapter extends RecyclerView.Adapter<KnownLanguageAdap
             public void onClick(View view) {
                 if (!section.isNative()){
                     section.setChosen(7);
-                    holder.isNative.setBackgroundColor(Color.BLACK);
+                    holder.isNative.setBackgroundResource(R.color.palette_button);
 
                     holder.a1.setBackgroundColor(Color.TRANSPARENT);
                     holder.a2.setBackgroundColor(Color.TRANSPARENT);

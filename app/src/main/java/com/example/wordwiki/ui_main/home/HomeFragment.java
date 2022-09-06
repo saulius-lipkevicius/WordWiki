@@ -80,6 +80,9 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+    // tabs for the spinner
+    TextView newWords, approachedWords, repeatedWords;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +146,8 @@ public class HomeFragment extends Fragment {
 
         AutoCompleteTextView spinnerText = root.findViewById(R.id.viewpager_text);
         spinnerText.setAdapter(statsAdapter);
+
+        /*
         spinnerText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -153,9 +158,74 @@ public class HomeFragment extends Fragment {
                 mCurCheckPosition = position;
             }
         });
+         */
 
 
         spinnerText.setBackground(getResources().getDrawable(R.drawable.home_fragment_selector));
+
+        newWords = root.findViewById(R.id.words_new);
+        newWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter = new DailyProgressAdapter(getContext(), 2);
+                viewPager.setCurrentItem(2);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = 2;
+
+                newWords.setTextColor(getResources().getColor(R.color.white));
+                newWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
+
+                approachedWords.setTextColor(getResources().getColor(R.color.black));
+                approachedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+
+                repeatedWords.setTextColor(getResources().getColor(R.color.black));
+                repeatedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+            }
+        });
+
+        approachedWords = root.findViewById(R.id.words_approached);
+        approachedWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter = new DailyProgressAdapter(getContext(), 1);
+                viewPager.setCurrentItem(1);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = 1;
+
+                approachedWords.setTextColor(getResources().getColor(R.color.white));
+                approachedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
+
+                repeatedWords.setTextColor(getResources().getColor(R.color.black));
+                repeatedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+
+                newWords.setTextColor(getResources().getColor(R.color.black));
+                newWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+            }
+        });
+
+        repeatedWords = root.findViewById(R.id.words_repeated);
+        repeatedWords.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewAdapter = new DailyProgressAdapter(getContext(), 0);
+                viewPager.setCurrentItem(0);
+                viewPager.setAdapter(viewAdapter);
+
+                mCurCheckPosition = 0;
+
+                repeatedWords.setTextColor(getResources().getColor(R.color.white));
+                repeatedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
+
+                approachedWords.setTextColor(getResources().getColor(R.color.black));
+                approachedWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+
+                newWords.setTextColor(getResources().getColor(R.color.black));
+                newWords.setBackground(getResources().getDrawable(R.drawable.fragment_home_tab_bg));
+            }
+        });
+
 
 /* NO IDEA WHAT THE FUCK IS THIS
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
@@ -511,12 +581,6 @@ public class HomeFragment extends Fragment {
 
         boolean input_value3 = sharedPreferences.getBoolean("Article", false);
         mode_list.add(new ModeSelectionModel("Article", "You guess what article is correct", input_value3));
-
-        boolean input_value4 = sharedPreferences.getBoolean("Preposition", false);
-        mode_list.add(new ModeSelectionModel("Preposition", "Learn most common verb preposition combinations", input_value4));
-
-        boolean input_value5 = sharedPreferences.getBoolean("Idiom", false);
-        mode_list.add(new ModeSelectionModel("Idiom", "Master vivid idioms", input_value5));
 
         /*
         Collections.sort(mode_list, new Comparator<ModeSelectionModel>() {

@@ -47,6 +47,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
+            android:background="@drawable/login_mail_inputs"
             android:hint="Description">
 
             <!-- TODO create an indexer for the letter count, and keep it short and simple -->
@@ -57,7 +58,7 @@
                 android:textColor="@color/palette_text"
                 android:inputType="textPassword|textVisiblePassword|textCapSentences"
                 android:maxLength="150"
-                android:background="@drawable/login_mail_inputs"
+                android:background="@color/ap_transparent"
                 android:gravity="top|start" />
 
         </com.google.android.material.textfield.TextInputLayout>

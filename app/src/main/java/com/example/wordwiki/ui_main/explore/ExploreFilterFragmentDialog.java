@@ -119,39 +119,39 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
         sp = getActivity().getSharedPreferences("filters", MODE_PRIVATE);
 
         if (sp.getBoolean("A1", false)){
-            isA1.setBackgroundColor(Color.GRAY);
+            isA1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            isA1.setBackgroundColor(Color.TRANSPARENT);
+            isA1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         if (sp.getBoolean("A2", false)){
-            isA2.setBackgroundColor(Color.GRAY);
+            isA2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            isA2.setBackgroundColor(Color.TRANSPARENT);
+            isA2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         if (sp.getBoolean("B1", false)){
-            isB1.setBackgroundColor(Color.GRAY);
+            isB1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            isB1.setBackgroundColor(Color.TRANSPARENT);
+            isB1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         if (sp.getBoolean("B2", false)){
-            isB2.setBackgroundColor(Color.GRAY);
+            isB2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            isB2.setBackgroundColor(Color.TRANSPARENT);
+            isB2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         if (sp.getBoolean("C1", false)){
-            isC1.setBackgroundColor(Color.GRAY);
+            isC1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            isC1.setBackgroundColor(Color.TRANSPARENT);
+            isC1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         if (sp.getBoolean("C2", false)){
-            isC2.setBackgroundColor(Color.GRAY);
+            isC2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
         } else {
-            isC2.setBackgroundColor(Color.TRANSPARENT);
+            isC2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
         }
 
         // create a single value to trace if it was visited for a first time
@@ -302,12 +302,12 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         if (i == 1) {
             if (sp.getBoolean("A1", false)) {
-                isA1.setBackgroundColor(Color.TRANSPARENT);
+                isA1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putBoolean("A1", false);
 
                 selectedLevelList.remove("A1");
             } else {
-                isA1.setBackgroundColor(Color.GRAY);
+                isA1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putBoolean("A1", true);
 
                 selectedLevelList.add("A1");
@@ -315,12 +315,12 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         } else if (i == 2) {
             if (sp.getBoolean("A2", false)) {
-                isA2.setBackgroundColor(Color.TRANSPARENT);
+                isA2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putBoolean("A2", false);
 
                 selectedLevelList.remove("A2");
             } else {
-                isA2.setBackgroundColor(Color.GRAY);
+                isA2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putBoolean("A2", true);
 
                 selectedLevelList.add("A2");
@@ -329,12 +329,12 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         } else if (i == 3) {
             if (sp.getBoolean("B1", false)) {
-                isB1.setBackgroundColor(Color.TRANSPARENT);
+                isB1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putBoolean("B1", false);
 
                 selectedLevelList.remove("B1");
             } else {
-                isB1.setBackgroundColor(Color.GRAY);
+                isB1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putBoolean("B1", true);
 
                 selectedLevelList.add("B1");
@@ -342,12 +342,12 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         } else if (i == 4) {
             if (sp.getBoolean("B2", false)) {
-                isB2.setBackgroundColor(Color.TRANSPARENT);
+                isB2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putBoolean("B2", false);
 
                 selectedLevelList.remove("B2");
             } else {
-                isB2.setBackgroundColor(Color.GRAY);
+                isB2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putBoolean("B2", true);
 
                 selectedLevelList.add("B2");
@@ -355,12 +355,12 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         } else if (i == 5) {
             if (sp.getBoolean("C1", false)) {
-                isC1.setBackgroundColor(Color.TRANSPARENT);
+                isC1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putBoolean("C1", false);
 
                 selectedLevelList.remove("C1");
             } else {
-                isC1.setBackgroundColor(Color.GRAY);
+                isC1.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putBoolean("C1", true);
 
                 selectedLevelList.add("C1");
@@ -368,12 +368,12 @@ public class ExploreFilterFragmentDialog  extends DialogFragment implements View
 
         } else if (i == 6) {
             if (sp.getBoolean("C2", false)) {
-                isC2.setBackgroundColor(Color.TRANSPARENT);
+                isC2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_bg));
                 editor.putBoolean("C2", false);
 
                 selectedLevelList.remove("C2");
             } else {
-                isC2.setBackgroundColor(Color.GRAY);
+                isC2.setBackground(getContext().getDrawable(R.drawable.fragment_home_tab_clicked_bg));
                 editor.putBoolean("C2", true);
 
                 selectedLevelList.add("C2");

@@ -99,9 +99,9 @@ public class LanguagesFragment extends Fragment implements LanguageListAdapter.O
     private void addLanguages() {
         languageList.clear();
         languageList.add(new LanguagesModel("English", World.getFlagOf("gb")));
-        languageList.add(new LanguagesModel("Spanish", World.getFlagOf("es")));
-        languageList.add(new LanguagesModel("German", World.getFlagOf("de")));
-        languageList.add(new LanguagesModel("French", World.getFlagOf("fr")));
+        //languageList.add(new LanguagesModel("Spanish", World.getFlagOf("es")));
+        //languageList.add(new LanguagesModel("German", World.getFlagOf("de")));
+        //languageList.add(new LanguagesModel("French", World.getFlagOf("fr")));
         languageList.add(new LanguagesModel("Lithuanian", World.getFlagOf("lt")));
 
     }
