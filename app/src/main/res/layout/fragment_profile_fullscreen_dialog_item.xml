@@ -15,24 +15,40 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1"/>
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/profile_follow_section_progressbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:layout_weight="1"
-        android:layout_gravity="center"
-        android:progress="50"
-        android:max="100"
-        app:trackColor="@android:color/holo_red_dark"
-        app:indicatorColor="@android:color/black"/>
+        android:gravity="bottom">
+
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/profile_follow_section_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:progress="50"
+            android:max="100"
+            android:background="@drawable/fragment_home_tab_bg"
+            app:trackColor="@android:color/white"
+            app:indicatorColor="@color/palette_button"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/palette_text"
+            android:text="500/570"
+            android:textSize="12sp"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
 
 </LinearLayout>

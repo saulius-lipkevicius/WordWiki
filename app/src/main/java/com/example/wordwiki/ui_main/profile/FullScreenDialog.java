@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.database.DatabaseHelper;
 import com.example.wordwiki.ui_main.actionbar.setting.SettingFragment;
 import com.example.wordwiki.ui_main.home.adapters.DailyProgressAdapter;
 import com.example.wordwiki.ui_main.home.classes.AsyncTaskClassGetStatistics;
@@ -34,7 +35,7 @@ import com.example.wordwiki.ui_main.profile.models.ProgressSectionHelper;
 import java.util.ArrayList;
 
 public class FullScreenDialog extends DialogFragment implements View.OnClickListener{
-
+    DatabaseHelper myDb;
     private Callback callback;
 
     // progress viewer and statistics
@@ -71,6 +72,8 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_profile_fullscreen_dialog, container, false);
+
+        myDb = new DatabaseHelper(getContext());
 
         Bundle bundle = getArguments();
         String dialogTitleText = bundle.getString("title","");
@@ -181,6 +184,7 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
 
         // recycler view for section stats
         ArrayList<ProgressSectionHelper> sectionList = new ArrayList<>();
+
 
         sectionList.add(new ProgressSectionHelper("introduction", 11, 50));
         sectionList.add(new ProgressSectionHelper("introduction2", 11, 60));

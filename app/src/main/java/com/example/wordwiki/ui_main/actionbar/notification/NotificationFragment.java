@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -42,8 +43,9 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         //View root =  inflater.inflate(R.layout.fragment_notification, container, false);
 
-        Toolbar tb = root.findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(tb);
+        //  title name change
+        TextView titleName = root.findViewById(R.id.toolbar_title);
+        titleName.setText("Notification");
 
         // setup feed of friends in the feed
         notificationAdapter = new NotificationListAdapter(getContext(), notificationList, notificationList.size());
@@ -55,7 +57,7 @@ public class NotificationFragment extends Fragment {
 
         notificationListRecycle.setAdapter(notificationAdapter);
 
-        ImageButton toHome = root.findViewById(R.id.setting_back);
+        ImageButton toHome = root.findViewById(R.id.toolbar_back_btn);
 
         toHome.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -172,7 +172,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener {
                             , null //lng.getWords()
                             , null //lng.getTranslations()
                             , false
-
+                            , lng.getDescription()
                     ));  // cia papildyti su quey resultatais
                     Log.d("a", "onCreate: change7 " + sectionsList.size());
 

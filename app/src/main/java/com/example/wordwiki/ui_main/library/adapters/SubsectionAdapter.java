@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -286,7 +287,7 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
         // set firebase connection
         DatabaseReference mDatabase = FirebaseDatabase.getInstance("https://wordwiki-af0d4-default-rtdb.europe-west1.firebasedatabase.app").getReference("Dictionaries")
-                .child(currentItem.getSectionName()).child("A1").child(currentItem.getCreator() + "_" + currentItem.getSubsectionName()).child("likesSum");
+                .child(currentItem.getSectionName()).child(currentItem.getSubsectionLevel()).child(currentItem.getCreator() + "_" + currentItem.getSubsectionName()).child("likesSum");
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -319,7 +320,7 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
         TextView subsectionName, description, creatorName, reportSubsection, subsectionLevel;
         ImageButton deleteItem, rateUp, rateDown, expandItem;
-        ConstraintLayout expandableLayout;
+        LinearLayout expandableLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

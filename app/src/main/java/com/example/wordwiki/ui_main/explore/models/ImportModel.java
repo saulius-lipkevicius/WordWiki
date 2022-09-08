@@ -14,10 +14,13 @@ public class ImportModel {
     private ArrayList<String> words;
     private ArrayList<String> translations;
     private Boolean checkBox;
+    private String description;
 
     public ImportModel(String nativeLanguage, String learningLanguage, String username, Integer downloadCount
             , String sectionLevel, Integer likesSum, Integer wordsCount
-            , String sectionName, ArrayList<String> words, ArrayList<String> translations, Boolean checkBox) {
+            , String sectionName, ArrayList<String> words, ArrayList<String> translations, Boolean checkBox
+            , String description
+            ) {
         this.nativeLanguage = nativeLanguage;
         this.learningLanguage = learningLanguage;
         this.username = username;
@@ -29,6 +32,7 @@ public class ImportModel {
         this.words = words;
         this.translations = translations;
         this.checkBox = checkBox;
+        this.description = description;
     }
 
     public ArrayList<String> getWords() {
@@ -121,5 +125,13 @@ public class ImportModel {
 
     public String getLanguageSection(){
         return learningLanguage + sectionName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

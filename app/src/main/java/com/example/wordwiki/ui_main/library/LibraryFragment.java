@@ -155,10 +155,10 @@ public class LibraryFragment extends Fragment {
         myDb = new DatabaseHelper(getContext());
         //initialize recycle viewers
         initData();
+
         mainRecyclerView = root.findViewById(R.id.fragment_library_top_recycle_view);
         sectionAdapter = new SectionAdapter(sectionList, getContext());
         mainRecyclerView.setAdapter(sectionAdapter);
-
 
         //TODO move it to async task later
         if (sectionList.size() == 0) {
@@ -284,7 +284,6 @@ public class LibraryFragment extends Fragment {
         try {
             List<SubsectionHelper> sectionItems = new ArrayList<>();
             while (dictionaryInformation.moveToNext()) {
-                Log.i(TAG, "currentLanguage: " + dictionaryInformation.getString(2));
                 String countryISO = myDb.getFlagISO(currentLanguage);
                 int flagInt = World.getFlagOf(countryISO);
 
@@ -296,8 +295,6 @@ public class LibraryFragment extends Fragment {
                 } else if (currentLanguage.length() == 0) {
                     currentLanguage = dictionaryInformation.getString(2);
                 }
-
-
 
                 Cursor ratingCursor = myDb.getRating(dictionaryInformation.getString(2)
                         , dictionaryInformation.getString(3));

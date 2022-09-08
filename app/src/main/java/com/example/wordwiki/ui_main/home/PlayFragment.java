@@ -16,6 +16,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.preference.PreferenceManager;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.blongho.country_data.World;
 import com.example.wordwiki.R;
@@ -35,9 +37,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Random;
 
 public class PlayFragment extends Fragment {
+    TextToSpeech t1;
+
+
     private static final String TAG = "SecondActivity";
     FragmentPlayBinding binding;
     DatabaseHelper myDb;
@@ -101,7 +107,40 @@ public class PlayFragment extends Fragment {
 
 
 
+        t1=new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                Log.i(TAG, "onInit: status: " + status);
+                if(status != TextToSpeech.ERROR) {
+                    t1.setLanguage(Locale.ITALIAN);
+                }
+            }
+        });
+
+        neutralBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getContext(), "lot",Toast.LENGTH_SHORT).show();
+                t1.speak(shownTranslation.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+
+            }
+        });
+
+
+
+
+
+
         return root;
+    }
+
+    public void onPause(){
+        if(t1 !=null){
+            t1.stop();
+            t1.shutdown();
+        }
+        super.onPause();
     }
 
     private void displayNewWord() {
@@ -116,6 +155,7 @@ public class PlayFragment extends Fragment {
 
             Log.d(TAG, "displayNewWord: testas - revised words: " + wordsRevisedCounter);
             myDb.storeProgress(getCountOfTodayWords(), myDb.countLastDayWords().toString(), myDb.countTotalWords().toString(), wordsRevisedCounter);
+
             // restart statistics
             wordsRevisedCounter = 0;
             storeCountOfTodayWords(0);
@@ -404,6 +444,9 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onWrongAnswer(view);
+
+                // increase failedCount for the word
+                myDb.failedCountIncreasement(sectionShown.getText().toString(), shownWord.getText().toString());
             }
         });
 

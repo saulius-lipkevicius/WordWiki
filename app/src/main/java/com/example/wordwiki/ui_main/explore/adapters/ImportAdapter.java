@@ -124,6 +124,8 @@ public class ImportAdapter extends RecyclerView.Adapter<ImportAdapter.ImportLang
                             holder.username.getText().toString()
                             , currentItem.getLearningLanguage()
                             , currentItem.getSectionName()
+                            //, currentItem.getDescription
+                            , currentItem.getDescription()
                             , currentItem.getSectionLevel()
                     };
 

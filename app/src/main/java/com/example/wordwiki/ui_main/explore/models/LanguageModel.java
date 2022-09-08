@@ -13,12 +13,15 @@ public class LanguageModel {
     private String sectionName;
     private ArrayList<String> words;
     private ArrayList<String> translations;
+    private String description;
 
     public LanguageModel(){};
     public LanguageModel(String nativeLanguage, String learningLanguage, String username
             , Integer downloadCount
             , String sectionLevel, Integer likesSum, Integer wordsCount
-            , String sectionName, ArrayList<String> words, ArrayList<String> translations) {
+            , String sectionName, ArrayList<String> words, ArrayList<String> translations
+            , String description
+            ) {
         this.nativeLanguage = nativeLanguage;
         this.learningLanguage = learningLanguage;
         this.username = username;
@@ -29,6 +32,7 @@ public class LanguageModel {
         this.sectionName = sectionName;
         this.words = words;
         this.translations = translations;
+        this.description = description;
     }
 
     public ArrayList<String> getWords() {
@@ -109,5 +113,13 @@ public class LanguageModel {
 
     public void setLearningLanguage(String learningLanguage) {
         this.learningLanguage = learningLanguage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

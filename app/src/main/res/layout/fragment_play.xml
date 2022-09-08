@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui_main.home.PlayFragment">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
+        android:background="@color/palette_background"
         android:orientation="vertical"
         tools:context=".wording.WordingActivity">
 
@@ -20,16 +20,15 @@
             android:id="@+id/stats_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="50dp"
             android:background="@android:color/transparent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/wording_newToday_statistics_int"
@@ -42,7 +41,7 @@
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:textAlignment="center"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
                 <TextView
                     android:id="@+id/wording_newToday_statistics_text"
@@ -51,8 +50,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="24dp"
                     android:layout_weight="3"
-                    android:text="New"
-                    android:textColor="@color/palette4" />
+                    android:text="New Words"
+                    android:textColor="@color/palette_text" />
 
                 <TextView
                     android:id="@+id/wording_today_statistics_int"
@@ -66,24 +65,25 @@
                     android:gravity="center_horizontal"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
                 <TextView
-                    android:id="@+id/wording_today_statistics_text"
+                    android:id="@+id/wording_revised_statistics_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="30dp"
                     android:layout_weight="3"
-                    android:text="Revised"
-                    android:textColor="@color/palette4" />
+                    android:text="Words Revised"
+                    android:textColor="@color/palette_text" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/wording_total_statistics_int"
@@ -96,7 +96,7 @@
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:textAlignment="center"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
                 <TextView
                     android:id="@+id/wording_total_statistics_text"
@@ -105,7 +105,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_weight="3"
                     android:text="Total"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
                 <TextView
                     android:id="@+id/wording_revised_statistics_int"
@@ -118,10 +118,10 @@
                     android:ems="10"
                     android:gravity="center_horizontal"
                     android:textAlignment="center"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
                 <TextView
-                    android:id="@+id/wording_revised_statistics_text"
+                    android:id="@+id/wording_today_statistics_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -129,7 +129,7 @@
                     android:layout_weight="3"
                     android:text="Revised"
                     android:textAlignment="viewStart"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
 
             </LinearLayout>
 
@@ -139,25 +139,40 @@
             android:id="@+id/words_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="100dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="100dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="120dp"
+                android:layout_marginBottom="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+
+                <androidx.constraintlayout.utils.widget.ImageFilterView
+                    android:id="@+id/wording_image"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/es"
+                    app:roundPercent="0.2" />
 
                 <TextView
                     android:id="@+id/wording_section_text"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="0dp"
                     android:layout_weight="4"
                     android:text="TextView"
                     android:textAlignment="center"
-                    android:textColor="@color/palette4"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/palette_text"
                     android:textStyle="italic"
                     android:top="@+id/wording_language_text" />
 
@@ -169,40 +184,33 @@
                 android:orientation="horizontal">
 
 
-                <androidx.constraintlayout.utils.widget.ImageFilterView
-                    android:id="@+id/wording_image"
-                    android:layout_gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:scaleType="fitXY"
-                    android:layout_marginStart="10dp"
-                    android:layout_weight="6"
-                    android:src="@drawable/es"
-                    app:roundPercent="0.2" />
-
                 <EditText
                     android:id="@+id/word_text"
                     android:layout_width="match_parent"
+                    android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="50dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginStart="30dp"
                     android:layout_weight="1"
+                    android:background="@color/ap_transparent"
                     android:gravity="center"
                     android:inputType="textPersonName"
-                    android:textColor="@color/palette4" />
+                    android:textColor="@color/palette_text" />
             </LinearLayout>
 
             <EditText
                 android:id="@+id/translation_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="30dp"
                 android:layout_weight="1"
+                android:background="@color/ap_transparent"
                 android:ems="10"
                 android:gravity="center"
                 android:inputType="textPersonName"
-                android:textColor="@color/palette4" />
+                android:textColor="@color/palette_text" />
 
         </LinearLayout>
 
@@ -210,7 +218,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="80dp"
             android:orientation="vertical">
 
             <Button
@@ -220,9 +228,8 @@
                 android:layout_marginStart="60dp"
                 android:layout_marginEnd="60dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:text="Show the answer"
-                android:textColor="@color/palette4" />
+                android:backgroundTint="@color/palette_button"
+                android:text="Show the answer" />
 
         </LinearLayout>
 
@@ -241,7 +248,7 @@
                 android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:contentDescription="positive"
                 android:src="@drawable/ic_thumb_up" />
 
@@ -252,7 +259,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:contentDescription="neutral"
                 android:padding="10dp"
                 android:src="@drawable/ic_question_24" />
@@ -264,7 +271,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
+                android:background="@drawable/fragment_home_tab_bg"
                 android:contentDescription="negative"
                 android:src="@drawable/ic_thumb_down" />
 

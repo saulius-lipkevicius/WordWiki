@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wordwiki.R;
+import com.example.wordwiki.ui_main.library.classes.AsyncTaskClassLoadLibrary;
 import com.example.wordwiki.ui_main.library.models.SectionHelper;
 import com.example.wordwiki.ui_main.library.models.SubsectionHelper;
 import com.github.mikephil.charting.formatter.IFillFormatter;
@@ -64,28 +65,23 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         int sectionFlag = section.getSectionFlag();
         List<SubsectionHelper> items = section.getSectionItems();
 
-        holder.sectionName.setText(sectionName);
-        holder.sectionFlag.setImageResource(sectionFlag);
-
         holder.sectionName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // don't let to remove the row with sections inside it
-
                 sectionList.remove(holder.getAdapterPosition());
                 notifyItemRemoved(holder.getAdapterPosition());
-
-
             }
         });
 
         // after the seOnClickListener because of the structure, otherwise an user will still be able to press it
         holder.sectionName.setClickable(false);
 
-        SubsectionAdapter subsectionAdapter = new SubsectionAdapter(
-                items, holder, context
-        );
-        holder.subsectionRecyclerView.setAdapter(subsectionAdapter);
+        String[] input = {sectionName, String.valueOf(sectionFlag)};
+
+        AsyncTaskClassLoadLibrary taskClassLoadLibrary = new AsyncTaskClassLoadLibrary(holder.sectionName,  holder.sectionFlag, holder.subsectionRecyclerView, items, holder, context);
+        taskClassLoadLibrary.execute(input);
+
     }
 
     @Override
@@ -94,7 +90,7 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView sectionName;
         ImageFilterView sectionFlag;

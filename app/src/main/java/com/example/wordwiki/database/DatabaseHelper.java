@@ -41,10 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_12 = "articleDate";
     public static final String COL_13 = "articleLvl";
     public static final String COL_14 = "form";
-    public static final String COL_15 = "prepositionLvl";
-    public static final String COL_16 = "prepositionDate";
-    public static final String COL_17 = "idiomLvl";
-    public static final String COL_18 = "idiomDate";
+    public static final String COL_15 = "failedCount";
 
 
     // progress table
@@ -276,10 +273,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COL_12 + " String, " +
                 COL_13 + " INTEGER, " +
                 COL_14 + " String, " +
-                COL_15 + " INTEGER, " +
-                COL_16 + " String, " +
-                COL_17 + " INTEGER, " +
-                COL_18 + " String " +
+                COL_15 + " INTEGER " +
                 ")");
 
         // table for progress following
@@ -378,12 +372,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Level_Column = COL_9;
         } else if (Mode.equals("Swapped")) {
             Level_Column = COL_11;
-        } else if (Mode.equals("Article")) {
-            Level_Column = COL_13;
-        } else if (Mode.equals("Preposition")) {
-            Level_Column = COL_15;
         } else {
-            Level_Column = COL_17;
+            Level_Column = COL_13;
         }
 
         //Finds AND updates word's level
@@ -416,10 +406,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(COL_10, dateFormat.format(date));
         } else if (Mode.equals("Article")) {
             contentValues.put(COL_12, dateFormat.format(date));
-        } else if (Mode.equals("Preposition")) {
-            contentValues.put(COL_16, dateFormat.format(date));
-        } else if (Mode.equals("Idiom")) {
-            contentValues.put(COL_18, dateFormat.format(date));
         }
 
         db.update(TABLE_NAME, contentValues, " ID = ?", new String[]{wordToUpdate.getString(1)});
@@ -436,12 +422,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Level_Column = COL_9;
         } else if (Mode.equals("Swapped")) {
             Level_Column = COL_11;
-        } else if (Mode.equals("Article")) {
-            Level_Column = COL_13;
-        } else if (Mode.equals("Preposition")) {
-            Level_Column = COL_15;
         } else {
-            Level_Column = COL_17;
+            Level_Column = COL_13;
         }
 
         //Finds AND updates word's level
@@ -662,8 +644,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             COL_13 + ", " +
                             COL_3 + ", " +
                             COL_11 + ", " +
-                            COL_15 + ", " +
-                            COL_17 + " " +
+                            COL_15 + " " +
                             "FROM " + TABLE_NAME + " " +
                             "WHERE Language = 'English'" + " " +
                             " AND form = '" + mode + "' " +
@@ -679,8 +660,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                             COL_13 + ", " +
                             COL_3 + ", " +
                             COL_11 + ", " +
-                            COL_15 + ", " +
-                            COL_17 + " " +
+                            COL_15 + " " +
                             "FROM " + TABLE_NAME + " " +
                             "WHERE Language IN " + language_name + " " +
                             "AND (Language || Section) IN " + sections + " " +
@@ -762,9 +742,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String ColumnToUpdate;
         if (CurrentLearningMode.equals("Classical")) {
-            ColumnToUpdate = "Level_Classical";
+            ColumnToUpdate = "ClassicalLvl";
         } else {
-            ColumnToUpdate = "Level_Swapped";
+            ColumnToUpdate = "SwappedLvl";
         }
 
 
@@ -1065,7 +1045,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return word.getInt(0);
     }
 
-    public void isDictionaryImported(String username, String languageName, String sectionName, String isDownloaded) {
+    public void isDictionaryImported(String username, String languageName, String sectionName, String isDownloaded, String descriptionText, String levelName) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -1088,7 +1068,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(INFORMATION_COL2, username);
         cv.put(INFORMATION_COL3, languageName);
         cv.put(INFORMATION_COL4, sectionName);
-        cv.put(INFORMATION_COL5, "description");
+        cv.put(INFORMATION_COL5, descriptionText);
+        cv.put(INFORMATION_COL6, levelName);
         cv.put(INFORMATION_COL7, 0);
         cv.put(INFORMATION_COL8, 0);
         cv.put(INFORMATION_COL9, 0);
@@ -1176,6 +1157,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return exportWords;
 
+    }
+
+    // function to increase failedCount
+    public void failedCountIncreasement(String language, String word) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        db.execSQL("UPDATE " + TABLE_NAME +
+                " SET " + COL_15 + " = " + COL_15 + " + 1 " +
+                " WHERE " + COL_2 + "='" + language + "'" +
+                " AND " + COL_5 + "= '" + word + "';");
+        db.close();
     }
 }
 
