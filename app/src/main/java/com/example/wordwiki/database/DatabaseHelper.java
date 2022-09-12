@@ -61,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String LANGUAGE_CODE_COL2 = "iso";
     public static final String LANGUAGE_CODE_COL3 = "language";
     public static final String LANGUAGE_CODE_COL4 = "article";
+    public static final String LANGUAGE_CODE_COL5 = "locale";
 
     //Setting a format of time in app
     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -291,7 +292,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + LANGUAGE_CODE_COL1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 LANGUAGE_CODE_COL2 + " INTEGER, " +
                 LANGUAGE_CODE_COL3 + " String, " +
-                LANGUAGE_CODE_COL4 + " String " +
+                LANGUAGE_CODE_COL4 + " String, " +
+                LANGUAGE_CODE_COL5 + " String " +
                 ")");
 
         // enter country ISO and its language
@@ -874,6 +876,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String sql = "SELECT " + LANGUAGE_CODE_COL2 +
+                " FROM " + LANGUAGE_CODE_TABLE_NAME +
+                " WHERE " + LANGUAGE_CODE_COL3 + " = '" + language_name + "';";
+
+        Cursor exportWords = db.rawQuery(sql, null);
+
+        if (exportWords.getCount() == 0) {
+            return language_name;
+        } else {
+            exportWords.moveToFirst();
+            return exportWords.getString(0);
+        }
+    }
+
+    public String getLanguageLocale(String language_name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + LANGUAGE_CODE_COL5 +
                 " FROM " + LANGUAGE_CODE_TABLE_NAME +
                 " WHERE " + LANGUAGE_CODE_COL3 + " = '" + language_name + "';";
 

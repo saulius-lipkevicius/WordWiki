@@ -42,7 +42,10 @@ import java.util.Random;
 
 public class PlayFragment extends Fragment {
     TextToSpeech t1;
-
+    String textToSpeechLOCALE;
+    String languageName;
+    String country_name;
+    String currentLocale;
 
     private static final String TAG = "SecondActivity";
     FragmentPlayBinding binding;
@@ -106,13 +109,13 @@ public class PlayFragment extends Fragment {
         displayNewWord();
 
 
-
         t1=new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
                 Log.i(TAG, "onInit: status: " + status);
                 if(status != TextToSpeech.ERROR) {
-                    t1.setLanguage(Locale.ITALIAN);
+                    Locale currentLocale = new Locale(myDb.getLanguageLocale(languageName), myDb.getFlagISO(languageName).toUpperCase(Locale.ROOT));
+                    t1.setLanguage(currentLocale);
                 }
             }
         });
@@ -120,17 +123,12 @@ public class PlayFragment extends Fragment {
         neutralBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.i(TAG, "onClick: testing lang and speecherr " + languageName + " and locale: " + t1.getLanguage());
                 Toast.makeText(getContext(), "lot",Toast.LENGTH_SHORT).show();
-                t1.speak(shownTranslation.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
+                t1.speak(shownWord.getText().toString(), TextToSpeech.QUEUE_FLUSH, null);
 
             }
         });
-
-
-
-
-
 
         return root;
     }
@@ -236,12 +234,27 @@ public class PlayFragment extends Fragment {
             wrongBtn.setVisibility(View.VISIBLE);
         }
 
-        String country_name = myDb.getFlagISO(wordsCursor.getString(3));
+        languageName = wordsCursor.getString(3);
+        country_name = myDb.getFlagISO(languageName);
+        currentLocale = myDb.getLanguageLocale(languageName);
         int flag = World.getFlagOf(country_name);
 
         //languageShown.setText(wordsCursor.getString(3));
         languageImage.setImageResource(flag);
         sectionShown.setText(wordsCursor.getString(5));
+
+        // set LOCALE if it exists
+        t1=new TextToSpeech(getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                Log.i(TAG, "onInit: status: " + status);
+                if(status != TextToSpeech.ERROR) {
+                    Locale currentLocale = new Locale(myDb.getLanguageLocale(languageName), myDb.getFlagISO(languageName).toUpperCase(Locale.ROOT));
+                    t1.setLanguage(currentLocale);
+                }
+            }
+        });
+
     }
 
     private String addBoldedArticle(String cursorWord, String cursorLanguage, Boolean isArticle, Boolean theWord, Boolean boldedWord) {
@@ -309,7 +322,7 @@ public class PlayFragment extends Fragment {
         shownTranslation.setVisibility(View.VISIBLE);
         showAnswerBtn.setVisibility(View.INVISIBLE);
         //correctBtn.setText("Next Word");
-        neutralBtn.setVisibility(View.INVISIBLE);
+        neutralBtn.setVisibility(View.VISIBLE);
         wrongBtn.setVisibility(View.INVISIBLE);
     }
 

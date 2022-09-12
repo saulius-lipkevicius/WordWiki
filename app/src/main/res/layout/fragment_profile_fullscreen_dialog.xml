@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/palette_background">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <include layout="@layout/actionbar_profile_dialog" />
 
     <TextView
@@ -25,6 +29,23 @@
         android:layout_margin="20dp"
         android:orientation="vertical" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ffffff"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stats_recycler_words"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#ffffff"/>
+
     <RelativeLayout
 
         android:id="@+id/scroll_view_main"
@@ -32,7 +53,7 @@
         android:layout_height="300dp"
         android:layout_marginBottom="50dp"
         android:layout_marginTop="20dp"
-        android:background="@android:color/white"
+        android:background="@color/palette_background"
         android:gravity="bottom"
 
         android:scrollbarTrackHorizontal="@drawable/ic_home_play"
@@ -46,7 +67,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/transparent"
+            android:background="@color/palette_background"
             android:orientation="vertical">
 
             <LinearLayout
@@ -126,4 +147,5 @@
 
 
     </RelativeLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

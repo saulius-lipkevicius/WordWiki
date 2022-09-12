@@ -20,7 +20,7 @@
             android:id="@+id/stats_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:orientation="vertical">
 
@@ -82,54 +82,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:visibility="visible">
 
-                <TextView
-                    android:id="@+id/wording_total_statistics_int"
-                    android:layout_width="30dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:gravity="center_horizontal"
-                    android:textAlignment="center"
-                    android:textColor="@color/palette_text" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/wording_total_statistics_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="3"
-                    android:text="Total"
-                    android:textColor="@color/palette_text" />
+                    <TextView
+                        android:id="@+id/wording_total_statistics_int"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:clickable="false"
+                        android:ems="10"
+                        android:text="aaaa"
+                        android:gravity="right"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/palette_text" />
 
-                <TextView
-                    android:id="@+id/wording_revised_statistics_int"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:ems="10"
-                    android:gravity="center_horizontal"
-                    android:textAlignment="center"
-                    android:textColor="@color/palette_text" />
+                    <TextView
+                        android:id="@+id/wording_total_statistics_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="Total Learned"
+                        android:textColor="@color/palette_text" />
 
-                <TextView
-                    android:id="@+id/wording_today_statistics_text"
-                    android:layout_width="wrap_content"
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_weight="3"
-                    android:text="Revised"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/palette_text" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/wording_revised_statistics_int"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="3"
+                        android:clickable="false"
+                        android:ems="10"
+                        android:gravity="end"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/palette_text" />
+
+                    <TextView
+                        android:id="@+id/wording_today_statistics_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="2"
+                        android:text="Times Revised"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/palette_text" />
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
@@ -145,7 +156,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
+                android:layout_marginTop="100dp"
                 android:layout_marginBottom="30dp"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -186,6 +197,7 @@
 
                 <EditText
                     android:id="@+id/word_text"
+                    android:inputType="textMultiLine"
                     android:layout_width="match_parent"
                     android:layout_marginBottom="10dp"
                     android:layout_height="wrap_content"
@@ -194,7 +206,6 @@
                     android:layout_weight="1"
                     android:background="@color/ap_transparent"
                     android:gravity="center"
-                    android:inputType="textPersonName"
                     android:textColor="@color/palette_text" />
             </LinearLayout>
 
@@ -202,6 +213,7 @@
                 android:id="@+id/translation_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:inputType="textMultiLine"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="30dp"
@@ -209,7 +221,6 @@
                 android:background="@color/ap_transparent"
                 android:ems="10"
                 android:gravity="center"
-                android:inputType="textPersonName"
                 android:textColor="@color/palette_text" />
 
         </LinearLayout>
@@ -262,7 +273,7 @@
                 android:background="@drawable/fragment_home_tab_bg"
                 android:contentDescription="neutral"
                 android:padding="10dp"
-                android:src="@drawable/ic_question_24" />
+                android:src="@drawable/ic_volume_up_24" />
 
             <ImageButton
                 android:id="@+id/wrong_answer_btn"

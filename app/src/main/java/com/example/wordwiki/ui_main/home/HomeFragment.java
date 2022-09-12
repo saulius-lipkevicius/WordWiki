@@ -226,16 +226,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
-/* NO IDEA WHAT THE FUCK IS THIS
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("user_profile", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", null);
-        editor.apply();
-
- */
-
-
         return root;
     }
 
