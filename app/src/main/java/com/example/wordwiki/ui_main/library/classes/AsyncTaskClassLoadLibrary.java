@@ -21,6 +21,7 @@ import com.example.wordwiki.ui_main.library.models.SubsectionHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class AsyncTaskClassLoadLibrary extends AsyncTask<String, Void, Void> {
     TextView sectionName;
@@ -52,6 +53,14 @@ public class AsyncTaskClassLoadLibrary extends AsyncTask<String, Void, Void> {
         );
 
         subsectionRecyclerView.setAdapter(subsectionAdapter);
+
+        // TEST SHIMMER EFFECT
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        ///////////
 
         return null;
     }

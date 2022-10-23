@@ -77,10 +77,20 @@ public class SectionAdapter extends RecyclerView.Adapter<SectionAdapter.ViewHold
         // after the seOnClickListener because of the structure, otherwise an user will still be able to press it
         holder.sectionName.setClickable(false);
 
-        String[] input = {sectionName, String.valueOf(sectionFlag)};
+        //String[] input = {sectionName, String.valueOf(sectionFlag)};
 
-        AsyncTaskClassLoadLibrary taskClassLoadLibrary = new AsyncTaskClassLoadLibrary(holder.sectionName,  holder.sectionFlag, holder.subsectionRecyclerView, items, holder, context);
-        taskClassLoadLibrary.execute(input);
+        //AsyncTaskClassLoadLibrary taskClassLoadLibrary = new AsyncTaskClassLoadLibrary(holder.sectionName,  holder.sectionFlag, holder.subsectionRecyclerView, items, holder, context);
+        //taskClassLoadLibrary.execute(input);
+
+        holder.sectionName.setText(sectionName);
+        holder.sectionFlag.setImageResource(Integer.parseInt(String.valueOf(sectionFlag)));
+
+        SubsectionAdapter subsectionAdapter = new SubsectionAdapter(
+                items, holder, context
+        );
+
+        holder.subsectionRecyclerView.setAdapter(subsectionAdapter);
+
 
     }
 

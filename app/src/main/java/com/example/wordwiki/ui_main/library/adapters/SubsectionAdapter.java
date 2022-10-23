@@ -281,6 +281,8 @@ public class SubsectionAdapter extends RecyclerView.Adapter<SubsectionAdapter.Vi
 
             }
         });
+
+        ///////////
     }
 
     private void firebaseRateDictionary(int voteChange) {

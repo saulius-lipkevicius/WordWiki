@@ -18,6 +18,8 @@ import com.example.wordwiki.ui_main.profile.models.ProgressHelper;
 import com.example.wordwiki.ui_main.profile.models.ProgressSectionHelper;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class ProgressSectionAdapter extends RecyclerView.Adapter<ProgressSectionAdapter.ViewHolder> {
@@ -47,6 +49,8 @@ public class ProgressSectionAdapter extends RecyclerView.Adapter<ProgressSection
         Log.i(TAG, "onBindViewHolder: progress parameter is : " + progressEstimate + " : " + progressEstimateInt);
         holder.progressIndicator.setProgress(progressEstimateInt);
         holder.progressIndicator.setScaleY(5f);
+
+        holder.sectionCountIndicator.setText(progressItem.getLearnedCount() + " / " + progressItem.getAllCount());
         /*
         AsyncTaskClassProfileProgress profileProgressTask = new AsyncTaskClassProfileProgress(holder.image, context);
         Log.i(TAG, "onBindViewHolder: " + progressItem.getTitle() + " : " + progressItem.getWordCounter());
@@ -64,12 +68,14 @@ public class ProgressSectionAdapter extends RecyclerView.Adapter<ProgressSection
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView sectionName;
+        TextView sectionCountIndicator;
         LinearProgressIndicator progressIndicator;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             sectionName = itemView.findViewById(R.id.profile_follow_section_name);
+            sectionCountIndicator = itemView.findViewById(R.id.profile_follow_section_counter);
             progressIndicator = itemView.findViewById(R.id.profile_follow_section_progressbar);
         }
     }

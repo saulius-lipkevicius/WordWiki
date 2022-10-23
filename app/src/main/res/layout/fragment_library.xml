@@ -17,7 +17,7 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@color/palette_background">
 
         <ImageView
@@ -42,7 +42,27 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_library_top_recycle_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:visibility="gone"/>
+
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/library_shimmer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/fragment_library_section_item_shimmer"/>
+            <include layout="@layout/fragment_library_section_item_shimmer"/>
+            <include layout="@layout/fragment_library_section_item_shimmer"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </LinearLayout>

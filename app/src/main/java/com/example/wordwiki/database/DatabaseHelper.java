@@ -1166,6 +1166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " COUNT(" + COL_9  + ") " +
                 " FROM " + TABLE_NAME +
                 " WHERE " + COL_8 + " IS NOT NULL " +
+                " AND " + COL_9 + " >= 2 " +
                 " GROUP BY " + COL_2 +
                 ";";
         Log.i(TAG, "get isShared: sqlite: " + sql);
@@ -1175,7 +1176,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         return exportWords;
-
     }
 
     // function to increase failedCount
@@ -1187,6 +1187,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " WHERE " + COL_2 + "='" + language + "'" +
                 " AND " + COL_5 + "= '" + word + "';");
         db.close();
+    }
+
+    public Cursor getSectionProgress(String languageName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT " + COL_3 + ", " +
+                " SUM( CASE WHEN " + COL_9 + " >= 2 THEN 1 ELSE 0 END ), " +
+                " COUNT(" + COL_9  + ") " +
+                " FROM " + TABLE_NAME +
+                " WHERE " + COL_2 + "= '" + languageName + "' " +
+                " GROUP BY " + COL_3 +
+                ";";
+        Log.i(TAG, "get isShared: sqlite: " + sql);
+        Cursor exportWords = db.rawQuery(sql, null);
+
+        exportWords.moveToFirst();
+
+        Log.i(TAG, "getSectionProgress: sql is: " + sql);
+
+        return exportWords;
     }
 }
 

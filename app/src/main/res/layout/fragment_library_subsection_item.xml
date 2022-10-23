@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/fragment_home_tab_bg">
+    android:background="@drawable/fragment_home_tab_bg"
+    android:layout_marginTop="10dp">
 
 
     <LinearLayout

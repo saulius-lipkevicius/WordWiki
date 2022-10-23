@@ -19,6 +19,9 @@
     <color name="dark_theme_buttonColor">#212121</color>
 
 
+    <!-- Shimmer colours -->
+    <color name="shimmer_color">#BFBDBD</color>
+
     <!-- Intro colours -->
     <!-- Screen background -->
     <color name="bg_screen1">#B12515</color>

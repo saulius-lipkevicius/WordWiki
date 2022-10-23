@@ -30,6 +30,7 @@ import com.example.wordwiki.ui_main.home.adapters.DailyProgressAdapter;
 import com.example.wordwiki.ui_main.home.classes.AsyncTaskClassGetStatistics;
 import com.example.wordwiki.ui_main.library.adapters.SectionAdapter;
 import com.example.wordwiki.ui_main.profile.adapters.ProgressSectionAdapter;
+import com.example.wordwiki.ui_main.profile.classes.AsyncTaskClassLoadSectionProgress;
 import com.example.wordwiki.ui_main.profile.models.ProgressSectionHelper;
 
 import java.util.ArrayList;
@@ -183,16 +184,25 @@ public class FullScreenDialog extends DialogFragment implements View.OnClickList
 
 
         // recycler view for section stats
-        ArrayList<ProgressSectionHelper> sectionList = new ArrayList<>();
-
-
-        sectionList.add(new ProgressSectionHelper("introduction", 11, 50));
-        sectionList.add(new ProgressSectionHelper("introduction2", 11, 60));
-
         RecyclerView sectionStatsRecycler = root.findViewById(R.id.stats_recycler);
-        ProgressSectionAdapter sectionAdapter = new ProgressSectionAdapter(sectionList, getContext());
-        sectionStatsRecycler.setLayoutManager(layoutManager);
-        sectionStatsRecycler.setAdapter(sectionAdapter);
+        ArrayList<ProgressSectionHelper> sectionList = new ArrayList<>();
+        String[] input = {dialogTitleText};
+
+
+        AsyncTaskClassLoadSectionProgress taskClassLoadSectionProgress = new AsyncTaskClassLoadSectionProgress(sectionStatsRecycler, sectionList, layoutManager, getContext());
+        taskClassLoadSectionProgress.execute(input);
+
+        // add words you are strugling with
+        //ArrayList<String> strugleList = new ArrayList<>();
+
+        RecyclerView struglingWordRecycler = root.findViewById(R.id.stats_recycler_words);
+
+        // TODO add an new adapter and helper to find text
+
+        //ProgressSectionAdapter sectionAdapter = new ProgressSectionAdapter(sectionList, getContext());
+        //struglingWordRecycler.setLayoutManager(layoutManager);
+        //struglingWordRecycler.setAdapter(sectionAdapter);
+
 
         return root;
     }

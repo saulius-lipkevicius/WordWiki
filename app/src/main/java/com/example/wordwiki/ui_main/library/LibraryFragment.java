@@ -53,6 +53,7 @@ import com.example.wordwiki.classes.FileUtils;
 import com.example.wordwiki.ui_main.library.models.SectionHelper;
 import com.example.wordwiki.ui_main.library.models.SubsectionHelper;
 import com.example.wordwiki.ui_main.profile.models.ExcelParsing;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -89,6 +90,10 @@ public class LibraryFragment extends Fragment {
     ArrayList<ExcelParsing> uploadData;
     DatabaseHelper myDb;
     String dictionaryLevel;
+
+    //Shimmer effect
+    ShimmerFrameLayout shimmerFrameLayout;
+
 
     AppCompatButton isA1, isA2, isB1, isB2, isC1, isC2;
 
@@ -145,30 +150,16 @@ public class LibraryFragment extends Fragment {
         binding = FragmentLibraryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // layout for a filler
-        emptyStateFiller = binding.getRoot().findViewById(R.id.explore_fragment_empty_filler_layout);
 
-
+        shimmerFrameLayout = root.findViewById(R.id.library_shimmer);
+        mainRecyclerView = root.findViewById(R.id.fragment_library_top_recycle_view);
 
         Toolbar tb = root.findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(tb);
         myDb = new DatabaseHelper(getContext());
-        //initialize recycle viewers
-        initData();
 
-        mainRecyclerView = root.findViewById(R.id.fragment_library_top_recycle_view);
-        sectionAdapter = new SectionAdapter(sectionList, getContext());
-        mainRecyclerView.setAdapter(sectionAdapter);
 
-        //TODO move it to async task later
-        if (sectionList.size() == 0) {
-            mainRecyclerView.setVisibility(View.GONE);
-            emptyStateFiller.setVisibility(View.VISIBLE);
 
-        } else {
-            mainRecyclerView.setVisibility(View.VISIBLE);
-            emptyStateFiller.setVisibility(View.GONE);
-        }
 
         //mainRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
@@ -212,8 +203,66 @@ public class LibraryFragment extends Fragment {
             }
         });
 
+        Log.i(TAG, "onStart: bbbbbbbbbbbbbbbbbb");
+/*
+        //TODO move it to async task later
+        if (sectionList.size() == 0) {
+            mainRecyclerView.setVisibility(View.GONE);
+            emptyStateFiller.setVisibility(View.VISIBLE);
+
+        } else {
+            mainRecyclerView.setVisibility(View.VISIBLE);
+            emptyStateFiller.setVisibility(View.GONE);
+        }
+        //shimmerFrameLayout.setVisibility(View.GONE);
+        //mainRecyclerView.setVisibility(View.VISIBLE);
+
+ */
+
+
+
 
         return root;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // layout for a filler
+        emptyStateFiller = binding.getRoot().findViewById(R.id.explore_fragment_empty_filler_layout);
+
+
+        //Shimmer
+
+        shimmerFrameLayout.startShimmer();
+
+
+        //initialize recycle viewers
+        initData();
+
+
+        sectionAdapter = new SectionAdapter(sectionList, getContext());
+        mainRecyclerView.setAdapter(sectionAdapter);
+
+
+        Log.i(TAG, "onStart: aaaaaaaaaaaaaaaaaaaaaa");
+        shimmerFrameLayout.stopShimmer();
+        //shimmerFrameLayout.setVisibility(View.INVISIBLE);
+
+        /*
+        if (sectionList.size() == 0) {
+            mainRecyclerView.setVisibility(View.GONE);
+            emptyStateFiller.setVisibility(View.VISIBLE);
+
+        } else {
+            mainRecyclerView.setVisibility(View.VISIBLE);
+            emptyStateFiller.setVisibility(View.GONE);
+        }
+
+         */
+        //shimmerFrameLayout.setVisibility(View.GONE);
+        //mainRecyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -274,6 +323,8 @@ public class LibraryFragment extends Fragment {
          * 1. CREATE DB function that finds all
          */
 
+       
+
         Cursor dictionaryInformation = myDb.findDictionaryInformation();
         String currentLanguage = "";
         boolean rateUp = false;
@@ -282,8 +333,10 @@ public class LibraryFragment extends Fragment {
         if (dictionaryInformation == null)
             return; // can't do anything with a null cursor.
         try {
+
             List<SubsectionHelper> sectionItems = new ArrayList<>();
             while (dictionaryInformation.moveToNext()) {
+
                 String countryISO = myDb.getFlagISO(currentLanguage);
                 int flagInt = World.getFlagOf(countryISO);
 
